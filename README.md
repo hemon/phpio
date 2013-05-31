@@ -1,4 +1,4 @@
-phpio
+PHPIO
 =====
 
 安装funcall扩展
