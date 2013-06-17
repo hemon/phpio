@@ -8,4 +8,4 @@ pecl install funcall-0.3.0alpha
 php.ini 中启用扩展
 ===
 [funcall]  
-extension=funcall.so
+extension=funcall.so 
