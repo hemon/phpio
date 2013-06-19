@@ -1,58 +1,36 @@
 <?php
-$GLOBALS['__phpio_pre_cb'] = array();
-$GLOBALS['__phpio_post_cb'] = array();
-$GLOBALS['__phpio_traces'] = array();
-
-function phpio_post_cb(){
-    list($args, $result, $t) = func_get_args();
-	$traces = $GLOBALS['__phpio_traces'];
-    $func = $traces[1]['function'];
-    if ( isset($traces[1]['class']) ) {
-        $func = $traces[1]['class'] . '::' . $func; 
-    }
-	
-    return call_user_func_array($GLOBALS['__phpio_post_cb'][$func], array($args, $traces, $result, $t));
-}
-
-function phpio_pre_cb(){
-    list($args) = func_get_args();
-    $GLOBALS['__phpio_traces'] = $traces = debug_backtrace();
-    
-    $func = $traces[1]['function'];
-    if ( isset($traces[1]['class']) ) {
-        $func = $traces[1]['class'] . '::' . $func; 
-    }
-    return call_user_func_array($GLOBALS['__phpio_pre_cb'][$func], array($args, $traces));
-}
-
-function phpio_add_post($func, $callback) {
-    $GLOBALS['__phpio_post_cb'][$func] = $callback;
-	fc_add_post($func, "phpio_post_cb");
-}
-
-function phpio_add_pre($func, $callback) {
-    $GLOBALS['__phpio_pre_cb'][$func] = $callback;
-	fc_add_pre($func, "phpio_pre_cb");
-}
-
 abstract class PHPIO_Hook_Class {
 	const classname = '';
 	var $log = array();
 	var $hooks = array();
+
+	function _preCallback($jp) {
+	    $args   = $jp->getArguments();
+	    $traces = debug_backtrace();
+
+	    $this->preCallback($args, $traces);
+	}
+
+	function _postCallback($jp) {
+	    $args   = $jp->getArguments();
+	    $traces = debug_backtrace();
+	    $result = $jp->getReturnedValue();
+
+	    $this->postCallback($args, $traces, $result);
+	}
 	
-	function preCallback($args, $traces) {		
+	function preCallback($args, $traces) {
 		$traces[1]['object'] = $this->getObjectId($traces[1]['object']);
-        $traces[1]['time'] = microtime(true);
-		$traces[1]['trace'] = $this->getPrintTrace($traces);
-		$traces[1]['class'] = $this::classname;
+        $traces[1]['time']   = microtime(true);
+		$traces[1]['trace']  = $this->getPrintTrace($traces);
+		$traces[1]['class']  = $this::classname;
 		
 		$this->log[] = $traces[1];
 	}
 	
-	function postCallback($args, $traces, $result, $t) {
+	function postCallback($args, $traces, $result) {
 		$traces[1]['result'] = $this->getObjectId($result);
-		$traces[1]['t'] = $t;
-        $traces[1]['time_end'] = microtime(true);
+        $traces[1]['time']   = microtime(true);
 		// pre_log_id
 		$i = $this->log->count() - 1;
 		$this->log[$i] = $traces[1]+$this->log[$i];
@@ -121,13 +99,13 @@ abstract class PHPIO_Hook_Class {
 	function hook() {
 		if ($this->hooks) foreach ( $this->hooks as $func ) {
 			$func = $this->getHookFunc($func);
-			if ( method_exists($this,'preCallback') ) phpio_add_pre($func, array($this, 'preCallback'));
-			if ( method_exists($this,'postCallback') ) phpio_add_post($func, array($this, 'postCallback'));
+			aop_add_before($func, array($this, '_preCallback'));
+			aop_add_after($func, array($this, '_postCallback'));
 		}
 	}
 	
 	function getHookFunc($func) {
-		return $this::classname . '::' . $func;
+		return $this::classname . '->' . $func . '()';
 	}
 }
 
@@ -142,18 +120,18 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 		return get_extension_funcs($this::classname);
 	}
 	
-	function preCallback($args, $traces) {		
+	function preCallback($args, $traces) {
 		$traces[1]['object_id'] = (int) $this->getLink($args);
 		parent::preCallback($args, $traces);
 	}
 	
-	function postCallback($args, $traces, $result, $t) {
+	function postCallback($args, $traces, $result) {
 		if ( in_array( $traces[1]['function'], $this->link_hooks ) && 
 			 is_resource($result) ) {
 			$this->link = $result;
 		}
 		
-		parent::postCallback($args, $traces, $result, $t);
+		parent::postCallback($args, $traces, $result);
 	}
 	
 	function getLink($args) {
@@ -163,6 +141,6 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 	}
 	
 	function getHookFunc($func) {
-		return $func;
+		return $func . '()';
 	}
 }
