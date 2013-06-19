@@ -8,4 +8,4 @@ pecl install aop-beta
 php.ini 中启用扩展
 ===
 [funcall]  
-extension=funcall.so 
+extension=aop.so 
