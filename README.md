@@ -7,5 +7,5 @@ pecl install aop-beta
 
 php.ini 中启用扩展
 ===
-[funcall]  
+[aop]  
 extension=aop.so 
