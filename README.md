@@ -1,9 +1,9 @@
 PHPIO
 =====
 
-安装funcall扩展
+安装aop扩展
 ===
-pecl install funcall-0.3.0alpha  
+pecl install aop-beta  
 
 php.ini 中启用扩展
 ===
