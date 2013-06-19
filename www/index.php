@@ -51,8 +51,8 @@ switch(get('op')){
 		end($profiles);
 		$profile = current($profiles);
 		$data = json_decode(file_get_contents($profile), true);
-		
 		require 'templates/view.phtml';
+		echo "<pre>",print_r($data);
 }
 
 

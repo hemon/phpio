@@ -8,7 +8,7 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 	function preCallback($args, $traces) {
 		$ch = $args[0];
 		
-		$traces[1]['url'] = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		$traces[1]['cmd'] = $traces[1]['url'] = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		
 		$stderr = '/tmp/phpio_curl_'.PHPIO::$run_id.'_'.intval($ch);
 
@@ -18,7 +18,7 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 		parent::preCallback($args, $traces);
 	}
 	
-	function postCallback($args, $traces, $result, $t) {
+	function postCallback($args, $traces, $result) {
 		$ch = $args[0];
 		
 		$stderr = '/tmp/phpio_curl_'.PHPIO::$run_id.'_'.intval($ch);
@@ -27,7 +27,7 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 		
 		unlink($stderr);
 		
-		parent::postCallback($args, $traces, $result, $t);
+		parent::postCallback($args, $traces, $result);
 	}
 	
 	function getLink($args) {

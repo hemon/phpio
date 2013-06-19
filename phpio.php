@@ -5,6 +5,7 @@ class PHPIO {
 		'Curl' => 1,
 		'Mysql' => 1,
 		'PDO' => 1,
+		'PDOStatement' => 1,
 		'Redis' => 1,
 		'Memcache' => 1,
 		'Memcached' => 1,

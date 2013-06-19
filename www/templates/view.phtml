@@ -33,8 +33,7 @@
 <body>
     <div id="head">
         <div id="logo">
-            <h1>PHPIO<sup style="font-size:10px">v<?php echo Webgrind_Config::$webgrindVersion?></sup></h1>
-            <p>profiling in the browser</p>
+            <h1>PHPIO</h1>
         </div>
         <div id="options">
         </div>
@@ -45,7 +44,7 @@
         <div id="trace_view">
         	<div style="float:left;">
         	    <h2 id="invoke_url"></h2>
-        	    <span id="data_file"></span> @ <span id="mtime"></span>
+        	    <span id="data_file"></span><span id="mtime"></span>
         	</div>
         	<div style="float:right;">
         	    <div id="breakdown" style="margin-bottom:5px;width:320px;height:20px"></div>
@@ -74,8 +73,11 @@
 					$call_style['Memcached'] = 'orange';
 					$call_style['Curl'] = 'wheat';
 					
-					foreach($data as $i => $row): 
+					for($i=0,$len=count($data); $i<$len; $i++):
 						if ( $i%2 == 1 ) continue;
+
+						$row = $data[$i];
+						$res = $data[$i+1];
 					?>
 					<tr class="<?php echo $row_style[$i/2%2] ?>">
 					  <td bgcolor="<?php echo $call_style[$row['class']];?>"></td>
@@ -92,11 +94,11 @@
 							  </tr>
 							</thead>
 							<tbody>
-							  <?php foreach($row['trace'] as $i => $trace):
+							  <?php foreach($row['trace'] as $j => $trace):
 								  preg_match('|\[(.*?)\:(\d+)\]|', $trace, $match);
 							  ?>
-							  <tr class="<?php echo $row_style[$i%2] ?>">
-								<td><?php echo $i?>&nbsp;&nbsp;<?php echo $trace?></td>
+							  <tr class="<?php echo $row_style[$j%2] ?>">
+								<td><?php echo $j?>&nbsp;&nbsp;<?php echo $trace?></td>
 								<td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Open file and show line"><img alt="O" src="img/file_line.png"></a></td>
 							  </tr>
 							  <?php endforeach;?>
@@ -104,19 +106,14 @@
 						  </table>
 						</div></td>
 					  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Open file"><img alt="O" src="img/file.png"></a></td>
-					  <td class="lr"><?php echo $row['args'][0]?></td>
-					  <td class="nr"><?php echo round($row['t']*1000,4)?></td>
+					  <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
+					  <td class="nr"><?php echo round($res['t']*1000,4)?></td>
 					</tr>
-					<?php endforeach; ?>
+					<?php endfor; ?>
         		</tbody>
         	</table>
         </div>
-        <h2 id="hello_message">Select a cachegrind file above</h2>
         <div id="footer">
-            <?php if(Webgrind_Config::$checkVersion):?>
-        	<div id="version_info">&nbsp;</div>
-        	<?php endif?>
-            Copyright © 2013 Zhangwei(hemono@gmail.com). <a href="http://code.google.com/p/webgrind/">phpio homepage</a>
         </div>
     </div>
 </body>

@@ -3,8 +3,10 @@ abstract class PHPIO_Hook_Class {
 	const classname = '';
 	var $log = array();
 	var $hooks = array();
+	var $jp = null;
 
 	function _preCallback($jp) {
+		$this->jp = $jp;
 	    $args   = $jp->getArguments();
 	    $traces = debug_backtrace();
 
@@ -12,6 +14,7 @@ abstract class PHPIO_Hook_Class {
 	}
 
 	function _postCallback($jp) {
+		$this->jp = $jp;
 	    $args   = $jp->getArguments();
 	    $traces = debug_backtrace();
 	    $result = $jp->getReturnedValue();

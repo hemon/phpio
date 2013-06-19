@@ -3,7 +3,7 @@
 class PHPIO_Mysql extends PHPIO_Hook_Func {
 	const classname = 'Mysql';
 	var $hooks = array(
-		'mysql_affected_rows',
+		//'mysql_affected_rows',
 		'mysql_connect',
 		'mysql_create_db',
 		'mysql_db_query',
