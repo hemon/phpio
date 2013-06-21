@@ -18,6 +18,7 @@ class PHPIO {
 	function hook() {
 		self::$run_id = uniqid();
 		self::$log = new self::$log_class(array());
+		self::$log[] = array('_SERVER'=>$_SERVER,'_GET'=>$_GET,'_POST'=>$_POST);
 	
 		require __DIR__."/PHPIO/Hook.php";
 		foreach ( self::$available as $hook => $enabled ) {

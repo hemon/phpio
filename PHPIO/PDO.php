@@ -1,8 +1,8 @@
 <?php
 
 class PHPIO_PDO extends PHPIO_Hook_Class {
-	const classname = 'PDO';
-	var $hooks = array(
+    const classname = 'PDO';
+    var $hooks = array(
         'beginTransaction',
         'commit',
         '__construct',
@@ -13,7 +13,7 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
         //'getAvailableDrivers',
         //'inTransaction',
         'lastInsertId',
-        'prepare',
+        //'prepare',
         'query',
         //'quote',
         'rollBack',

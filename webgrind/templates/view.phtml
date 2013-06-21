@@ -99,15 +99,15 @@
 							  ?>
 							  <tr class="<?php echo $row_style[$j%2] ?>">
 								<td><?php echo $j?>&nbsp;&nbsp;<?php echo $trace?></td>
-								<td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Open file and show line"><img alt="O" src="img/file_line.png"></a></td>
+								<td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Open file and show line"><img alt="O" src="img/file_line.png"></a></td>
 							  </tr>
 							  <?php endforeach;?>
 							</tbody>
 						  </table>
 						</div></td>
-					  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Open file"><img alt="O" src="img/file.png"></a></td>
+					  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Open file"><img alt="O" src="img/file.png"></a></td>
 					  <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
-					  <td class="nr"><?php echo round($res['t']*1000,4)?></td>
+					  <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?> ms</td>
 					</tr>
 					<?php endfor; ?>
         		</tbody>

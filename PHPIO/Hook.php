@@ -7,6 +7,8 @@ abstract class PHPIO_Hook_Class {
 
 	function _preCallback($jp) {
 		$this->jp = $jp;
+		$this->object = $this->jp->getObject();
+
 	    $args   = $jp->getArguments();
 	    $traces = debug_backtrace();
 
@@ -15,6 +17,8 @@ abstract class PHPIO_Hook_Class {
 
 	function _postCallback($jp) {
 		$this->jp = $jp;
+		$this->object = $this->jp->getObject();
+		
 	    $args   = $jp->getArguments();
 	    $traces = debug_backtrace();
 	    $result = $jp->getReturnedValue();
@@ -35,8 +39,8 @@ abstract class PHPIO_Hook_Class {
 		$traces[1]['result'] = $this->getObjectId($result);
         $traces[1]['time']   = microtime(true);
 		// pre_log_id
-		$i = $this->log->count() - 1;
-		$this->log[$i] = $traces[1]+$this->log[$i];
+		//$i = $this->log->count() - 1;
+		//$this->log[$i] = $traces[1]+$this->log[$i];
 		// add result log
 		$this->log[] = $traces[1];
 	}
