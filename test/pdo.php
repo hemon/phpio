@@ -1,7 +1,5 @@
 <?php 
-aop_add_before("PDO->*()", function($jp){
-	var_dump($jp->getArguments());
-});
+require "../phpio.php";
 
 $db[0] = new PDO('mysql:dbname=test;host=127.0.0.1', 'root', 'zzzizzz1');
 $db[1] = new PDO('mysql:dbname=test;host=127.0.0.1', 'root', 'zzzizzz1');

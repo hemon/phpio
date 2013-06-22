@@ -1,29 +1,28 @@
 <?php
 abstract class PHPIO_Hook_Class {
 	const classname = '';
-	var $log = array();
+	//var $log = array();
 	var $hooks = array();
 	var $jp = null;
+	var $args = array();
+	var $traces = array();
 
 	function _preCallback($jp) {
 		$this->jp = $jp;
 		$this->object = $this->jp->getObject();
 
-	    $args   = $jp->getArguments();
-	    $traces = debug_backtrace();
+	    $this->args = $args = $jp->getArguments();
+	    $this->traces = $traces = debug_backtrace();
 
 	    $this->preCallback($args, $traces);
 	}
 
 	function _postCallback($jp) {
 		$this->jp = $jp;
-		$this->object = $this->jp->getObject();
 		
-	    $args   = $jp->getArguments();
-	    $traces = debug_backtrace();
 	    $result = $jp->getReturnedValue();
 
-	    $this->postCallback($args, $traces, $result);
+	    $this->postCallback($this->args, $this->traces, $result);
 	}
 	
 	function preCallback($args, $traces) {
@@ -32,17 +31,18 @@ abstract class PHPIO_Hook_Class {
 		$traces[1]['trace']  = $this->getPrintTrace($traces);
 		$traces[1]['class']  = $this::classname;
 		
-		$this->log[] = $traces[1];
+		PHPIO::$log->append($traces[1]);
 	}
 	
 	function postCallback($args, $traces, $result) {
+		$traces[1]['object'] = $this->getObjectId($traces[1]['object']);
 		$traces[1]['result'] = $this->getObjectId($result);
         $traces[1]['time']   = microtime(true);
 		// pre_log_id
 		//$i = $this->log->count() - 1;
 		//$this->log[$i] = $traces[1]+$this->log[$i];
-		// add result log
-		$this->log[] = $traces[1];
+		// add result log 
+		PHPIO::$log->append($traces[1]);
 	}
 	
 	function getPrintTrace($traces) {
@@ -70,11 +70,11 @@ abstract class PHPIO_Hook_Class {
 		if ( preg_match('|object\((\w+)\)#(\d+)|', $object_string, $match) ) {
 			return $match[0];
 		}
-		return 0;
+		return $object_string;
 	}
 	
-	function init($log) {
-		$this->log = $log;
+	function init() {
+		//$this->log = $log;
 		$this->hooks = $this->getHooks();
 		$this->hook();
 		

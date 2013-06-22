@@ -1,4 +1,7 @@
 <?php 
+require '../phpio.php';
+//aop_add_after('*()',function($jp){var_dump($jp);});
+
 $redis[0] = new Redis;
 $redis[0]->connect('127.0.0.1');
 $redis[0]->set('key', rand());
