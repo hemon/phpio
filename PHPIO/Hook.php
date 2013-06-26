@@ -62,7 +62,7 @@ abstract class PHPIO_Hook_Class {
 	
 	function getObjectId($object) {
         if ( !is_object($object) ) return $object;
-        
+	return spl_object_hash($object); 
 		ob_start();
         var_dump($object); 
 		$object_string = ob_get_clean();

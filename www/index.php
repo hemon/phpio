@@ -25,7 +25,7 @@ switch( $_REQUEST['op'] ){
 		$file = STORE .'/'. $profile;
 		list($is_ok, $data) = file_read($file);
 		if ( $is_ok ) {
-			$data = json_decode($data, true);
+			$data = unserialize($data);
 			require 'templates/profile.phtml';
 		}
 		break;

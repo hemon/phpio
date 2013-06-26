@@ -15,7 +15,7 @@ class PHPIO {
 	static $log_class = 'PHPIO_Log_File';
 	static $log;
 	
-	function hook() {
+	static function hook() {
 		self::$run_id = uniqid();
 		self::$log = new self::$log_class();
 		self::$log->append(array('_SERVER'=>$_SERVER,'_GET'=>$_GET,'_POST'=>$_POST));
@@ -52,8 +52,8 @@ class PHPIO_Log_File {
 		}
 		
 		if ( $this->count() > 0 ) {
-			echo '<pre>',var_dump($this);
-			file_put_contents($this->save_dir.'/'.PHPIO::$run_id, json_encode($this->logs));
+			//echo '<pre>',var_dump($this);
+			file_put_contents($this->save_dir.'/'.PHPIO::$run_id, serialize($this->logs));
 		}
 	}
 }
