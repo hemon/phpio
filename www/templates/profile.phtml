@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+<?php
+//"1D8BD1", "F1683C", "2AD62A", "DBDC25",  "649665", "4169E1", "087eb6", "BA55D3", "D2691E", "FF7F50",  "32CD32", "4682B4"
+$call_style['Mysql'] = '1D8BD1';
+$call_style['PDO'] = 'F1683C';
+$call_style['PDOStatement'] = 'F1683C';
+$call_style['Redis'] = '2AD62A';
+$call_style['Memcache'] = 'DBDC25';
+$call_style['Memcached'] = '649665';
+$call_style['Curl'] = '4169E1';
+
+?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -13,6 +23,15 @@
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+	.nav span.label {
+		position: absolute;
+		top:-3px;
+	}
+<?php
+foreach ( $call_style as $cls => $color ) {
+	echo ".label-$cls{background-color:#$color}";
+}
+?>
     </style>
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -35,8 +54,6 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">ALL</a></li>
-              <li><a href="#about">MySQL</a></li>
-              <li><a href="#contact">PDO</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -56,15 +73,7 @@
             </thead>
             <tbody>
             <?php
-              //"1D8BD1", "F1683C", "2AD62A", "DBDC25",  "649665", "4169E1", "087eb6", "BA55D3", "D2691E", "FF7F50",  "32CD32", "4682B4"
-                $call_style['Mysql'] = '1D8BD1';
-                $call_style['PDO'] = 'F1683C';
-                $call_style['PDOStatement'] = 'F1683C';
-                $call_style['Redis'] = '2AD62A';
-                $call_style['Memcache'] = 'DBDC25';
-                $call_style['Memcached'] = '649665';
-                $call_style['Curl'] = '4169E1';
-                
+               
                 for($i=1,$len=count($data); $i<$len; $i++):
                     if ( $i%2 == 0 ) continue;
 
@@ -72,7 +81,7 @@
                     $res = $data[$i+1];
                 ?>
                 <tr class="<?php echo $row['class']?>">
-                  <td bgcolor="<?php echo $call_style[$row['class']];?>"></td>
+                  <td class="label-<?php echo $row['class'];?>"></td>
                   <td><a href="javascript:toggleCallInfo(<?php echo $i?>)"><?php echo $row['class'],'::',$row['function'] ?></a></td>
                   <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Open file"><img alt="O" src="img/file.png"></a></td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
@@ -87,7 +96,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/profile.js"></script>
+    <!--script src="js/bootstrap.min.js"></script-->
   </body>
 </html>

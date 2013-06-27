@@ -27,6 +27,7 @@ switch( $_REQUEST['op'] ){
 		if ( $is_ok ) {
 			$data = unserialize($data);
 			require 'templates/profile.phtml';
+			echo '<pre>',print_r($data);
 		}
 		break;
 }
