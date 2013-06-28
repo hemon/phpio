@@ -6,6 +6,7 @@ abstract class PHPIO_Hook_Class {
 	var $jp = null;
 	var $args = array();
 	var $traces = array();
+	var $object = null;
 
 	function _preCallback($jp) {
 		$this->jp = $jp;
@@ -62,7 +63,7 @@ abstract class PHPIO_Hook_Class {
 	
 	function getObjectId($object) {
         if ( !is_object($object) ) return $object;
-	return spl_object_hash($object); 
+        //return spl_object_hash($object); 
 		ob_start();
         var_dump($object); 
 		$object_string = ob_get_clean();

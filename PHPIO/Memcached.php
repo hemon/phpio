@@ -42,4 +42,15 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
         'setMultiByKey',
         'setOption',
     );
+
+    function postCallback($args, $traces, $result) {
+        if ( $result ) {
+            $traces[1]['status'] = $this->object->getResultCode();
+        } else {
+            $traces[1]['errno'] = $this->object->getResultCode();
+            $traces[1]['error'] = $this->object->getResultMessage();
+        }
+        
+        parent::postCallback($args, $traces, $result);
+    }
 }

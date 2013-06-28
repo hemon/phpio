@@ -60,11 +60,10 @@ $call_style['Curl'] = '4169E1';
         border-radius: none;
         display: block;
         font-size: 100%;
-        margin: 0 0 14px;
-        padding: 6.5px;
+        margin: 0;
+        padding: 0;
         white-space: pre-wrap;
         word-wrap: break-word;
-
       }
 <?php
 foreach ( $call_style as $cls => $color ) {
@@ -116,7 +115,7 @@ foreach ( $call_style as $cls => $color ) {
                 <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['class']?>">
                   <td class="label-class label-<?php echo $row['class'];?>"></td>
                   <td><a href="#"><?php echo $row['class'],'::',$row['function'] ?></a></td>
-                  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Open file"><img alt="O" src="img/file.png"></a></td>
+                  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Show Source"><img alt="O" src="img/file.png"></a></td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
                   <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?></td>
                 </tr>
@@ -125,29 +124,35 @@ foreach ( $call_style as $cls => $color ) {
                     <div class="tabbable">
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
-                        <li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li>
-                        <li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li>
+                        <?php if(isset($res['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
+                        <?php if(!empty($row['args'])): ?><li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li><?php endif;?>
                         <li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li>
                         </ul>
                         <div class="tab-content">
                         <div class="tab-pane active" id="traces<?php echo $i?>">
                           <ol>
-                            <span>Called From</span></th>
                             <?php 
                               foreach($row['trace'] as $j => $trace):
                                   preg_match('|\[(.*?)\:(\d+)\]|', $trace, $match);
                               ?>
-                              <li><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Show source code"><?php echo $trace?></a></li>
+                              <li><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Show source code"><?php echo $trace?></a></li>
                             <?php endforeach; ?>
                           </ol>
                         </div>
+                        <?php if(isset($res['header'])): ?>
                         <div class="tab-pane" id="header<?php echo $i?>">
-                          <pre><?php echo $res['header'] ?>
-                          </pre>
+                          <pre><?php echo $res['header'] ?></pre>
                         </div>
+                      <?php endif;?>
+                      <?php if(!empty($row['args'])): ?>
                         <div class="tab-pane" id="args<?php echo $i?>">
-                          <pre><?php var_export($row['args']) ?></pre>
+                          <ol>
+                            <?php foreach($row['args'] as $_arg):?>
+                            <li><pre><?php var_export($_arg) ?></pre></li>
+                          <?php endforeach;?>
+                          </ol>
                         </div>
+                        <?php endif;?>
                         <div class="tab-pane" id="response<?php echo $i?>">
                           <pre><?php echo $res['result']?></pre>
                         </div>

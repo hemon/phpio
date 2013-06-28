@@ -24,6 +24,8 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 		$stderr = '/tmp/phpio_curl_'.PHPIO::$run_id.'_'.intval($ch);
 		$traces[1]['header'] = file_get_contents($stderr);
 		$traces[1]['curl'] = curl_getinfo($ch);
+
+		
 		
 		unlink($stderr);
 		

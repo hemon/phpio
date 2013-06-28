@@ -31,4 +31,14 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
 		'mysql_pconnect'
 	);
 	
+	function postCallback($args, $traces, $result) {
+		if ( $result ) {
+			$traces[1]['status'] = mysql_affected_rows();
+		} else {
+			$traces[1]['errno'] = mysql_errno();
+			$traces[1]['error'] = mysql_error();
+		}
+		
+		parent::postCallback($args, $traces, $result);
+	}
 }
