@@ -15,18 +15,57 @@ $call_style['Curl'] = '4169E1';
     <title>PHPIO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <link href="css/fbootstrap.min.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        overflow: auto;
       }
-	.nav span.label {
-		position: absolute;
-		top:-3px;
-	}
+    	.nav span.label {
+    		/*position: absolute;*/
+    		margin-left: 2px
+    	}
+      .prof_detail {
+        display: none;
+        height: 150px;
+      }
+      .show_detail,.prof_detail,.show_detail .label-class {
+        background-color: #F5F5F5;
+      }
+      .prof_detail .tabbable .nav {
+        margin: 0;
+        padding: 0;
+      }
+
+      .label-class {
+        padding: 0;
+        width: 1px;
+      }
+
+      .lr {
+        word-wrap:break-word;
+      }
+
+      #function_table {
+        table-layout:fixed;
+      }
+
+      .tab-pane pre {
+        background-color: #F2F2F2;
+        border: none;
+        border-radius: none;
+        display: block;
+        font-size: 100%;
+        margin: 0 0 14px;
+        padding: 6.5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+
+      }
 <?php
 foreach ( $call_style as $cls => $color ) {
 	echo ".label-$cls{background-color:#$color}";
@@ -42,14 +81,9 @@ foreach ( $call_style as $cls => $color ) {
   </head>
 
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
+    <div id="nav" class="topbar navbar-inverse navbar-fixed-top">
+      <div class="topbar-inner">
         <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="brand" href="#">PHPIO</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
@@ -61,31 +95,65 @@ foreach ( $call_style as $cls => $color ) {
     </div>
 
     <div class="container-fluid">
-        <table class="table table-hover" id="function_table" cellspacing="0">
+        <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
             <thead>
                 <tr>
-                    <th> </th>
-                    <th><span>Function</span></th>
-                    <th> </th>
-                    <th><span>Args</span></th>
-                    <th><span>Total Self Cost</span></th>
+                    <th width=1> </th>
+                    <th width=150><span>Function</span></th>
+                    <th width=10> </th>
+                    <th><span>Command</span></th>
+                    <th width=50><span>Time(ms)</span></th>
                 </tr>
             </thead>
             <tbody>
             <?php
-               
                 for($i=1,$len=count($data); $i<$len; $i++):
                     if ( $i%2 == 0 ) continue;
 
                     $row = $data[$i];
                     $res = $data[$i+1];
                 ?>
-                <tr class="<?php echo $row['class']?>">
-                  <td class="label-<?php echo $row['class'];?>"></td>
-                  <td><a href="javascript:toggleCallInfo(<?php echo $i?>)"><?php echo $row['class'],'::',$row['function'] ?></a></td>
+                <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['class']?>">
+                  <td class="label-class label-<?php echo $row['class'];?>"></td>
+                  <td><a href="#"><?php echo $row['class'],'::',$row['function'] ?></a></td>
                   <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Open file"><img alt="O" src="img/file.png"></a></td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
-                  <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?> ms</td>
+                  <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?></td>
+                </tr>
+                <tr id="prof_detail_<?php echo $i?>" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
+                        <li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li>
+                        <li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li>
+                        <li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li>
+                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces<?php echo $i?>">
+                          <ol>
+                            <span>Called From</span></th>
+                            <?php 
+                              foreach($row['trace'] as $j => $trace):
+                                  preg_match('|\[(.*?)\:(\d+)\]|', $trace, $match);
+                              ?>
+                              <li><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>#line_emph" title="Show source code"><?php echo $trace?></a></li>
+                            <?php endforeach; ?>
+                          </ol>
+                        </div>
+                        <div class="tab-pane" id="header<?php echo $i?>">
+                          <pre><?php echo $res['header'] ?>
+                          </pre>
+                        </div>
+                        <div class="tab-pane" id="args<?php echo $i?>">
+                          <pre><?php var_export($row['args']) ?></pre>
+                        </div>
+                        <div class="tab-pane" id="response<?php echo $i?>">
+                          <pre><?php echo $res['result']?></pre>
+                        </div>
+                        </div>
+                    </div>
+                  </td>
                 </tr>
                 <?php endfor; ?>
             </tbody>
@@ -95,8 +163,8 @@ foreach ( $call_style as $cls => $color ) {
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/profile.js"></script>
-    <!--script src="js/bootstrap.min.js"></script-->
   </body>
 </html>
