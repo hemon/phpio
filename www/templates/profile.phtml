@@ -154,7 +154,7 @@ foreach ( $call_style as $cls => $color ) {
                         </div>
                         <?php endif;?>
                         <div class="tab-pane" id="response<?php echo $i?>">
-                          <pre><?php echo $res['result']?></pre>
+                          <pre><?php echo htmlspecialchars($res['result'])?></pre>
                         </div>
                         </div>
                     </div>
