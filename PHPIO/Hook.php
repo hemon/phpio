@@ -7,6 +7,7 @@ abstract class PHPIO_Hook_Class {
 	var $args = array();
 	var $traces = array();
 	var $object = null;
+	var $link = null;
 
 	function _preCallback($jp) {
 		$this->jp = $jp;
@@ -30,7 +31,10 @@ abstract class PHPIO_Hook_Class {
 		$traces[1]['object'] = $this->getObjectId($traces[1]['object']);
         $traces[1]['time']   = microtime(true);
 		$traces[1]['trace']  = $this->getPrintTrace($traces);
-		$traces[1]['class']  = $this::classname;
+		if ( array_key_exists('class', $traces[1]) ) {
+			$traces[1]['function'] = $traces[1]['class'].'::'.$traces[1]['function'];
+		}
+		$traces[1]['classname']  = $this::classname;
 		
 		PHPIO::$log->append($traces[1]);
 	}
@@ -61,17 +65,20 @@ abstract class PHPIO_Hook_Class {
 		return $printTraces;
 	}
 	
-	function getObjectId($object) {
-        if ( !is_object($object) ) return $object;
-        //return spl_object_hash($object); 
+	function getObjectId($result) {
+        if ( !(is_object($result) || is_resource($result)) ) {
+        	return $result;
+        }
+
+        //return spl_object_hash($result); 
 		ob_start();
-        var_dump($object); 
-		$object_string = ob_get_clean();
-        
-		if ( preg_match('|object\((\w+)\)#(\d+)|', $object_string, $match) ) {
+        var_dump($result); 
+		$dump = ob_get_clean();
+		
+		if ( preg_match('|object\((\w+)\)#(\d+)|', $dump, $match) ) {
 			return $match[0];
 		}
-		return $object_string;
+		return $dump;
 	}
 	
 	function init() {
@@ -106,9 +113,18 @@ abstract class PHPIO_Hook_Class {
 	
 	function hook() {
 		if ($this->hooks) foreach ( $this->hooks as $func ) {
-			$func = $this->getHookFunc($func);
-			aop_add_before($func, array($this, '_preCallback'));
-			aop_add_after($func, array($this, '_postCallback'));
+			$function = $this->getHookFunc($func);
+
+			if ( method_exists($this, "_pre_$func") ) {
+				aop_add_before($function, array($this, "_pre_$func"));
+			} else {
+				aop_add_before($function, array($this, '_preCallback'));
+			}
+			if ( method_exists($this, "_post_$func") ) {
+				aop_add_after($function, array($this, "_post_$func"));
+			} else {
+				aop_add_after($function, array($this, '_postCallback'));
+			}
 		}
 	}
 	
@@ -129,7 +145,7 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 	}
 	
 	function preCallback($args, $traces) {
-		$traces[1]['object_id'] = (int) $this->getLink($args);
+		$traces[1]['link'] = $this->getObjectId($this->getLink($args));
 		parent::preCallback($args, $traces);
 	}
 	
@@ -137,6 +153,7 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 		if ( in_array( $traces[1]['function'], $this->link_hooks ) && 
 			 is_resource($result) ) {
 			$this->link = $result;
+			$traces[1]['link'] = $this->getObjectId($result);
 		}
 		
 		parent::postCallback($args, $traces, $result);
@@ -145,9 +162,10 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 	function getLink($args) {
 		$link = $args[ count($args)-1 ];
 		$link = (is_resource($link) ? $link : $this->link);
+
 		return $link;
 	}
-	
+
 	function getHookFunc($func) {
 		return $func . '()';
 	}

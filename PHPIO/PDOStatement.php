@@ -8,6 +8,7 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 
     function preCallback($args, $traces) {
     	$traces[1]['cmd'] = $this->queryString();
+    	$traces[1]['link'] = PHPIO::$links[$this->getObjectId($this->object)];
 		parent::preCallback($args, $traces);
 	}
 

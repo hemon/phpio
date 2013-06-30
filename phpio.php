@@ -14,6 +14,7 @@ class PHPIO {
 	static $hooks = array();
 	static $log_class = 'PHPIO_Log_File';
 	static $log;
+	static $links = array();
 	
 	static function hook() {
 		self::$run_id = uniqid();
@@ -57,7 +58,6 @@ class PHPIO_Log_File {
 		}
 	}
 }
-
 
 
 PHPIO::hook();

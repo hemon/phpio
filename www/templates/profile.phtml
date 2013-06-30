@@ -112,9 +112,9 @@ foreach ( $call_style as $cls => $color ) {
                     $row = $data[$i];
                     $res = $data[$i+1];
                 ?>
-                <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['class']?>">
-                  <td class="label-class label-<?php echo $row['class'];?>"></td>
-                  <td><a href="#"><?php echo $row['class'],'::',$row['function'] ?></a></td>
+                <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
+                  <td class="label-class label-<?php echo $row['classname'];?>"></td>
+                  <td><a href="#"><?php echo $row['function'] ?></a></td>
                   <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Show Source"><img alt="O" src="img/file.png"></a></td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
                   <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?></td>
