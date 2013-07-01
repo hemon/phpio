@@ -115,13 +115,13 @@ abstract class PHPIO_Hook_Class {
 		if ($this->hooks) foreach ( $this->hooks as $func ) {
 			$function = $this->getHookFunc($func);
 
-			if ( method_exists($this, "_pre_$func") ) {
-				aop_add_before($function, array($this, "_pre_$func"));
+			if ( method_exists($this, "{$func}_pre") ) {
+				aop_add_before($function, array($this, "{$func}_pre"));
 			} else {
 				aop_add_before($function, array($this, '_preCallback'));
 			}
-			if ( method_exists($this, "_post_$func") ) {
-				aop_add_after($function, array($this, "_post_$func"));
+			if ( method_exists($this, "{$func}_post") ) {
+				aop_add_after($function, array($this, "{$func}_post"));
 			} else {
 				aop_add_after($function, array($this, '_postCallback'));
 			}

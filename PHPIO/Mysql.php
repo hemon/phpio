@@ -32,13 +32,25 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
 	);
 	
 	function postCallback($args, $traces, $result) {
-		if ( $result ) {
+		if ( $result === false ) {
+			$traces[1]['errno'] = mysql_errno();
+			$traces[1]['error'] = mysql_error();
+		}
+
+		parent::postCallback($args, $traces, $result);
+	}
+
+	function mysql_query_post($jp) {
+		$result = $jp->getReturnedValue();
+		$traces = $this->traces;
+		$args = $this->args;
+		if ( $result === false ) {
 			$traces[1]['status'] = mysql_affected_rows();
 		} else {
 			$traces[1]['errno'] = mysql_errno();
 			$traces[1]['error'] = mysql_error();
 		}
-		
+
 		parent::postCallback($args, $traces, $result);
 	}
 }

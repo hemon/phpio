@@ -22,19 +22,23 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 		$ch = $args[0];
 		
 		$stderr = '/tmp/phpio_curl_'.PHPIO::$run_id.'_'.intval($ch);
-		$traces[1]['header'] = file_get_contents($stderr);
-		$traces[1]['curl'] = curl_getinfo($ch);
-
-		
-		
+		$header = file_get_contents($stderr);
 		unlink($stderr);
+
+		$traces[1]['header'] = $header;
+		$traces[1]['curl'] = curl_getinfo($ch);
+		$traces[1]['link'] = $this->getLink($header);
 		
 		parent::postCallback($args, $traces, $result);
 	}
 	
-	function getLink($args) {
-		$link = $args[0];
-		$link = (is_resource($link) ? $link : $this->link);
-		return $link;
+	function getLink($header) {
+		if (is_array($header)) {
+			return parent::getLink($header);
+		} else {
+			if ( preg_match('/Connected to (.*?) \((.*?)\) port (\d+)/', $header, $matches) ) {
+				return $matches[2].":".$matches[3];
+			}
+		}
 	}
 }

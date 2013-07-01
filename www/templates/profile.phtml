@@ -33,7 +33,7 @@ $call_style['Curl'] = '4169E1';
         display: none;
         height: 150px;
       }
-      .show_detail,.prof_detail,.show_detail .label-class {
+      .show_detail,.prof_detail {
         background-color: #F5F5F5;
       }
       .prof_detail .tabbable .nav {
@@ -42,8 +42,14 @@ $call_style['Curl'] = '4169E1';
       }
 
       .label-class {
-        padding: 0;
-        width: 1px;
+        text-indent: 1em;
+        width: 3px;
+        display: inline-block;
+        margin-right: 3px;
+      }
+
+      .srclink {
+        float: right;
       }
 
       .lr {
@@ -97,10 +103,9 @@ foreach ( $call_style as $cls => $color ) {
         <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
             <thead>
                 <tr>
-                    <th width=1> </th>
-                    <th width=150><span>Function</span></th>
-                    <th width=10> </th>
+                    <th width=200><span>Function</span></th>
                     <th><span>Command</span></th>
+                    <th width=220><span>Connection</span></th>
                     <th width=50><span>Time(ms)</span></th>
                 </tr>
             </thead>
@@ -113,14 +118,17 @@ foreach ( $call_style as $cls => $color ) {
                     $res = $data[$i+1];
                 ?>
                 <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
-                  <td class="label-class label-<?php echo $row['classname'];?>"></td>
-                  <td><a href="#"><?php echo $row['function'] ?></a></td>
-                  <td><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Show Source"><img alt="O" src="img/file.png"></a></td>
+                  <td>
+                    <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>
+                    <a href="#"><?php echo $row['function'] ?></a>
+                  </td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
+                  <td><?php echo $res['link']?></td>
                   <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?></td>
                 </tr>
                 <tr id="prof_detail_<?php echo $i?>" class="prof_detail">
-                  <td colspan=5>
+                  <td colspan=4>
                     <div class="tabbable">
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
