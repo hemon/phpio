@@ -27,7 +27,7 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
         'getOption',
         //'getResultCode',
         //'getResultMessage',
-        'getServerByKey',
+        //'getServerByKey',
         //'getServerList',
         'getStats',
         'getVersion',

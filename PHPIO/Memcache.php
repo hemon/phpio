@@ -51,4 +51,8 @@ class PHPIO_Memcache extends PHPIO_Hook_Class {
         
         parent::postCallback($args, $traces, $result);
     }
+
+    function getServerByKey($key) {
+        
+    }
 }

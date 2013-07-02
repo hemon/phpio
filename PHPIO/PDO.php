@@ -41,6 +41,17 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
         }
     }
 
+    function lastInsertId_pre($jp) {
+        $this->jp = $jp;
+        $this->object = $this->jp->getObject();
+
+        $this->args = $args = $jp->getArguments();
+        $traces = debug_backtrace();
+        $traces[1]['cmd'] = 'SELECT LAST_INSERT_ID()';
+        $this->traces = $traces;
+        $this->preCallback($args, $traces);
+    }
+
     function postCallback($args, $traces, $result) {
         $traces[1]['link'] = $this->getLink($this->object);
         if ( $result === false ) {

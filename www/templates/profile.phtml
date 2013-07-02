@@ -52,6 +52,10 @@ $call_style['Curl'] = '4169E1';
         float: right;
       }
 
+      .error {
+        background-color: red;
+      }
+
       .lr {
         word-wrap:break-word;
       }
@@ -122,6 +126,7 @@ foreach ( $call_style as $cls => $color ) {
                     <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
                     <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>
                     <a href="#"><?php echo $row['function'] ?></a>
+                    <?php if(isset($res['error'])):?><span class="label error" title="<?php echo htmlspecialchars($res['error'])?>"><?php echo $res['errno']?></span><?php endif;?>
                   </td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
                   <td><?php echo $res['link']?></td>

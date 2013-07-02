@@ -163,13 +163,22 @@ class PHPIO_Redis extends PHPIO_Hook_Class {
         $this->connect_post($jp);
     }
 
+    function open_post($jp) {
+        $this->connect_post($jp);
+    }
+
+    function popen_post($jp) {
+        $this->connect_post($jp);
+    }
+
     function getLink($args) {
-        if ( substr($args[0],0,4) == 'unix' ) {
-            $link = $args[0];
-        } else {
-            $link = $args[0].":".$args[1];
+        $host = $args[0];
+        // not unix sock
+        if ( strpos($host,'/') === false ) {
+            $port = (isset($args[1]) ? $args[1] : 6379);
+            $host = $host .":". $port;
         }
-        return $link;
+        return $host;
     }
 
     function postCallback($args, $traces, $result) {

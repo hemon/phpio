@@ -1,5 +1,4 @@
 <?php 
-require '../phpio.php';
 //aop_add_after('*()',function($jp){var_dump($jp);});
 
 $redis[0] = new Redis;
