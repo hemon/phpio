@@ -28,7 +28,7 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 	function curl_multi_remove_handle_post($jp) {
 		$ch = $this->args[1];
 		$this->removeErrorHandle($ch);
-		$this->trace['result'] = curl_multi_getcontent($ch);
+		$this->trace['result'] = $this->dump(curl_multi_getcontent($ch));
 
 		parent::postCallback($jp);
 	}
