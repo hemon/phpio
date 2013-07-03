@@ -172,15 +172,14 @@ foreach ( $call_style as $cls => $color ) {
                           </ol>
                         </div>
                         <?php endif;?>
-                        <div class="tab-pane" id="response<?php echo $i?>">
-                          <?php 
+                        <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 
                           list($type, $content) = explode(" ", $row['result'], 2);
                           if ( substr($type, 0, 6) == 'string' ) {
                               echo '<b>',$type,'</b>','<br>', htmlspecialchars(substr($content,1,-1));
                           } else {
                               echo htmlspecialchars($row['result']);
                           }
-                          ?>
+                          ?></pre>
                         </div>
                         </div>
                     </div>
