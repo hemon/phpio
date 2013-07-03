@@ -53,8 +53,7 @@ class PHPIO_Log_File {
 		}
 		
 		if ( $this->count() > 0 ) {
-			//echo '<pre>',var_dump($this);
-			file_put_contents($this->save_dir.'/'.PHPIO::$run_id, serialize($this->logs));
+			file_put_contents($this->save_dir.'/prof_'.PHPIO::$run_id, serialize($this->logs));
 		}
 	}
 }

@@ -24,7 +24,7 @@ function file_read($file) {
 
 function phpio_profiles($limit=20) {
 	$profiles = array();
-	$files = glob(STORE.'/*');
+	$files = glob(STORE.'/prof_*');
 	foreach($files as $file) {
 		list($is_ok, $data) = file_read($file);
 		if ( $is_ok ) {
@@ -35,4 +35,10 @@ function phpio_profiles($limit=20) {
 	krsort($profiles);
 	array_splice($profiles, $limit);
 	return $profiles;
+}
+
+function curl_link($header) {
+	if ( preg_match('/Connected to (.*?) \((.*?)\) port (\d+)/', $header, $matches) ) {
+			return $matches[2].":".$matches[3];
+	}
 }

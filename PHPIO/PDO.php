@@ -25,41 +25,33 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
     function __construct_post($jp) {
         $dsn = $this->args[0];
         $object_id = $this->getObjectId($this->object);
-        $this->links[ $object_id ] = $this->fmtLink($dsn,$object_id);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->links[ $object_id ] = $this->fmtLink($dsn, $object_id);
+        $this->postCallback($jp);
     }
 
     function prepare_pre($jp) {
     }
 
     function prepare_post($jp) {
-        $result = $jp->getReturnedValue();
-        if ( $result instanceof PDOStatement ) {
-            $sth = $this->getObjectId($result);
+        if ( $this->result instanceof PDOStatement ) {
+            $sth  = $this->getObjectId($this->result);
             $link = $this->getLink($this->object);
             PHPIO::$links[$sth] = $link;
         }
     }
 
     function lastInsertId_pre($jp) {
-        $this->jp = $jp;
-        $this->object = $this->jp->getObject();
-
-        $this->args = $args = $jp->getArguments();
-        $traces = debug_backtrace();
-        $traces[1]['cmd'] = 'SELECT LAST_INSERT_ID()';
-        $this->traces = $traces;
-        $this->preCallback($args, $traces);
+        $this->trace['cmd'] = 'SELECT LAST_INSERT_ID()';
     }
 
-    function postCallback($args, $traces, $result) {
-        $traces[1]['link'] = $this->getLink($this->object);
+    function postCallback($jp) {
+        $this->trace['link'] = $this->getLink($this->object);
         if ( $result === false ) {
             list(,$errno, $error) = $this->object->errorInfo();
-            $traces[1]['errno'] = $errno;
-            $traces[1]['error'] = $error;
+            $this->trace['errno'] = $errno;
+            $this->trace['error'] = $error;
         }
-        parent::postCallback($args, $traces, $result);
+        parent::postCallback($jp);
     }
 
     function getLink($object) {

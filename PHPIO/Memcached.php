@@ -45,19 +45,19 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
 
     function addServer_post($jp) {
         $this->link[] = $this->getLink($this->args);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function addServers_post($jp) {
         foreach ( $this->args as $server ) {
             $this->link[] = $this->getLink($server);
         }
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function connect_post($jp) {
         $this->link = $this->getLink($this->args);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function pconnect_post($jp) {
@@ -73,16 +73,16 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
         return $link;
     }
 
-    function postCallback($args, $traces, $result) {
-        $traces[1]['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
+    function postCallback($jp) {
+        $this->trace['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
 
-        if ( $result ) {
-            $traces[1]['status'] = $this->object->getResultCode();
+        if ( $this->result ) {
+            $this->trace['status'] = $this->object->getResultCode();
         } else {
-            $traces[1]['errno'] = $this->object->getResultCode();
-            $traces[1]['error'] = $this->object->getResultMessage();
+            $this->trace['errno'] = $this->object->getResultCode();
+            $this->trace['error'] = $this->object->getResultMessage();
         }
         
-        parent::postCallback($args, $traces, $result);
+        parent::postCallback($jp);
     }
 }

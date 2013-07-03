@@ -6,22 +6,17 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
         'execute',
     );
 
-    function preCallback($args, $traces) {
-    	$traces[1]['cmd'] = $this->queryString();
-
-		parent::preCallback($args, $traces);
-	}
-
-	function postCallback($args, $traces, $result) {
-		$traces[1]['link'] = PHPIO::$links[$this->getObjectId($this->object)];
+	function postCallback($jp) {
+		$this->trace['link'] = PHPIO::$links[$this->getObjectId($this->object)];
+		$this->trace['cmd'] = $this->queryString();
 		if ( $result ) {
-			$traces[1]['rowcount'] = $this->object->rowCount();
+			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
 			list(,$errno, $error) = $this->object->errorInfo();
-			$traces[1]['errno'] = $errno;
-			$traces[1]['error'] = $error;
+			$this->trace['errno'] = $errno;
+			$this->trace['error'] = $error;
 		}
-		parent::postCallback($args, $traces, $result);
+		parent::postCallback($jp);
 	}
 
 	function debugDump() {

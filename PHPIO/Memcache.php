@@ -25,7 +25,7 @@ class PHPIO_Memcache extends PHPIO_Hook_Class {
 
     function addServer_post($jp) {
         $this->link[] = $this->getLink($this->args);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function pconnect_post($jp) {
@@ -34,7 +34,7 @@ class PHPIO_Memcache extends PHPIO_Hook_Class {
 
     function connect_post($jp) {
         $this->link = $this->getLink($this->args);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function getLink($args) {
@@ -46,13 +46,13 @@ class PHPIO_Memcache extends PHPIO_Hook_Class {
         return $link;
     }
 
-    function postCallback($args, $traces, $result) {
-        $traces[1]['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
+    function postCallback($jp) {
+        $this->trace['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
         
-        parent::postCallback($args, $traces, $result);
+        parent::postCallback($jp);
     }
 
     function getServerByKey($key) {
-        
+
     }
 }

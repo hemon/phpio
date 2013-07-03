@@ -5,9 +5,10 @@ $ch2 = curl_init();
 
 // set URL and other appropriate options
 curl_setopt($ch1, CURLOPT_URL, "http://m.baidu.com/");
-curl_setopt($ch1, CURLOPT_HEADER, 0);
+curl_setopt($ch1, CURLOPT_RETURNTRANSFER, 1);
+
 curl_setopt($ch2, CURLOPT_URL, "http://www.baidu.com/");
-curl_setopt($ch2, CURLOPT_HEADER, 0);
+curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
 
 //create the multiple cURL handle
 $mh = curl_multi_init();

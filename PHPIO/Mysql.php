@@ -26,20 +26,10 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
 		'mysql_thread_id',
 		'mysql_unbuffered_query',
 	);
-	var $link_hooks = array(
-		'mysql_connect',
-		'mysql_pconnect'
-	);
 
-    function mysql_insert_id_pre($jp) {
-        $this->jp = $jp;
-        $this->object = $this->jp->getObject();
-
-        $this->args = $args = $jp->getArguments();
-        $traces = debug_backtrace();
-        $traces[1]['cmd'] = 'SELECT LAST_INSERT_ID()';
-        $this->traces = $traces;
-        $this->preCallback($args, $traces);
+    function mysql_insert_id_post($jp) {
+        $this->trace['cmd'] = 'SELECT LAST_INSERT_ID()';
+        $this->postCallback($jp);
     }
 
     function mysql_pconnect_post($jp) {
@@ -48,7 +38,7 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
 
     function mysql_connect_post($jp) {
         $this->link = $this->getLink($this->args);
-        $this->postCallback($this->args, $this->traces, $jp->getReturnedValue());
+        $this->postCallback($jp);
     }
 
     function getLink($args) {
@@ -59,25 +49,22 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
         return $link;
     }
 	
-	function postCallback($args, $traces, $result) {
-		$traces[1]['link'] = $this->link;
+	function postCallback($jp) {
+		$this->trace['link'] = $this->link;
 
-		if ( $result === false ) {
-			$traces[1]['errno'] = mysql_errno();
-			$traces[1]['error'] = mysql_error();
+		if ( $this->result === false ) {
+			$this->trace['errno'] = mysql_errno();
+			$this->trace['error'] = mysql_error();
 		}
 
-		parent::postCallback($args, $traces, $result);
+		parent::postCallback($jp);
 	}
 
 	function mysql_query_post($jp) {
-		$result = $jp->getReturnedValue();
-		$traces = $this->traces;
-		$args = $this->args;
-		if ( $result !== false ) {
-			$traces[1]['status'] = mysql_affected_rows();
+		if ( $this->result !== false ) {
+			$this->trace['status'] = mysql_affected_rows();
 		}
 
-		$this->postCallback($args, $traces, $result);
+		$this->postCallback($jp);
 	}
 }

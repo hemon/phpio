@@ -20,6 +20,8 @@ switch( $_REQUEST['op'] ){
 		if ( empty($profile) ) {
 			$profiles = phpio_profiles();
 			list($profile, $uri) = each($profiles);
+		} else {
+			$profile = 'prof_'.$profile;
 		}
 
 		$file = STORE .'/'. $profile;
@@ -27,7 +29,7 @@ switch( $_REQUEST['op'] ){
 		if ( $is_ok ) {
 			$data = unserialize($data);
 			require 'templates/profile.phtml';
-			echo '<pre>',print_r($data);
+			//echo '<pre>',print_r($data);
 		}
 		break;
 }

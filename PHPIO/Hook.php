@@ -5,49 +5,44 @@ abstract class PHPIO_Hook_Class {
 	var $hooks = array();
 	var $jp = null;
 	var $args = array();
-	var $traces = array();
+	var $trace = array();
 	var $object = null;
 	var $link = null;
+	var $time_start = 0;
 
 	function _preCallback($jp) {
-		$this->jp = $jp;
-		$this->object = $this->jp->getObject();
+		$this->object = $jp->getObject();
+	    $this->args = $jp->getArguments();
+	    $this->time_start = microtime(true);
 
-	    $this->args = $args = $jp->getArguments();
-	    $this->traces = $traces = debug_backtrace();
+	    $traces = debug_backtrace();
+	    $trace = $traces[1];
+		$trace['trace']  = $this->getPrintTrace($traces);
+		if ( isset($trace['object']) ) $trace['object'] = $this->getObjectId($trace['object']);
+		$trace['time_start'] = $this->time_start;
+		$trace['classname']  = $this::classname;
 
-	    $this->preCallback($args, $traces);
+	    $this->trace = $trace;
+	    $this->func =  $trace['function'];
+
+		$callback = (method_exists($this, "{$this->func}_pre") ? "{$this->func}_pre" : "preCallback");
+		$this->$callback($jp);
 	}
 
 	function _postCallback($jp) {
-		$this->jp = $jp;
-		
-	    $result = $jp->getReturnedValue();
+	    $this->result = $jp->getReturnedValue();
+		$this->trace['result'] = $this->getObjectId($this->result);
+		$this->trace['time_end'] = microtime(true);
 
-	    $this->postCallback($this->args, $this->traces, $result);
+		$callback = (method_exists($this, "{$this->func}_post") ? "{$this->func}_post" : "postCallback");
+		$this->$callback($jp);
 	}
 	
-	function preCallback($args, $traces) {
-		$traces[1]['object'] = $this->getObjectId($traces[1]['object']);
-        $traces[1]['time']   = microtime(true);
-		$traces[1]['trace']  = $this->getPrintTrace($traces);
-		if ( array_key_exists('class', $traces[1]) ) {
-			$traces[1]['function'] = $traces[1]['class'].'::'.$traces[1]['function'];
-		}
-		$traces[1]['classname']  = $this::classname;
-		
-		PHPIO::$log->append($traces[1]);
+	function preCallback($jp) {
 	}
 	
-	function postCallback($args, $traces, $result) {
-		$traces[1]['object'] = $this->getObjectId($traces[1]['object']);
-		$traces[1]['result'] = $this->getObjectId($result);
-        $traces[1]['time']   = microtime(true);
-		// pre_log_id
-		//$i = $this->log->count() - 1;
-		//$this->log[$i] = $traces[1]+$this->log[$i];
-		// add result log 
-		PHPIO::$log->append($traces[1]);
+	function postCallback($jp) {
+		PHPIO::$log->append($this->trace);
 	}
 	
 	function getPrintTrace($traces) {
@@ -64,20 +59,21 @@ abstract class PHPIO_Hook_Class {
 		}
 		return $printTraces;
 	}
-	
-	function getObjectId($result) {
-        if ( !(is_object($result) || is_resource($result)) ) {
-        	return $result;
-        }
 
-        //return spl_object_hash($result); 
+	function dump($var) {
 		ob_start();
-        var_dump($result); 
-		$dump = ob_get_clean();
-		
-		if ( preg_match('|object\((\w+)\)#(\d+)|', $dump, $match) ) {
-			return $match[0];
+        var_dump($var);
+		return ob_get_clean();
+	}
+	
+	function getObjectId($var) {
+		$dump = $this->dump($var);
+		if ( is_object($var) ) {
+			if ( preg_match('|object\((\w+)\)#(\d+)|', $dump, $match) ) {
+				return $match[0];
+			}
 		}
+
 		return $dump;
 	}
 	
@@ -114,17 +110,8 @@ abstract class PHPIO_Hook_Class {
 	function hook() {
 		if ($this->hooks) foreach ( $this->hooks as $func ) {
 			$function = $this->getHookFunc($func);
-
-			if ( method_exists($this, "{$func}_pre") ) {
-				aop_add_before($function, array($this, "{$func}_pre"));
-			} else {
-				aop_add_before($function, array($this, '_preCallback'));
-			}
-			if ( method_exists($this, "{$func}_post") ) {
-				aop_add_after($function, array($this, "{$func}_post"));
-			} else {
-				aop_add_after($function, array($this, '_postCallback'));
-			}
+			aop_add_before($function, array($this, '_preCallback'));
+			aop_add_after($function, array($this, '_postCallback'));
 		}
 	}
 	
@@ -137,28 +124,11 @@ abstract class PHPIO_Hook_Func extends PHPIO_Hook_Class {
 	const classname = '';
 	var $log = array();
 	var $hooks = array();
-	var $link_hooks = array();
-	var $link = 0;
 	
 	function getFunctions() {
 		return get_extension_funcs($this::classname);
 	}
-	
-	function preCallback($args, $traces) {
-		$traces[1]['link'] = $this->getObjectId($this->getLink($args));
-		parent::preCallback($args, $traces);
-	}
-	
-	function postCallback($args, $traces, $result) {
-		if ( in_array( $traces[1]['function'], $this->link_hooks ) && 
-			 is_resource($result) ) {
-			$this->link = $result;
-			$traces[1]['link'] = $this->getObjectId($result);
-		}
-		
-		parent::postCallback($args, $traces, $result);
-	}
-	
+
 	function getLink($args) {
 		$link = $args[ count($args)-1 ];
 		$link = (is_resource($link) ? $link : $this->link);

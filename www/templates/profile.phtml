@@ -115,46 +115,52 @@ foreach ( $call_style as $cls => $color ) {
             </thead>
             <tbody>
             <?php
-                for($i=1,$len=count($data); $i<$len; $i++):
-                    if ( $i%2 == 0 ) continue;
+                foreach($data as $i => $row):
+                  if ($i == 0) continue;
 
-                    $row = $data[$i];
-                    $res = $data[$i+1];
+                  if ( isset($row['curl']) ) {
+                      $row['header'] = file_get_contents($row['header']);
+                      $row['link'] = curl_link($row['header']);
+                  }
+
+                  $traces = array();
+                  foreach($row['trace'] as $trace) {
+                      preg_match('|\[(.*?)\:(\d+)\]|', $trace, $matches);
+                      $matches[0] = $trace;
+                      $traces[] = $matches;
+                  }
                 ?>
                 <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
                   <td>
-                    <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $matches[1]?>&amp;line=<?php echo $matches[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
                     <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>
-                    <a href="#"><?php echo $row['function'] ?></a>
-                    <?php if(isset($res['error'])):?><span class="label error" title="<?php echo htmlspecialchars($res['error'])?>"><?php echo $res['errno']?></span><?php endif;?>
+                    <a href="#"><?php echo (isset($row['class']) ? $row['class'].'::'.$row['function'] : $row['function']) ?></a>
+                    <?php if(isset($row['error'])):?><span class="label error" title="<?php echo htmlspecialchars($row['error'])?>"><?php echo $row['errno']?></span><?php endif;?>
                   </td>
                   <td class="lr"><?php echo (isset($row['cmd']) ? $row['cmd'] : $row['args'][0]) ?></td>
-                  <td><?php echo $res['link']?></td>
-                  <td class="nr"><?php echo round(($res['time']-$row['time'])*1000,4)?></td>
+                  <td><?php echo $row['link'] ?></td>
+                  <td class="nr"><?php echo round((isset($row['curl']) ? $row['curl']['total_time'] : ($row['time_end']-$row['time_start']))*1000,4) ?></td>
                 </tr>
                 <tr id="prof_detail_<?php echo $i?>" class="prof_detail">
                   <td colspan=4>
                     <div class="tabbable">
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
-                        <?php if(isset($res['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
+                        <?php if(isset($row['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
                         <?php if(!empty($row['args'])): ?><li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li><?php endif;?>
                         <li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li>
                         </ul>
                         <div class="tab-content">
                         <div class="tab-pane active" id="traces<?php echo $i?>">
                           <ol>
-                            <?php 
-                              foreach($row['trace'] as $j => $trace):
-                                  preg_match('|\[(.*?)\:(\d+)\]|', $trace, $match);
-                              ?>
-                              <li><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $match[1]?>&amp;line=<?php echo $match[2]?>" title="Show source code"><?php echo $trace?></a></li>
-                            <?php endforeach; ?>
+                            <?php foreach($traces as $trace): ?>
+                            <li><a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $trace[1]?>&amp;line=<?php echo $trace[2]?>" title="Show source code"><?php echo $trace[0]?></a></li>
+                          <?php endforeach;?>
                           </ol>
                         </div>
-                        <?php if(isset($res['header'])): ?>
+                        <?php if(isset($row['header'])): ?>
                         <div class="tab-pane" id="header<?php echo $i?>">
-                          <pre><?php echo $res['header'] ?></pre>
+                          <pre><?php echo $row['header']; ?></pre>
                         </div>
                       <?php endif;?>
                       <?php if(!empty($row['args'])): ?>
@@ -167,13 +173,13 @@ foreach ( $call_style as $cls => $color ) {
                         </div>
                         <?php endif;?>
                         <div class="tab-pane" id="response<?php echo $i?>">
-                          <pre><?php echo htmlspecialchars($res['result'])?></pre>
+                          <pre><?php echo htmlspecialchars($row['result'])?></pre>
                         </div>
                         </div>
                     </div>
                   </td>
                 </tr>
-                <?php endfor; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div> <!-- /container -->
