@@ -167,7 +167,7 @@ foreach ( $call_style as $cls => $color ) {
                         <div class="tab-pane" id="args<?php echo $i?>">
                           <ol>
                             <?php foreach($row['args'] as $_arg):?>
-                            <li><pre><?php var_export($_arg) ?></pre></li>
+                            <li><pre><?php var_dump($_arg) ?></pre></li>
                           <?php endforeach;?>
                           </ol>
                         </div>
