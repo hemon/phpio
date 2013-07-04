@@ -59,6 +59,9 @@ class PHPIO_Log_File {
 	}
 }
 
-if ( $_REQUEST['XDEBUG_PROFILE'] || $_COOKIE['XDEBUG_PROFILE'] || $_SERVER['XDEBUG_PROFILE'] ) {
+if ( isset($_REQUEST['XDEBUG_PROFILE']) || 
+     isset($_COOKIE['XDEBUG_PROFILE'])  || 
+     isset($_SERVER['XDEBUG_PROFILE']) 
+) {
 	PHPIO::hook();
 }
