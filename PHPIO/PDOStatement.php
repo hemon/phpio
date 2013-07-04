@@ -8,19 +8,12 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
         'bindValue',
     );
     var $params = array();
-
-    function __construct_post($jp) {
-        $object_id = $this->getObjectId($this->object);
-        // create params array for save bindParam value
-        $this->params[$object_id] = array();
-    }
-
 	function postCallback($jp) {
 		$object_id = $this->getObjectId($this->object);
 		$this->trace['classname'] = 'PDO';
 		$this->trace['link'] = PHPIO_PDO::$statements[$object_id];
 		$this->trace['cmd'] = $this->queryString();
-		$this->trace['args'] = $this->params[$object_id];
+		$this->trace['args'] = (isset($this->params[$object_id]) ? $this->params[$object_id] : null);
 		if ( $this->result !== false ) {
 			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
@@ -52,7 +45,7 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 		// Prepare params array for [strtr] function
 		// 1. replace numeric key(1,2,3) to string key(:1,:2,:3)
 		// 2. use [var_export] quote string value
-		if ( !empty($this->params[$object_id]) ) {
+		if ( isset($this->params[$object_id]) && !empty($this->params[$object_id]) ) {
 			$params = array();
 			foreach ( $this->params[$object_id] as $parameter => $value ) {
 				$value = var_export($value, true);
