@@ -10,12 +10,12 @@ abstract class PHPIO_Hook_Class {
 	var $link = null;
 	var $time_start = 0;
 
-	function _preCallback($jp) {
+	function _preCallback($jp, $traces=array()) {
 		$this->object = $jp->getObject();
 	    $this->args = $jp->getArguments();
 	    $this->time_start = microtime(true);
 
-	    $traces = debug_backtrace();
+	    $traces = (!empty($traces) ? $traces : debug_backtrace());
 	    $trace = $traces[1];
 		$trace['trace']  = $this->getPrintTrace($traces);
 		if ( isset($trace['object']) ) $trace['object'] = $this->getObjectId($trace['object']);
@@ -54,7 +54,8 @@ abstract class PHPIO_Hook_Class {
 			if ( isset($traces[$i]['class']) ) {
 				$traces[$i]['function'] = $traces[$i]['class'] .'->'.$traces[$i]['function'];
 			}
-			
+			// set default value avoid Undefined Index error
+			$traces[$i] += array('function'=>'','file'=>'','line'=>0);
 			$printTraces[] = sprintf("%s() called at [%s:%d]", $traces[$i]['function'],$traces[$i]['file'],$traces[$i]['line']);
 		}
 		return $printTraces;

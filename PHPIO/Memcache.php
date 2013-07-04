@@ -41,6 +41,7 @@ class PHPIO_Memcache extends PHPIO_Hook_Class {
         if ( substr($args[0],0,4) == 'unix' ) {
             $link = $args[0];
         } else {
+            $port = isset($args[1]) ? $args[1] : 11211;
             $link = $args[0].":".$args[1];
         }
         return $link;

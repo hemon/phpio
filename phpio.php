@@ -9,6 +9,7 @@ class PHPIO {
 		'Redis' => 1,
 		'Memcache' => 1,
 		'Memcached' => 1,
+		'CallUserFunc' => 1,
 	);
 	static $run_id;
 	static $hooks = array();
@@ -28,8 +29,8 @@ class PHPIO {
 			}
 			
 			require __DIR__."/PHPIO/$hook.php";
-			$phpio_class_name = "PHPIO_$hook";
-			self::$hooks[$hook] = new $phpio_class_name;
+			$phpio_hook = "PHPIO_$hook";
+			self::$hooks[$hook] = new $phpio_hook;
 			self::$hooks[$hook]->init();
 		}
 		

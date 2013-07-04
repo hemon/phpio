@@ -65,18 +65,14 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
     }
 
     function getLink($args) {
-        if ( substr($args[0],0,4) == 'unix' ) {
-            $link = $args[0];
-        } else {
-            $link = $args[0].":".$args[1];
-        }
+        $link = $args[0].":".$args[1];
         return $link;
     }
 
     function postCallback($jp) {
         $this->trace['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
 
-        if ( $this->result ) {
+        if ( $this->result !== false ) {
             $this->trace['status'] = $this->object->getResultCode();
         } else {
             $this->trace['errno'] = $this->object->getResultCode();
