@@ -15,3 +15,7 @@ $redis[0]->set('key', rand());
 $redis[1]->set('key', rand());
 $redis[0]->get('key');
 $redis[1]->get('key');
+
+
+call_user_func(array($redis[0],'get'), 'key');
+call_user_func_array(array($redis[0],'get'), array('key'));

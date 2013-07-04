@@ -47,7 +47,7 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
 
     function postCallback($jp) {
         $this->trace['link'] = $this->getLink($this->object);
-        if ( $result === false ) {
+        if ( $this->result === false ) {
             list(,$errno, $error) = $this->object->errorInfo();
             $this->trace['errno'] = $errno;
             $this->trace['error'] = $error;

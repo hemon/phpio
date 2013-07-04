@@ -11,10 +11,11 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 
 	function postCallback($jp) {
 		$object_id = $this->getObjectId($this->object);
+		$this->trace['classname'] = 'PDO';
 		$this->trace['link'] = PHPIO_PDO::$statements[$object_id];
 		$this->trace['cmd'] = $this->queryString();
 		$this->trace['args'] = $this->params[$object_id];
-		if ( $result ) {
+		if ( $this->result ) {
 			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
 			list(,$errno, $error) = $this->object->errorInfo();
