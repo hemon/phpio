@@ -14,7 +14,7 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 		$this->trace['classname'] = 'PDO';
 		$this->trace['link'] = PHPIO_PDO::$statements[$object_id];
 		$this->trace['cmd'] = $this->queryString();
-		$this->trace['args'] = $this->params[$object_id];
+		$this->trace['args'] = (isset($this->params[$object_id]) ? $this->params[$object_id] : array());
 		if ( $this->result ) {
 			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
@@ -46,7 +46,7 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 		// Prepare params array for [strtr] function
 		// 1. replace numeric key(1,2,3) to string key(:1,:2,:3)
 		// 2. use [var_export] quote string value
-		if ( is_array($this->params[$object_id]) ) {
+		if ( isset($this->params[$object_id]) && is_array($this->params[$object_id]) ) {
 			$params = array();
 			foreach ( $this->params[$object_id] as $parameter => $value ) {
 				$value = var_export($value, true);
