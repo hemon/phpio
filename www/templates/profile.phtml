@@ -143,7 +143,7 @@ foreach ( $call_style as $cls => $color ) {
                     <a href="#"><?php echo (isset($row['class']) ? $row['class'].'->'.$row['function'] : $row['function']) ?></a>
                     <?php if(isset($row['error'])):?><span class="label error" title="<?php echo htmlspecialchars($row['error'])?>"><?php echo $row['errno']?></span><?php endif;?>
                   </td>
-                  <td class="lr"><?php htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
+                  <td class="lr"><?php echo htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
                   <td><?php echo $row['link'] ?></td>
                   <td class="nr"><?php echo round((isset($row['curl']) ? $row['curl']['total_time'] : ($row['time_end']-$row['time_start']))*1000,4) ?></td>
                 </tr>
