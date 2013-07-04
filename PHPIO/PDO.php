@@ -21,6 +21,7 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
     );
 
     var $links = array();
+    static $statements = array();
 
     function __construct_post($jp) {
         $dsn = $this->args[0];
@@ -36,7 +37,7 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
         if ( $this->result instanceof PDOStatement ) {
             $sth  = $this->getObjectId($this->result);
             $link = $this->getLink($this->object);
-            PHPIO::$links[$sth] = $link;
+            self::$statements[$sth] = $link;
         }
     }
 
@@ -75,7 +76,7 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
         sqlsrv:Server=localhost,1521;Database=testdb
         */
 
-        list(, $object_num) = explode('#', $object_id);
+        list(, $object_id) = explode('#', $object_id);
 
         list($driver, $params) = explode(':', $dsn, 2);
 
@@ -95,10 +96,12 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
                 if ( isset($options['host']) ) {
                     $default = array('port'=>3306);
                     $options = $options + $default;
-                    return $options['host'].':'.$options['port'].'/'.$options['dbname'].'#'.$object_num;
+                    return $options['host'].':'.$options['port'].'/'.$options['dbname'].'#'.$object_id;
                 } else {
-                    return 'unix://'.$options['unix_socket'].'#'.$object_num;
+                    return 'unix://'.$options['unix_socket'].'#'.$object_id;
                 }
+            default:
+                return $dsn."#".$object_id;
         }
     }
 }

@@ -75,6 +75,12 @@ $call_style['Curl'] = '4169E1';
         white-space: pre-wrap;
         word-wrap: break-word;
       }
+
+      .args_table {
+        width:auto;
+        max-width: 100%;
+        border: 1px solid #ccc;
+      }
 <?php
 foreach ( $call_style as $cls => $color ) {
 	echo ".label-$cls{background-color:#$color}";
@@ -165,11 +171,22 @@ foreach ( $call_style as $cls => $color ) {
                       <?php endif;?>
                       <?php if(!empty($row['args'])): ?>
                         <div class="tab-pane" id="args<?php echo $i?>">
-                          <ol>
-                            <?php foreach($row['args'] as $_arg):?>
-                            <li><pre><?php var_dump($_arg) ?></pre></li>
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                            <?php foreach($row['args'] as $parameter => $value):?>
+                            <tr>
+                              <td><?php echo $parameter;?></td>
+                              <td><?php echo gettype($value);?></td>
+                              <td><pre><?php print_r($value);?></pre></td>
+                            </tr>
                           <?php endforeach;?>
-                          </ol>
+                          </tbody>
+                        </table>
                         </div>
                         <?php endif;?>
                         <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 

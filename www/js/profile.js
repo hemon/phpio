@@ -37,4 +37,8 @@ $(function(){
 	    e.preventDefault();
 	    $(this).tab('show');
     });
+
+    $('.prof_detail').dblclick(function(){
+    	 $(this).prev('tr').click();
+    });
 })

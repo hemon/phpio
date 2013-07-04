@@ -4,11 +4,16 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 	const classname = 'PDOStatement';
 	var $hooks = array(
         'execute',
+        'bindParam',
+        'bindValue',
     );
+    var $params = array();
 
 	function postCallback($jp) {
-		$this->trace['link'] = PHPIO::$links[$this->getObjectId($this->object)];
+		$object_id = $this->getObjectId($this->object);
+		$this->trace['link'] = PHPIO_PDO::$statements[$object_id];
 		$this->trace['cmd'] = $this->queryString();
+		$this->trace['args'] = $this->params[$object_id];
 		if ( $result ) {
 			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
@@ -26,6 +31,42 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 	}
 
 	function queryString() {
-		return $this->object->queryString;
+		$object_id = $this->getObjectId($this->object);
+		$queryString = $this->object->queryString;
+
+		// Translate SQL parmas ?,? To :1,:2
+		$queryStrings = explode('?', $queryString);
+		if ( count($queryStrings) > 1 ) {
+			$queryString = '';
+			foreach ($queryStrings as $i => $query) {
+				$queryString .= $query.':'.$i+1;
+			}
+		}
+		// Prepare params array for [strtr] function
+		// 1. replace numeric key(1,2,3) to string key(:1,:2,:3)
+		// 2. use [var_export] quote string value
+		if ( is_array($this->params[$object_id]) ) {
+			$params = array();
+			foreach ( $this->params[$object_id] as $parameter => $value ) {
+				$value = var_export($value, true);
+				if ( is_numeric($parameter) ) {
+					$parameter = ':'.$parameter;
+				}
+				$params[$parameter] = $value;
+			}
+			$queryString = strtr($queryString, $params);
+		}
+		return $queryString;
+	}
+
+	function bindParam_post($jp) {
+		$object_id = $this->getObjectId($this->object);
+		$parameter = $this->args[0];
+		$value = $this->args[1];
+		$this->params[$object_id][$parameter] = $value;
+	}
+
+	function bindValue_post($jp) {
+		$this->bindParam_post($jp);
 	}
 }
