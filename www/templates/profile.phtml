@@ -153,7 +153,9 @@ foreach ( $call_style as $cls => $color ) {
 				$label_style = ($row['rowcount'] == 0 ? 'warning' : 'notice');
 				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">',$row['rowcount'],'</span>';
 			} elseif ( isset($row['curl']) ) {
-				echo '<span class="label success" title="HTTP CODE">',$row['curl']['http_code'],'</span>';
+				$http_code = $row['curl']['http_code'];
+				$label_title = http_status($http_code);
+				echo "<span class=\"label success\" title=\"HTTP $http_code $label_title\">$http_code</span>";
 			} else {
 				preg_match('|(\w+)\((.+?)\)|',$row['result'], $matches);
 				list(,$type,$value) = $matches;
@@ -174,8 +176,9 @@ foreach ( $call_style as $cls => $color ) {
                     <div class="tabbable">
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
-                        <?php if(isset($row['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
                         <?php if(!empty($row['args'])): ?><li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li><?php endif;?>
+                        <?php if(isset($row['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
+                        <?php if(!empty($row['curl'])): ?><li><a href="#curl<?php echo $i?>" data-toggle="tab">Curl</a></li><?php endif;?>
                         <li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li>
                         </ul>
                         <div class="tab-content">
@@ -202,7 +205,7 @@ foreach ( $call_style as $cls => $color ) {
                           <tbody>
                             <?php foreach($row['args'] as $parameter => $value):?>
                             <tr>
-                              <td><?php echo $parameter;?></td>
+                              <th><?php echo $parameter;?></th>
                               <td><?php echo gettype($value);?></td>
                               <td><pre><?php print_r($value);?></pre></td>
                             </tr>
@@ -211,7 +214,22 @@ foreach ( $call_style as $cls => $color ) {
                         </table>
                         </div>
                         <?php endif;?>
-                        <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 
+                       <?php if(!empty($row['curl'])): ?>
+                        <div class="tab-pane" id="curl<?php echo $i?>">
+                          <table class="args_table">
+                          <tbody>
+                            <?php foreach($row['curl'] as $parameter => $value):?>
+                            <tr>
+                              <th><?php echo $parameter;?></th>
+                              <td><pre><?php print_r($value);?></pre></td>
+                            </tr>
+                          <?php endforeach;?>
+                          </tbody>
+                        </table>
+                        </div>
+                        <?php endif;?>
+ 
+                       <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 
                           list($type, $content) = explode(" ", $row['result'], 2);
                           if ( substr($type, 0, 6) == 'string' ) {
                               echo '<b>',$type,'</b>','<br>', htmlspecialchars(substr($content,1,-1));
