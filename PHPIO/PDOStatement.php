@@ -14,7 +14,7 @@ class PHPIO_PDOStatement extends PHPIO_Hook_Class {
 		$this->trace['link'] = PHPIO_PDO::$statements[$object_id];
 		$this->trace['cmd'] = $this->queryString();
 		$this->trace['args'] = (isset($this->params[$object_id]) ? $this->params[$object_id] : null);
-		if ( $this->result !== false ) {
+		if ( $this->result === true ) {
 			$this->trace['rowcount'] = $this->object->rowCount();
 		} else {
 			list(,$errno, $error) = $this->object->errorInfo();

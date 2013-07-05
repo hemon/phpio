@@ -9,8 +9,7 @@ class PHPIO_CallUserFunc extends PHPIO_Hook_Func {
     function _preCallback($jp, $traces=array()){
 		$jp = new PHPIO_JoinPoint($jp);
 		$hook = $this->getHookClass($jp);
-		$phpio_hook = "PHPIO_$hook";
-		if ( class_exists($phpio_hook) ) {
+		if ( $this->isHook($hook, $jp->getMethodName()) ) {
 			$traces = debug_backtrace();
 			$traces[1]['class'] = $hook;
 			$traces[1]['function'] = $jp->getMethodName();
@@ -23,7 +22,7 @@ class PHPIO_CallUserFunc extends PHPIO_Hook_Func {
 		$jp = new PHPIO_JoinPoint($jp);
 		$hook = $this->getHookClass($jp);
 		$phpio_hook = "PHPIO_$hook";
-		if ( class_exists($phpio_hook) ) {
+		if ( $this->isHook($hook, $jp->getMethodName()) ) {
 			PHPIO::$hooks[$hook]->_postCallback($jp);
 		}
     }
@@ -36,6 +35,17 @@ class PHPIO_CallUserFunc extends PHPIO_Hook_Func {
 			$hook = $jp->getClassName();
 		}
 		return $hook;
+    }
+
+    function isHook($hook, $method) {
+		if ( class_exists("PHPIO_$hook") ) {
+			foreach ( PHPIO::$hooks[$hook]->hooks as $hook_method ) {
+				if (strcasecmp($method, $hook_method) == 0) {
+					return true;
+				}
+			}
+		}
+		return false;
     }
 }
 
