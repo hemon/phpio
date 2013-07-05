@@ -113,9 +113,10 @@ foreach ( $call_style as $cls => $color ) {
         <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
             <thead>
                 <tr>
-                    <th width=200><span>Function</span></th>
+                    <th width=220><span>Function</span></th>
                     <th><span>Command</span></th>
                     <th width=220><span>Connection</span></th>
+                    <th width=50><span>Status</span></th>
                     <th width=50><span>Time(ms)</span></th>
                 </tr>
             </thead>
@@ -137,7 +138,7 @@ foreach ( $call_style as $cls => $color ) {
                   }
                 ?>
                 <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
-                  <td>
+                  <td nowrap>
                     <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $matches[1]?>&amp;line=<?php echo $matches[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
                     <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>
                     <a href="#"><?php echo (isset($row['class']) ? $row['class'].'->'.$row['function'] : $row['function']) ?></a>
@@ -145,10 +146,31 @@ foreach ( $call_style as $cls => $color ) {
                   </td>
                   <td class="lr"><?php echo htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
                   <td><?php echo $row['link'] ?></td>
+                  <td><?php 
+			 if(isset($row['error'])) {
+				echo '<span class="label error" title="',htmlspecialchars($row['error']),'">',$row['errno'],'</span>';
+			} elseif ( isset($row['rowcount']) ) {
+				$label_style = ($row['rowcount'] == 0 ? 'warning' : 'notice');
+				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">',$row['rowcount'],'</span>';
+			} elseif ( isset($row['curl']) ) {
+				echo '<span class="label success" title="HTTP CODE">',$row['curl']['http_code'],'</span>';
+			} else {
+				preg_match('|(\w+)\((.+?)\)|',$row['result'], $matches);
+				list(,$type,$value) = $matches;
+				switch ($type) {
+					case 'string':
+						echo '<span class="label notice" title="Bytes">',$value,'</span>';break;
+					case 'bool':
+						$label_style = array('true'=>'success','false'=>'error');
+						echo '<span class="label '. $label_style[$value] .'">',$value,'</span>';break;
+				
+				}
+			}
+		?></td>
                   <td class="nr"><?php echo round((isset($row['curl']) ? $row['curl']['total_time'] : ($row['time_end']-$row['time_start']))*1000,4) ?></td>
                 </tr>
                 <tr id="prof_detail_<?php echo $i?>" class="prof_detail">
-                  <td colspan=4>
+                  <td colspan=5>
                     <div class="tabbable">
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
