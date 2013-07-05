@@ -31,7 +31,7 @@ abstract class PHPIO_Hook_Class {
 
 	function _postCallback($jp) {
 	    $this->result = $jp->getReturnedValue();
-		$this->trace['result'] = $this->getObjectId($this->result);
+		$this->trace['result'] = $this->dump($this->result);
 		$this->trace['time_end'] = microtime(true);
 
 		$callback = (method_exists($this, "{$this->func}_post") ? "{$this->func}_post" : "postCallback");
