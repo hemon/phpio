@@ -183,6 +183,7 @@ class PHPIO_Redis extends PHPIO_Hook_Class {
 
     function postCallback($jp) {
         $this->trace['link'] = $this->link;
+        $this->trace['cmd'] = (is_array($this->args[0]) ? implode(' ',$this->args[0]) : $this->args[0]);
         
         parent::postCallback($jp);
     }
