@@ -39,6 +39,15 @@ class PHPIO_Curl extends PHPIO_Hook_Func {
 
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_STDERR, fopen($stderr, 'w'));
+		
+		$this->addDebugFlag($ch);
+	}
+
+	function addDebugFlag($ch) {
+		$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		$glue = (( strpos($url,'?') !== false ) ? '&' : '?');
+		$url .= $glue.'XDEBUG_PROFILE='.PHPIO::$run_id;
+		curl_setopt($ch, CURLOPT_URL, $url);
 	}
 
 	function removeErrorHandle($ch) {
