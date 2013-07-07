@@ -61,8 +61,8 @@ class PHPIO_Mysql extends PHPIO_Hook_Func {
 	}
 
 	function mysql_query_post($jp) {
-		if ( $this->result !== false ) {
-			$this->trace['status'] = mysql_affected_rows();
+		if ( is_resource($this->result) || $this->result === true ) {
+			$this->trace['rowcount'] = mysql_affected_rows();
 		}
 
 		$this->postCallback($jp);

@@ -142,7 +142,6 @@ foreach ( $call_style as $cls => $color ) {
                     <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $matches[1]?>&amp;line=<?php echo $matches[2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
                     <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>
                     <a href="#"><?php echo (isset($row['class']) ? $row['class'].'->'.$row['function'] : $row['function']) ?></a>
-                    <?php if(isset($row['error'])):?><span class="label error" title="<?php echo htmlspecialchars($row['error'])?>"><?php echo $row['errno']?></span><?php endif;?>
                   </td>
                   <td class="lr"><?php echo htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
                   <td><?php echo $row['link'] ?></td>
@@ -150,7 +149,7 @@ foreach ( $call_style as $cls => $color ) {
 			$label_style = 'success';
 			if(isset($row['error'])) {
 				$label_style = 'error';
-				echo '<span class="label '.$label_style.'" title="',htmlspecialchars($row['error']),'">',$row['errno'],'</span>';
+				echo '<span class="label '.$label_style.'" title="',htmlspecialchars($row['error']),'">ERRNO(',$row['errno'],')</span>';
 			} elseif ( isset($row['rowcount']) ) {
 				$label_style = ($row['rowcount'] == 0 ? 'warning' : $label_style);
 				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">ROWS(',$row['rowcount'],')</span>';
@@ -248,7 +247,7 @@ foreach ( $call_style as $cls => $color ) {
                        <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 
                           list($type, $content) = explode(" ", $row['result'], 2);
                           if ( substr($type, 0, 6) == 'string' ) {
-                              echo '<b>',$type,'</b>','<br>', htmlspecialchars(substr($content,1,-1));
+                              echo '<b>',$type,'</b>','<br>', htmlspecialchars(substr($content,1,-2));
                           } else {
                               echo htmlspecialchars($row['result']);
                           }
