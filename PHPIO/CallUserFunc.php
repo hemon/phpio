@@ -68,7 +68,7 @@ class PHPIO_JoinPoint {
 		$this->args = $args[1];
 		$this->kindOfAdvice = $this->jp->getKindOfAdvice();
 
-		if ( is_array($args) ) {
+		if ( is_array($args[0]) ) {
 			$this->object = $args[0][0];
 			$this->method = $args[0][1];
 		} else {
