@@ -34,8 +34,8 @@ $_SERVER['XDEBUG_PROFILE']=1
 for example : 
 http://www.example.com/index.php?XDEBUG_PROFILE=1 
 
-recommand firfox addon [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
-https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/
+recommand firfox addon [easy-xdebug](https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/), it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
+
 
 in cli mode, use export set parame to $_SERVER:
 ```
