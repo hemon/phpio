@@ -71,7 +71,7 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
 
     function postCallback($jp) {
         $this->trace['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
-        $this->trace['cmd'] = (is_array($this->args[0]) ? implode(' ',$this->args[0]) : $this->args[0]);
+        if (isset($this->args[0])) $this->trace['cmd'] = (is_array($this->args[0]) ? implode(' ',$this->args[0]) : $this->args[0]);
         if ( $this->result !== false ) {
             $this->trace['status'] = $this->object->getResultCode();
         } else {
