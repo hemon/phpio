@@ -31,7 +31,7 @@
         <h1>
 <a name="phpio" class="anchor" href="#phpio"><span class="octicon octicon-link"></span></a>PHPIO</h1>
 
-<p><img src="//raw.github.com/hemon/phpio/master/www/img/screenshot.png" alt="screenshot"></p>
+<p><img src="//raw.github.com/hemon/phpio/master/www/img/screenshot.png" alt="Screenshot"></p>
 
 <h2>
 <a name="install-aop-extension" class="anchor" href="#install-aop-extension"><span class="octicon octicon-link"></span></a>Install aop extension</h2>
@@ -63,18 +63,23 @@ extension=aop.so
 <h2>
 <a name="start-profile" class="anchor" href="#start-profile"><span class="octicon octicon-link"></span></a>start profile</h2>
 
-<p>run you php programs with param XDEBUG_PROFILE  </p>
+<p>run you php programs with param XDEBUG_PROFILE=1  </p>
 
-<pre><code>$_REQUEST['XDEBUG_PROFILE']  
-$_COOKIE['XDEBUG_PROFILE']  
-$_SERVER['XDEBUG_PROFILE']  
+<pre><code>$_REQUEST['XDEBUG_PROFILE']=1  
+$_COOKIE['XDEBUG_PROFILE']=1  
+$_SERVER['XDEBUG_PROFILE']=1  
 </code></pre>
 
 <p>for example : 
 <a href="http://www.example.com/index.php?XDEBUG_PROFILE=1">http://www.example.com/index.php?XDEBUG_PROFILE=1</a> </p>
 
-<p>recommand firefox user use [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
+<p>recommand firfox addon [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
 <a href="https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/">https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/</a></p>
+
+<p>in cli mode, use export set parame to $_SERVER:</p>
+
+<pre><code>export XDEBUG_PROFILE=1
+</code></pre>
 
 <h2>
 <a name="view-profile" class="anchor" href="#view-profile"><span class="octicon octicon-link"></span></a>view profile</h2>
