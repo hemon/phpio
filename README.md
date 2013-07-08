@@ -57,6 +57,6 @@ export XDEBUG_PROFILE=1
 ## view profile
 last profile  
 http://www.yousite.com/phpio/www/  
-profile_id  
+assign profile_id  
 http://www.yousite.com/phpio/www/?profile=[profile_id]
 
