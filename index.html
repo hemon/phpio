@@ -34,7 +34,18 @@
           <h1>
 <a name="phpio" class="anchor" href="#phpio"><span class="octicon octicon-link"></span></a>PHPIO</h1>
 
-<p><img src="//raw.github.com/hemon/phpio/master/www/img/screenshot.png" alt="Screenshot"></p>
+<p>PHPIO is prism for php. it's base on aop-php(<a href="http://aop-php.github.com">http://aop-php.github.com</a>), force on monitoring of IO operation, such like MySQL, Memcache, Redis, APC and so on.</p>
+
+<ul>
+<li>Common<br>
+host:port, call trace, function args, response, error message.</li>
+<li>MySQL, PDO<br>
+record raw SQL querystirng, affetced rows.</li>
+<li>Curl<br>
+record raw http header(request &amp; response), and curl_getinfo report the full infomation of time,speed and size.</li>
+<li>Memcached, Redis<br>
+record key for operation</li>
+</ul><p><img src="//raw.github.com/hemon/phpio/master/www/img/screenshot.png" alt="Screenshot"></p>
 
 <h2>
 <a name="install-aop-extension" class="anchor" href="#install-aop-extension"><span class="octicon octicon-link"></span></a>Install aop extension</h2>
@@ -86,7 +97,8 @@ $_SERVER['XDEBUG_PROFILE']=1
 <h2>
 <a name="view-profile" class="anchor" href="#view-profile"><span class="octicon octicon-link"></span></a>view profile</h2>
 
-<p><a href="http://www.yousite.com/phpio/www/index.php">http://www.yousite.com/phpio/www/index.php</a><br><a href="http://www.yousite.com/phpio/www/index.php?profile=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/index.php?profile=[profile_id]</a></p>
+<p>last profile<br><a href="http://www.yousite.com/phpio/www/">http://www.yousite.com/phpio/www/</a><br>
+profile_id<br><a href="http://www.yousite.com/phpio/www/?profile=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/?profile=[profile_id]</a></p>
         </section>
 
         <footer>
