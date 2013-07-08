@@ -19,7 +19,7 @@
 
         <header>
           <h1>PHPIO</h1>
-          <h2>Prism for php, monitoring php io</h2>
+          <h2>Prism for php, io monitor</h2>
         </header>
 
         <section id="downloads" class="clearfix">
@@ -34,15 +34,15 @@
           <h1>
 <a name="phpio" class="anchor" href="#phpio"><span class="octicon octicon-link"></span></a>PHPIO</h1>
 
-<p>PHPIO is prism for php. it's base on <a href="http://aop-php.github.com">aop-php</a> extension, force on monitoring of IO operation, such like MySQL, Memcache, Redis, APC and so on.</p>
+<p>PHPIO is prism for php. it's base on <a href="http://aop-php.github.com">aop-php</a> extension. focus on monitoring IO operation, such like MySQL, Memcache, Redis, APC and so on.</p>
 
 <ul>
 <li>Common<br>
-host:port, call trace, function args, response, error message.</li>
+connection's host and port, call trace, function args, response and error message.</li>
 <li>MySQL, PDO<br>
-record raw SQL querystirng, affetced rows.</li>
+record raw SQL query stirng and affected rows.</li>
 <li>Curl<br>
-record raw http header(request &amp; response), and report the full infomation of time,speed and size.</li>
+record raw http header(request &amp; response), and reporting the full infomation of time,speed and size.</li>
 <li>Memcached, Redis<br>
 record key for operation</li>
 </ul><p><img src="//raw.github.com/hemon/phpio/master/www/img/screenshot.png" alt="Screenshot"></p>
@@ -87,9 +87,9 @@ $_SERVER['XDEBUG_PROFILE']=1
 <p>for example : 
 <a href="http://www.example.com/index.php?XDEBUG_PROFILE=1">http://www.example.com/index.php?XDEBUG_PROFILE=1</a> </p>
 
-<p>recommand firfox addon <a href="https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/">easy-xdebug</a>, it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: </p>
+<p>recommand firfox addon <a href="https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/">easy-xdebug</a>, it can auto append user defined cookie param in request(default is XDEBUG_PROFILE=1): </p>
 
-<p>in cli mode, use export set parame to $_SERVER:</p>
+<p>in php-cli mode, use <code>export</code> command to set param for $_SERVER </p>
 
 <pre><code>export XDEBUG_PROFILE=1
 </code></pre>
@@ -98,7 +98,7 @@ $_SERVER['XDEBUG_PROFILE']=1
 <a name="view-profile" class="anchor" href="#view-profile"><span class="octicon octicon-link"></span></a>view profile</h2>
 
 <p>last profile<br><a href="http://www.yousite.com/phpio/www/">http://www.yousite.com/phpio/www/</a><br>
-profile_id<br><a href="http://www.yousite.com/phpio/www/?profile=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/?profile=[profile_id]</a></p>
+assign profile_id<br><a href="http://www.yousite.com/phpio/www/?profile=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/?profile=[profile_id]</a></p>
         </section>
 
         <footer>
