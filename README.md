@@ -7,7 +7,7 @@ pecl install aop-beta
 extension=aop.so 
 
 if coredump ?  
-1. change you aop extension version (the pecl version is stable than git)  
+1. change you aop extension version (the pecl version is stable than github)  
 2. rebuild php
 
 ## prepend phpio.php
