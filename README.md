@@ -1,4 +1,5 @@
 # PHPIO
+![Screenshot](//raw.github.com/hemon/phpio/master/www/img/screenshot.png)
 
 ## Install aop extension
 ```
@@ -23,18 +24,23 @@ php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
 ```
 
 ## start profile
-run you php programs with param XDEBUG_PROFILE  
+run you php programs with param XDEBUG_PROFILE=1  
 ```
-$_REQUEST['XDEBUG_PROFILE']  
-$_COOKIE['XDEBUG_PROFILE']  
-$_SERVER['XDEBUG_PROFILE']  
+$_REQUEST['XDEBUG_PROFILE']=1  
+$_COOKIE['XDEBUG_PROFILE']=1  
+$_SERVER['XDEBUG_PROFILE']=1  
 ```
 
 for example : 
 http://www.example.com/index.php?XDEBUG_PROFILE=1 
 
-recommand firefox user use [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
+recommand firfox addon [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
 https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/
+
+in cli mode, use export set parame to $_SERVER:
+```
+export XDEBUG_PROFILE=1
+```
 
 ## view profile
 http://www.yousite.com/phpio/www/index.php   
