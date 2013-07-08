@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Phpio by hemon</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Phpio</h1>
+        <h2>Prism for php, monitor php io operation</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/hemon/phpio/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/hemon/phpio/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/hemon/phpio" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="phpio" class="anchor" href="#phpio"><span class="octicon octicon-link"></span></a>PHPIO</h1>
+
+<h2>
+<a name="install-aop-extension" class="anchor" href="#install-aop-extension"><span class="octicon octicon-link"></span></a>Install aop extension</h2>
+
+<pre><code>pecl install aop-beta
+</code></pre>
+
+<pre><code>[aop]  
+extension=aop.so 
+</code></pre>
+
+<p>if coredump ?<br>
+1. change you aop extension version (the pecl version is stable than github)<br>
+2. rebuild php</p>
+
+<h2>
+<a name="prepend-phpiophp" class="anchor" href="#prepend-phpiophp"><span class="octicon octicon-link"></span></a>prepend phpio.php</h2>
+
+<p>php.ini  </p>
+
+<pre><code>auto_prepend_file = /path/to/phpio/phpio.php  
+</code></pre>
+
+<p>php-fpm  </p>
+
+<pre><code>php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
+</code></pre>
+
+<h2>
+<a name="start-profile" class="anchor" href="#start-profile"><span class="octicon octicon-link"></span></a>start profile</h2>
+
+<p>run you php programs with param XDEBUG_PROFILE  </p>
+
+<pre><code>$_REQUEST['XDEBUG_PROFILE']  
+$_COOKIE['XDEBUG_PROFILE']  
+$_SERVER['XDEBUG_PROFILE']  
+</code></pre>
+
+<p>for example : 
+<a href="http://www.example.com/index.php?XDEBUG_PROFILE=1">http://www.example.com/index.php?XDEBUG_PROFILE=1</a> </p>
+
+<p>recommand firefox user use [easy-xdebug], it can auto append $_COOKIE['XDEBUG_PROFILE'] in requst: 
+<a href="https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/">https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/</a></p>
+
+<h2>
+<a name="view-profile" class="anchor" href="#view-profile"><span class="octicon octicon-link"></span></a>view profile</h2>
+
+<p><a href="http://www.yousite.com/phpio/www/index.php">http://www.yousite.com/phpio/www/index.php</a><br><a href="http://www.yousite.com/phpio/www/index.php?profile=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/index.php?profile=[profile_id]</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
