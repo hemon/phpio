@@ -154,10 +154,10 @@ foreach ( $call_style as $cls => $color ) {
 			$label_style = 'success';
 			if(isset($row['error'])) {
 				$label_style = 'error';
-				echo '<span class="label '.$label_style.'" title="',htmlspecialchars($row['error']),'">ERRNO(',$row['errno'],')</span>';
+				echo '<span class="label '.$label_style.'" title="',htmlspecialchars($row['error']),'">errno(',$row['errno'],')</span>';
 			} elseif ( isset($row['rowcount']) ) {
 				$label_style = ($row['rowcount'] == 0 ? 'warning' : $label_style);
-				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">ROWS(',$row['rowcount'],')</span>';
+				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">rows(',$row['rowcount'],')</span>';
 			} elseif ( isset($row['curl']) ) {
 				$http_code = $row['curl']['http_code'];
 				switch ( substr($http_code,0,1) ){
@@ -171,14 +171,16 @@ foreach ( $call_style as $cls => $color ) {
 						$label_style = 'error';
 				}
 				$label_title = http_status($http_code);
-				echo "<span class=\"label $label_style\" title=\"HTTP $http_code $label_title\">HTTP($http_code)</span>";
+				echo "<span class=\"label $label_style\" title=\"HTTP $http_code $label_title\">http($http_code)</span>";
 			} elseif ( isset($row['result']) ) {
-				if ( preg_match('|(\w+)\((.+?)\)|',$row['result'], $matches) ) {
+				if ( preg_match('|(\w+)\((.+?)\)(#\d+)?|',$row['result'], $matches) ) {
 					list(,$type,$value) = $matches;
 					switch ($type) {
 						case 'bool':
 							$label_style = ($value == 'false' ? 'error' : $label_style);
 							echo '<span class="label '.$label_style.'">',$value,'</span>';break;
+						case 'object':
+							$matches[0] = $value.$matches[3];
 						default :
 							echo '<span class="label '.$label_style.'">',$matches[0],'</span>';
 					
