@@ -1,13 +1,20 @@
 # PHPIO
 
-## Install aop-php extension
+## Install aop extension
 pecl install aop-beta
 
 [aop]  
 extension=aop.so 
 
+if coredump ?  
+1. change you aop extension version (the pecl version is stable than git)  
+2. rebuild php
+
 ## prepend phpio.php
-auto_prepend_file = /path/to/phpio/phpio.php
+php.ini  
+auto_prepend_file = /path/to/phpio/phpio.php  
+php-fpm  
+php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
 
 ## start profile
 run you php programs with param XDEBUG_PROFILE  
