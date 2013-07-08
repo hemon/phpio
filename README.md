@@ -1,12 +1,12 @@
 # PHPIO
-PHPIO is prism for php. it's base on [aop-php](http://aop-php.github.com) extension, force on monitoring of IO operation, such like MySQL, Memcache, Redis, APC and so on.
+PHPIO is prism for php. it's base on [aop-php](http://aop-php.github.com) extension. focus on monitoring IO operation, such like MySQL, Memcache, Redis, APC and so on.
 
 * Common  
-host:port, call trace, function args, response, error message.
+connection's host and port, call trace, function args, response and error message.
 * MySQL, PDO    
-record raw SQL querystirng, affetced rows.
+record raw SQL query stirng and affected rows.
 * Curl  
-record raw http header(request & response), and report the full infomation of time,speed and size.
+record raw http header(request & response), and reporting the full infomation of time,speed and size.
 * Memcached, Redis  
 record key for operation
 
