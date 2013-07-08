@@ -2,6 +2,7 @@
 
 class PHPIO {
 	static $available = array(
+		'APC' => 1,
 		'Curl' => 1,
 		'Mysql' => 1,
 		'PDO' => 1,
