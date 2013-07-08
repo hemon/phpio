@@ -1,4 +1,16 @@
 # PHPIO
+PHPIO is prism for php. it's base on aop-php(http://aop-php.github.com), force on monitoring of IO operation, such like MySQL, Memcache, Redis, APC and so on.
+
+* Common  
+host:port, call trace, function args, response, error message.
+* MySQL, PDO    
+record raw SQL querystirng, affetced rows.
+* Curl  
+record raw http header(request & response), and curl_getinfo report the full infomation of time,speed and size.
+* Memcached, Redis  
+record key for operation
+
+
 ![Screenshot](//raw.github.com/hemon/phpio/master/www/img/screenshot.png)
 
 ## Install aop extension
@@ -43,5 +55,8 @@ export XDEBUG_PROFILE=1
 ```
 
 ## view profile
-http://www.yousite.com/phpio/www/index.php   
-http://www.yousite.com/phpio/www/index.php?profile=[profile_id]
+last profile  
+http://www.yousite.com/phpio/www/  
+profile_id  
+http://www.yousite.com/phpio/www/?profile=[profile_id]
+
