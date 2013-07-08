@@ -11,7 +11,7 @@ class PHPIO_Memcached extends PHPIO_Hook_Class {
         'appendByKey',
         'cas',
         'casByKey',
-        '__construct',
+        //'__construct',
         'decrement',
         'delete',
         'deleteByKey',
