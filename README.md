@@ -49,7 +49,7 @@ http://www.example.com/index.php?XDEBUG_PROFILE=1
 recommand firfox addon [easy-xdebug](https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/), it can auto append user defined cookie param in request(default is XDEBUG_PROFILE=1): 
 
 
-in php-cli mode, use `export` command to set $_SERVER's param
+in php-cli mode, use `export` command to set param for $_SERVER 
 ```
 export XDEBUG_PROFILE=1
 ```
