@@ -46,7 +46,7 @@ $(function(){
 	$.getJSON("?op=profiles",function(data){
 		$('#profiles .dropdown-menu').empty().append('<li><a href="?">Auto(newest)</a></li>');
             $.each(data,function(id,uri){
-                $('#profiles .dropdown-menu').append('<li><a href="?profile_id='+id+'" title="'+uri+'">'+id.substr(-4,4)+' '+uri+'</a></li>');
+                $('#profiles .dropdown-menu').append('<li><a href="?profile_id='+id+'" title="'+uri+'">'+id.substr(9,4)+' '+uri+'</a></li>');
             })
         });
     });
