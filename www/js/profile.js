@@ -15,12 +15,12 @@ $(function(){
 	});
 	
 	for (var cls in class_stat) {
-		$('#nav .nav').append('<li><a href="#'+cls+'" data="'+cls+'">'+cls+'<span class="label label-'+cls+'">'+class_stat[cls]+'</span></a></li>');
+		$('#hooks').append('<li><a href="#'+cls+'" data="'+cls+'">'+cls+'<span class="label label-'+cls+'">'+class_stat[cls]+'</span></a></li>');
 	}
 
-	$('#nav .nav li').click(function(){
+	$('#hooks li').click(function(){
 		$('.show_detail').removeClass('show_detail');
-		$('#nav .nav li.active').removeClass('active');
+		$('#hooks li.active').removeClass('active');
 		$(this).addClass('active');
 		
 		var cls = $("a", this).attr('data');
@@ -40,5 +40,14 @@ $(function(){
 
     $('.prof_detail').dblclick(function(){
     	 $(this).prev('tr').click();
+    });
+
+    $('#profiles .dropdown-toggle').click(function(){
+	$.getJSON("?op=profiles",function(data){
+		$('#profiles .dropdown-menu').empty().append('<li><a href="?">Auto(newest)</a></li>');
+            $.each(data,function(id,uri){
+                $('#profiles .dropdown-menu').append('<li><a href="?profile_id='+id+'" title="'+uri+'">'+id.substr(-4,4)+' '+uri+'</a></li>');
+            })
+        });
     });
 })

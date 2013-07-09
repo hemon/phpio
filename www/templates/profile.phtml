@@ -30,6 +30,7 @@ $call_style['APC'] = 'BA55D3';
     		/*position: absolute;*/
     		margin-left: 2px
     	}
+      #profiles{ float:right; margin-right:80px}
       .prof_detail {
         display: none;
         height: 150px;
@@ -106,9 +107,16 @@ foreach ( $call_style as $cls => $color ) {
         <div class="container-fluid">
           <a class="brand" href="#">PHPIO</a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
+            <ul class="nav" id="hooks">
               <li class="active"><a href="#">ALL</a></li>
             </ul>
+	    <ul class="nav" id="profiles">
+		<li class="dropdown" data-dropdown="dropdown">
+                  <a href="#" class="dropdown-toggle">Profiles</a>
+                  <ul class="dropdown-menu">
+                  </ul>
+		</li>
+	    </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -275,5 +283,6 @@ foreach ( $call_style as $cls => $color ) {
     <script src="js/jquery-1.10.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
   </body>
 </html>

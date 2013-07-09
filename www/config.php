@@ -22,14 +22,15 @@ function file_read($file) {
 	return empty($error) ? array(true,file_get_contents($file)) : array(false, $error);
 }
 
-function phpio_profiles($limit=20) {
+function phpio_profiles($limit=10) {
 	$profiles = array();
 	$files = glob(STORE.'/prof_*');
 	foreach($files as $file) {
 		list($is_ok, $data) = file_read($file);
 		if ( $is_ok ) {
-			$data = json_decode($data, true);
-			$profiles[ basename($file) ] = array($data[0]['_SERVER']['REQUEST_URI']);
+			$data = unserialize($data);
+			$profile_id = substr(basename($file),5);
+			$profiles[ $profile_id ] = $data[0]['_SERVER']['REQUEST_URI'];
 		}
 	}
 	krsort($profiles);

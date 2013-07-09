@@ -15,16 +15,15 @@ switch( $_REQUEST['op'] ){
 	case 'profiles':
 		$profiles = phpio_profiles();
 		echo json_encode($profiles);
+		break;
 	default:
-		$profile = $_REQUEST['profile'];
-		if ( empty($profile) ) {
+		$profile_id = $_REQUEST['profile_id'];
+		if ( empty($profile_id) ) {
 			$profiles = phpio_profiles();
-			list($profile, $uri) = each($profiles);
-		} else {
-			$profile = 'prof_'.$profile;
+			list($profile_id, $uri) = each($profiles);
 		}
 
-		$file = STORE .'/'. $profile;
+		$file = STORE .'/prof_'. $profile_id;
 		list($is_ok, $data) = file_read($file);
 		if ( $is_ok ) {
 			$data = unserialize($data);
