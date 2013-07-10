@@ -26,24 +26,22 @@ if coredump ?
 2. rebuild php
 
 ## get phpio   
-
-* download tarball  
+download tarball  
 ```
 wget https://github.com/hemon/phpio/tarball/master -O phpio.tar.gz  
 tar xvf phpio.tar.gz  
 ```
-
-* or git clone   
+or git clone   
 ```
 git clone https://hemon@github.com/hemon/phpio
 ```
 
 ## prepend phpio.php   
-* php.ini  
+php.ini  
 ```
 auto_prepend_file = /path/to/phpio/phpio.php  
 ```
-* php-fpm  
+php-fpm  
 ```
 php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
 ```
@@ -68,8 +66,7 @@ export XDEBUG_PROFILE=1
 ```
 
 ## view profile
-last profile  
-http://www.yousite.com/phpio/www/  
-assign profile_id  
-http://www.yousite.com/phpio/www/?profile_id=[profile_id]
-
+make phpio/www is accessible:  
+```
+http://path/to/phpio/www/  
+```
