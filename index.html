@@ -64,33 +64,31 @@ extension=aop.so
 <h2>
 <a name="get-phpio" class="anchor" href="#get-phpio"><span class="octicon octicon-link"></span></a>get phpio</h2>
 
-<ul>
-<li>
 <p>download tarball  </p>
 
 <pre><code>wget https://github.com/hemon/phpio/tarball/master -O phpio.tar.gz  
 tar xvf phpio.tar.gz  
 </code></pre>
-</li>
-<li>
+
 <p>or git clone   </p>
 
 <pre><code>git clone https://hemon@github.com/hemon/phpio
 </code></pre>
-</li>
-</ul><h2>
+
+<h2>
 <a name="prepend-phpiophp" class="anchor" href="#prepend-phpiophp"><span class="octicon octicon-link"></span></a>prepend phpio.php</h2>
 
-<ul>
-<li>php.ini<br><code>
-auto_prepend_file = /path/to/phpio/phpio.php  
-</code>
-</li>
-<li>php-fpm<br><code>
-php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
-</code>
-</li>
-</ul><h2>
+<p>php.ini  </p>
+
+<pre><code>auto_prepend_file = /path/to/phpio/phpio.php  
+</code></pre>
+
+<p>php-fpm  </p>
+
+<pre><code>php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
+</code></pre>
+
+<h2>
 <a name="start-profile" class="anchor" href="#start-profile"><span class="octicon octicon-link"></span></a>start profile</h2>
 
 <p>run you php programs with param XDEBUG_PROFILE=1  </p>
@@ -113,8 +111,10 @@ $_SERVER['XDEBUG_PROFILE']=1
 <h2>
 <a name="view-profile" class="anchor" href="#view-profile"><span class="octicon octicon-link"></span></a>view profile</h2>
 
-<p>last profile<br><a href="http://www.yousite.com/phpio/www/">http://www.yousite.com/phpio/www/</a><br>
-assign profile_id<br><a href="http://www.yousite.com/phpio/www/?profile_id=%5Bprofile_id%5D">http://www.yousite.com/phpio/www/?profile_id=[profile_id]</a></p>
+<p>make phpio/www is accessible:  </p>
+
+<pre><code>http://path/to/phpio/www/  
+</code></pre>
         </section>
 
         <footer>
