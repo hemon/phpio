@@ -33,7 +33,7 @@ wget https://github.com/hemon/phpio/tarball/master -O phpio.tar.gz
 tar xvf phpio.tar.gz  
 ```
 
-* git clone   
+* or git clone   
 ```
 git clone https://hemon@github.com/hemon/phpio
 ```
