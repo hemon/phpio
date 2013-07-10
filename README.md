@@ -39,11 +39,11 @@ git clone https://hemon@github.com/hemon/phpio
 ```
 
 ## prepend phpio.php   
-php.ini  
+* php.ini  
 ```
 auto_prepend_file = /path/to/phpio/phpio.php  
 ```
-php-fpm  
+* php-fpm  
 ```
 php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
 ```
