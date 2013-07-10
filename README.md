@@ -25,7 +25,20 @@ if coredump ?
 1. change you aop extension version (the pecl version is stable than github)  
 2. rebuild php
 
-## prepend phpio.php
+## get phpio   
+
+* download tarball  
+```
+wget https://github.com/hemon/phpio/tarball/master -O phpio.tar.gz  
+tar xvf phpio.tar.gz  
+```
+
+* git clone   
+```
+git clone https://hemon@github.com/hemon/phpio
+```
+
+## prepend phpio.php   
 php.ini  
 ```
 auto_prepend_file = /path/to/phpio/phpio.php  
