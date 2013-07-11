@@ -1,5 +1,4 @@
 <?php
-
 class PHPIO {
 	static $available = array(
 		'APC' => 1,
@@ -19,7 +18,10 @@ class PHPIO {
 	static $links = array();
 	
 	static function hook() {
-		self::$run_id = uniqid();
+		$run_id = uniqid();
+		self::$run_id = (self::requestId() > 1 ?  self::requestId().'.'.$run_id : $run_id);
+		setcookie('XDEBUG_PROFILE_ID', self::$run_id);
+
 		self::$log = new self::$log_class();
 		self::$log->append(array('_SERVER'=>$_SERVER,'_GET'=>$_GET,'_POST'=>$_POST));
 	
@@ -36,6 +38,13 @@ class PHPIO {
 		}
 		
 		register_shutdown_function(array(self::$log, 'save'));
+	}
+
+	static function requestId() {
+		if ( isset($_REQUEST['XDEBUG_PROFILE']) ) return $_REQUEST['XDEBUG_PROFILE'];
+		if ( isset($_COOKIE['XDEBUG_PROFILE'])  ) return $_COOKIE['XDEBUG_PROFILE'];
+		if ( isset($_SERVER['XDEBUG_PROFILE'])  ) return $_SERVER['XDEBUG_PROFILE'];
+		return 0;
 	}
 }
 
@@ -60,9 +69,6 @@ class PHPIO_Log_File {
 	}
 }
 
-if ( isset($_REQUEST['XDEBUG_PROFILE']) || 
-     isset($_COOKIE['XDEBUG_PROFILE'])  || 
-     isset($_SERVER['XDEBUG_PROFILE']) 
-) {
+if ( PHPIO::requestId()  ) {
 	PHPIO::hook();
 }
