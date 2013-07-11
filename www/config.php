@@ -30,7 +30,8 @@ function phpio_profiles($limit=10) {
 		if ( $is_ok ) {
 			$data = unserialize($data);
 			$profile_id = substr(basename($file),5);
-			$profiles[ $profile_id ] = $data[0]['_SERVER']['SCRIPT_NAME'];
+			$info = $data[0]['_SERVER'];
+			$profiles[ $profile_id ] = isset($info['DOCUMENT_URI']) ? $info['DOCUMENT_URI'] : $info['SCRIPT_NAME'];
 		}
 	}
 	krsort($profiles);
