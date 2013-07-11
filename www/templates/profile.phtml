@@ -112,7 +112,7 @@ foreach ( $call_style as $cls => $color ) {
             </ul>
 	    <ul class="nav" id="profiles">
 		<li class="dropdown" data-dropdown="dropdown">
-                  <a href="#" class="dropdown-toggle">Profile<?php if(!isset($_REQUEST['profile_id'])) echo '(Auto)'; ?> : <b class="label"><?php echo array_pop(explode('.',$profile_id))?></b></a>
+                  <a href="#" class="dropdown-toggle">Profile<?php if(!isset($_REQUEST['profile_id'])) echo '(newest)'; ?> : <b class="label"><?php echo array_pop(explode('.',$profile_id))?></b></a>
                   <ul class="dropdown-menu">
                   </ul>
 		</li>
