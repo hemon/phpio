@@ -36,9 +36,22 @@ class PHPIO_PDO extends PHPIO_Hook_Class {
     function prepare_post($jp) {
         if ( $this->result instanceof PDOStatement ) {
             $sth  = $this->getObjectId($this->result);
-            $link = $this->getLink($this->object);
-            self::$statements[$sth] = $link;
+            self::$statements[$sth] = $this->object;
         }
+    }
+
+    function query_post($jp) {
+        if ( $this->result instanceof PDOStatement ) {
+            $this->trace['rowcount'] = $this->result->rowCount();
+        }
+        $this->postCallback($jp);
+    }
+
+    function exec_post($jp) {
+        if ( $this->result !== false ) {
+            $this->trace['rowcount'] = $this->result;
+        }
+        $this->postCallback($jp);
     }
 
     function lastInsertId_pre($jp) {
