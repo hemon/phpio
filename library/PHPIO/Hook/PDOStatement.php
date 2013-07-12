@@ -102,6 +102,6 @@ class PHPIO_Hook_PDOStatement extends PHPIO_Hook_Class {
 	}
 
 	function getPDO() {
-		return PHPIO_PDO::$statements[$this->object_id];
+		return PHPIO_Hook_PDO::$statements[$this->object_id];
 	}
 }
