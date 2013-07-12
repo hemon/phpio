@@ -31,7 +31,7 @@ class PHPIO {
 				continue;
 			}
 
-			$phpio_hook = "PHPIO_$hook";
+			$phpio_hook = "PHPIO_Hook_$hook";
 			self::$hooks[$hook] = new $phpio_hook;
 			self::$hooks[$hook]->init();
 		}
