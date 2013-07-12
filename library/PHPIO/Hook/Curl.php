@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Curl extends PHPIO_Hook_Func {
+class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 	const classname = 'Curl';
 	var $hooks = array('curl_exec','curl_multi_add_handle','curl_multi_remove_handle');
 	var $stderr = array(); // curl error handels

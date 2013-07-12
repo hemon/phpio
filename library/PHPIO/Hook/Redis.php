@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Redis extends PHPIO_Hook_Class {
+class PHPIO_Hook_Redis extends PHPIO_Hook_Class {
 	const classname = 'Redis';
 	var $hooks = array(
         //'__construct',

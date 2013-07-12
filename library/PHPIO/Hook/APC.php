@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_APC extends PHPIO_Hook_Func {
+class PHPIO_Hook_APC extends PHPIO_Hook_Func {
 	const classname = 'APC';
 	var $link = 'localhost';
 	var $hooks = array(
