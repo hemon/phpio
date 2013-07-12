@@ -2,5 +2,5 @@
 require './config.php';
 
 if ( PHPIO::requestId()  ) {
-        PHPIO::hook();
+    PHPIO::hook();
 }

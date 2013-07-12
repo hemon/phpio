@@ -1,7 +1,7 @@
 <?php
 
 class PHPIO_Log_File {
-        var $save_dir = STORE;
+        var $save_dir = PHPIO_STORE;
         var $logs = array();
         function append($value) {
                 $this->logs[] = $value;

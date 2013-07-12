@@ -5,7 +5,7 @@ switch( $_REQUEST['op'] ){
 	case 'fileviewer':
 		$file = $_REQUEST['file'];
 		$line = $_REQUEST['line'];
-		list($is_ok, $data) = file_read($file);
+		list($is_ok, $data) = phpio_file_read($file);
 		if ( !$is_ok ) {
 			echo $data;
 			break;
@@ -23,8 +23,8 @@ switch( $_REQUEST['op'] ){
 			list($profile_id, $uri) = each($profiles);
 		}
 
-		$file = STORE .'/prof_'. $profile_id;
-		list($is_ok, $data) = file_read($file);
+		$file = PHPIO_STORE .'/prof_'. $profile_id;
+		list($is_ok, $data) = phpio_file_read($file);
 		if ( $is_ok ) {
 			$data = unserialize($data);
 			require 'templates/profile.phtml';
