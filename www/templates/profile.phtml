@@ -1,15 +1,4 @@
-<?php
-//"1D8BD1", "F1683C", "2AD62A", "DBDC25",  "649665", "4169E1", "087eb6", "BA55D3", "D2691E", "FF7F50",  "32CD32", "4682B4"
-$call_style['Mysql'] = 'D2691E';
-$call_style['PDO'] = 'F1683C';
-$call_style['PDOStatement'] = 'F1683C';
-$call_style['Redis'] = '2AD62A';
-$call_style['Memcache'] = 'DBDC25';
-$call_style['Memcached'] = 'DBDC25';
-$call_style['Curl'] = '087eb6';
-$call_style['APC'] = 'BA55D3';
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -44,8 +33,8 @@ $call_style['APC'] = 'BA55D3';
       }
       .label {
         font-size:11px;
-	font-weight:normal;
-	text-transform:none;
+      	font-weight:normal;
+      	text-transform:none;
       }
       .label-class {
         text-indent: 1em;
@@ -53,6 +42,15 @@ $call_style['APC'] = 'BA55D3';
         display: inline-block;
         margin-right: 3px;
       }
+      /* 1D8BD1, F1683C, 2AD62A, DBDC25,  649665, 4169E1, 087eb6, BA55D3, D2691E, FF7F50, 32CD32, 4682B4 */
+      .label-APC{background-color:#BA55D3}
+      .label-Mysql{background-color:#D2691E}
+      .label-PDO{background-color:#F1683C}
+      .label-PDOStatement{background-color:#F1683C}
+      .label-Redis{background-color:#2AD62A}
+      .label-Memcache{background-color:#DBDC25}
+      .label-Memcached{background-color:#D2691E}
+      .label-Curl{background-color:#087eb6}
 
       .srclink {
         float: right;
@@ -87,11 +85,7 @@ $call_style['APC'] = 'BA55D3';
         max-width: 100%;
         border: 1px solid #ccc;
       }
-<?php
-foreach ( $call_style as $cls => $color ) {
-	echo ".label-$cls{background-color:#$color}";
-}
-?>
+
     </style>
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -112,7 +106,7 @@ foreach ( $call_style as $cls => $color ) {
             </ul>
 	    <ul class="nav" id="profiles">
 		<li class="dropdown" data-dropdown="dropdown">
-                  <a href="#" class="dropdown-toggle">Profile<?php if(!isset($_REQUEST['profile_id'])) echo '(newest)'; ?> : <b class="label"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
+                  <a href="#" class="dropdown-toggle">Profile<?php if(!isset($_REQUEST['profile_id'])) echo '(last)'; ?> : <b class="label"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
                   <ul class="dropdown-menu">
                   </ul>
 		</li>
@@ -139,7 +133,7 @@ foreach ( $call_style as $cls => $color ) {
                   if ($i == 0) continue;
 
                   if ( isset($row['curl']) ) {
-                      $row['header'] = PHPIO::$log->fetch($row['header']);
+                      $row['header'] = PHPIO::$log->getCurlHeader($row['header']);
                       $row['link'] = PHPIO_Hook_Curl::getLink($row['header']);
                   }
 
@@ -282,7 +276,7 @@ foreach ( $call_style as $cls => $color ) {
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.10.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/profile.js"></script>
     <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/profile.js?20130713"></script>
   </body>
 </html>

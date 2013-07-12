@@ -42,12 +42,22 @@ $(function(){
     	 $(this).prev('tr').click();
     });
 
-    $('#profiles .dropdown-toggle').click(function(){
-	$.getJSON("?op=profiles",function(data){
-		$('#profiles .dropdown-menu').empty().append('<li><a href="?">Auto(newest)</a></li>');
-            $.each(data,function(id,uri){
-                $('#profiles .dropdown-menu').append('<li><a href="?profile_id='+id+'" title="'+uri+'">'+id.substr(id.length-4,4)+' '+uri+'</a></li>');
-            })
+    $('#profiles .dropdown').click(function(){
+    	if ( $(this).hasClass('open') ) return;
+    	
+    	var menu = $('#profiles .dropdown-menu');
+    	menu.empty().append('<li><a href="?">Loading...</a></li>');
+		$.getJSON("?op=profiles",function(data){
+			if ( data.length == 0 ) return;
+
+			menu.empty().append('<li><a href="?">Auto(last)</a></li>');
+            $.each(data,function(id,profile){
+            	var profile_id = profile[0];
+            	var uri = profile[1];
+                menu.append('<li><a href="?profile_id='+profile_id+'" title="'+uri+'">'+
+                	profile_id.substr(profile_id.length-4,4)+' '+uri+
+                '</a></li>');
+            });
         });
     });
 })

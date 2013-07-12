@@ -7,25 +7,27 @@ switch( $_REQUEST['op'] ){
 		$line = $_REQUEST['line'];
 		$data = file_get_contents($file);
 		if ( $data === false ) {
-			echo 'source file is not exists or is not readable.';
+			echo 'Source file is not exists or is not readable.';
 			break;
 		}
 		require 'templates/fileviewer.phtml';
 		break;
 	case 'profiles':
-		$profiles = PHPIO::$log->profiles();
+		$profiles = PHPIO::$log->getProfiles();
 		echo json_encode($profiles);
 		break;
 	default:
 		$profile_id = $_REQUEST['profile_id'];
 		if ( empty($profile_id) ) {
-			$profiles = PHPIO::$log->profiles();
-			list($profile_id, $uri) = each($profiles);
+			$profiles = PHPIO::$log->getProfiles(1);
+			if ( is_array($profiles[0]) ) {
+				list($profile_id, $uri) = $profiles[0];
+			}
 		}
 
-		$data = PHPIO::$log->fetch($profile_id);
+		$data = PHPIO::$log->getProfile($profile_id);
 		if ( $data === false ) {
-			echo 'profile is not exists or is not readable.';
+			echo 'Profile is not exists or is not readable.';
 			break;
 		}
 		require 'templates/profile.phtml';
