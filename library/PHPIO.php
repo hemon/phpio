@@ -1,20 +1,9 @@
 <?php
 
 class PHPIO {
-	static $available = array(
-		'APC' => 1,
-		'Curl' => 1,
-		'Mysql' => 1,
-		'PDO' => 1,
-		'PDOStatement' => 1,
-		'Redis' => 1,
-		'Memcache' => 1,
-		'Memcached' => 1,
-		'CallUserFunc' => 1,
-	);
+	static $enabled = array();
 	static $run_id;
 	static $hooks = array();
-	static $log_class = 'PHPIO_Log_File';
 	static $log;
 	static $links = array();
 
@@ -23,16 +12,14 @@ class PHPIO {
 		self::$run_id = (self::requestId() > 1 ?  self::requestId().'.'.$run_id : $run_id);
 		setcookie('XDEBUG_PROFILE_ID', self::$run_id);
 
-		self::$log = new self::$log_class();
 		self::$log->append(array('_SERVER'=>$_SERVER,'_GET'=>$_GET,'_POST'=>$_POST));
-
-		foreach ( self::$available as $hook => $enabled ) {
+		foreach ( self::$enabled as $hook => $enabled ) {
 			if ( !$enabled ) {
 				continue;
 			}
 
-			$phpio_hook = "PHPIO_Hook_$hook";
-			self::$hooks[$hook] = new $phpio_hook;
+			$hook_class = "PHPIO_Hook_$hook";
+			self::$hooks[$hook] = new $hook_class;
 			self::$hooks[$hook]->init();
 		}
 

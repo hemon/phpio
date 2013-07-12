@@ -5,30 +5,29 @@ switch( $_REQUEST['op'] ){
 	case 'fileviewer':
 		$file = $_REQUEST['file'];
 		$line = $_REQUEST['line'];
-		list($is_ok, $data) = phpio_file_read($file);
-		if ( !$is_ok ) {
-			echo $data;
+		$data = file_get_contents($file);
+		if ( $data === false ) {
+			echo 'source file is not exists or is not readable.';
 			break;
 		}
 		require 'templates/fileviewer.phtml';
 		break;
 	case 'profiles':
-		$profiles = phpio_profiles();
+		$profiles = PHPIO::$log->profiles();
 		echo json_encode($profiles);
 		break;
 	default:
 		$profile_id = $_REQUEST['profile_id'];
 		if ( empty($profile_id) ) {
-			$profiles = phpio_profiles();
+			$profiles = PHPIO::$log->profiles();
 			list($profile_id, $uri) = each($profiles);
 		}
 
-		$file = PHPIO_STORE .'/prof_'. $profile_id;
-		list($is_ok, $data) = phpio_file_read($file);
-		if ( $is_ok ) {
-			$data = unserialize($data);
-			require 'templates/profile.phtml';
-			//echo '<pre>',print_r($data);
+		$data = PHPIO::$log->fetch($profile_id);
+		if ( $data === false ) {
+			echo 'profile is not exists or is not readable.';
+			break;
 		}
+		require 'templates/profile.phtml';
 		break;
 }

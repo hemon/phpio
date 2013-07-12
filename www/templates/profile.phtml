@@ -135,12 +135,12 @@ foreach ( $call_style as $cls => $color ) {
             </thead>
             <tbody>
             <?php
-                foreach($data as $i => $row):
+                if ($data) foreach($data as $i => $row):
                   if ($i == 0) continue;
 
                   if ( isset($row['curl']) ) {
-                      $row['header'] = file_get_contents($row['header']);
-                      $row['link'] = curl_link($row['header']);
+                      $row['header'] = PHPIO::$log->fetch($row['header']);
+                      $row['link'] = PHPIO_Hook_Curl::getLink($row['header']);
                   }
 
                   $traces = array();
@@ -168,6 +168,7 @@ foreach ( $call_style as $cls => $color ) {
 				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">rows(',$row['rowcount'],')</span>';
 			} elseif ( isset($row['curl']) ) {
 				$http_code = $row['curl']['http_code'];
+        $http_status = $row['curl']['http_status'];
 				switch ( substr($http_code,0,1) ){
 					case '1':
 					case '2':
@@ -178,8 +179,7 @@ foreach ( $call_style as $cls => $color ) {
 					case '5':
 						$label_style = 'error';
 				}
-				$label_title = http_status($http_code);
-				echo "<span class=\"label $label_style\" title=\"HTTP $http_code $label_title\">http($http_code)</span>";
+				echo "<span class=\"label $label_style\" title=\"HTTP $http_code $http_status\">http($http_code)</span>";
 			} elseif ( isset($row['result']) ) {
 				if ( preg_match('|(\w+)\((.+?)\)(#\d+)?|',$row['result'], $matches) ) {
 					list(,$type,$value) = $matches;

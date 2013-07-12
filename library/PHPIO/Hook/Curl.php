@@ -35,7 +35,7 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 
 	function addErrorHandle($ch) {
 		$ch_id = intval($ch);
-		$stderr = $this->stderr[$ch_id] = '/tmp/phpio/curl_'.PHPIO::$run_id.'_'.$ch_id;
+		$stderr = $this->stderr[$ch_id] = PHPIO::$log->save_dir.'/curl_'.PHPIO::$run_id.'_'.$ch_id;
 
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_STDERR, fopen($stderr, 'w'));
@@ -56,12 +56,66 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 
 		$this->trace['cmd'] = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		$this->trace['curl'] = curl_getinfo($ch);
+		$this->trace['curl']['http_status'] = $this->httpStatus($this->trace['curl']['http_code']);
 		$this->trace['header'] = $stderr;
 	}
 	
-	function getLink($header) {
+	static function getLink($header) {
 		if ( preg_match('/Connected to (.*?) \((.*?)\) port (\d+)/', $header, $matches) ) {
-				return $matches[2].":".$matches[3];
+			return $matches[2].":".$matches[3];
 		}
+	}
+
+	static function httpStatus($http_code) {
+		$HTTP_STATUS = array(
+			100 => 'Continue',
+			101 => 'Switching Protocols',
+			102 => 'Processing',
+			200 => 'OK',
+			201 => 'Created',
+			202 => 'Accepted',
+			203 => 'Non-Authoriative Information',
+			204 => 'No Content',
+			205 => 'Reset Content',
+			206 => 'Partial Content',
+			207 => 'Multi-Status',
+			300 => 'Multiple Choices',
+			301 => 'Moved Permanently',
+			302 => 'Found',
+			303 => 'See Other',
+			304 => 'Not Modified',
+			305 => 'Use Proxy',
+			306 => '(Unused)',
+			307 => 'Temporary Redirect',
+			400 => 'Bad Request',
+			401 => 'Unauthorized',
+			402 => 'Payment Granted',
+			403 => 'Forbidden',
+			404 => 'File Not Found',
+			405 => 'Method Not Allowed',
+			406 => 'Not Acceptable',
+			407 => 'Proxy Authentication Required',
+			408 => 'Request Time-out',
+			409 => 'Conflict',
+			410 => 'Gone',
+			411 => 'Length Required',
+			412 => 'Precondition Failed',
+			413 => 'Request Entity Too Large',
+			414 => 'Request-URI Too Large',
+			415 => 'Unsupported Media Type',
+			416 => 'Requested range not satisfiable',
+			417 => 'Expectation Failed',
+			422 => 'Unprocessable Entity',
+			423 => 'Locked',
+			424 => 'Failed Dependency',
+			500 => 'Internal Server Error',
+			501 => 'Not Implemented',
+			502 => 'Bad Gateway',
+			503 => 'Service Unavailable',
+			504 => 'Gateway Timeout',
+			505 => 'HTTP Version Not Supported',
+			507 => 'Insufficient Storage',
+		);
+		return isset($HTTP_STATUS[$http_code]) ? $HTTP_STATUS[$http_code] : '';
 	}
 }
