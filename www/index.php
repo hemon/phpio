@@ -20,8 +20,8 @@ switch( $_REQUEST['op'] ){
 		$profile_id = $_REQUEST['profile_id'];
 		if ( empty($profile_id) ) {
 			$profiles = PHPIO::$log->getProfiles(1);
-			if ( is_array($profiles[0]) ) {
-				list($profile_id, $uri) = $profiles[0];
+			if ( is_array($profiles) ) {
+				list($profile_id, $uri) = array_shift($profiles);
 			}
 		}
 
