@@ -24,7 +24,7 @@ $_PHPIO = array(
 		'CallUserFunc' => 1,
 	),
 	'log' => array(
-		'class' => 'PHPIO_Log_File',
+		'class' => 'PHPIO_Log_Redis',
 		'save_dir' => PHPIO_TMP,
 	)
 );

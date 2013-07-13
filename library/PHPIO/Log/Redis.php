@@ -1,27 +1,23 @@
 <?php
 
-class PHPIO_Log_Redis {
-	var $save_dir = '';
-	var $logs = array();
+class PHPIO_Log_Redis extends PHPIO_Log {
 	var $redis = null;
 	var $host = '127.0.0.1';
 	var $port = 6379;
 	var $auth = '';
-
-	function append($value) {
-		$this->logs[] = $value;
-	}
-
-	function count() {
-		return count($this->logs);
-	}
+	var $saveSource = true;
+	var $saveCurlHeader = true;
 
 	function save() {
+		$this->stop();
 		if ( $this->count() == 0 ) return;
 
 		$run_ids = explode('.', PHPIO::$run_id);
 		$last_id = array_slice($run_ids, -1);
 		
+		if ( $this->saveSource ) $this->saveSource();
+		if ( $this->saveCurlHeader ) $this->saveCurlHeader();
+
 		$this->getRedis()->hSet('PHPIO_PROF', PHPIO::$run_id, serialize($this->logs));
 		$this->getRedis()->zAdd(
 			'PHPIO_LIST', 
@@ -33,7 +29,9 @@ class PHPIO_Log_Redis {
 			$root_profile_id = $run_ids[0];
 			$this->getRedis()->sAdd('PHPIO_REL_'.$root_prof_id, PHPIO::$run_id);
 		}
+	}
 
+	function saveCurlHeader() {
 		$curls = glob($this->save_dir.'/curl_*');
 		foreach ( $curls as $curl ) {
 			if ( filesize($curl) > 0 ) {
@@ -44,8 +42,30 @@ class PHPIO_Log_Redis {
 		}
 	}
 
-	function getURI($info) {
-		return isset($info['DOCUMENT_URI']) ? $info['DOCUMENT_URI'] : $info['SCRIPT_NAME'];
+	function getSource($file) {
+		return $this->getRedis()->hGet('PHPIO_SRC', $file);
+	}
+
+	function saveSource() {
+		$files = array();
+		foreach ( $this->logs as $log ) {
+			if ( isset($log['trace']) ) foreach ($log['trace'] as $trace) {
+				if ( preg_match('|\[(.*?)\:\d+\]|', $trace, $matches) ) {
+					$files[] = $matches[1];
+				}
+			}
+		}
+
+		$files = array_unique($files);
+		foreach ( $files as $file ) {
+			if ( !is_file($file) ) continue;
+
+			$hash = md5_file($file);
+			if ( !$this->getRedis()->hExists('PHPIO_SRC', $hash) ) {
+				$this->getRedis()->hSet('PHPIO_SRC', $hash, file_get_contents($file));
+			}
+			$this->logs[0]['_SRC'][$file] = $hash;
+		}
 	}
 
 	function getProfiles($limit=10) {

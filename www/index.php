@@ -5,7 +5,7 @@ switch( $_REQUEST['op'] ){
 	case 'fileviewer':
 		$file = $_REQUEST['file'];
 		$line = $_REQUEST['line'];
-		$data = file_get_contents($file);
+		$data = PHPIO::$log->getSource($file);
 		if ( $data === false ) {
 			echo 'Source file is not exists or is not readable.';
 			break;

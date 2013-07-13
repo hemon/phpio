@@ -1,18 +1,8 @@
 <?php
 
-class PHPIO_Log_File {
-	var $save_dir = '';
-	var $logs = array();
-
-	function append($value) {
-		$this->logs[] = $value;
-	}
-
-	function count() {
-		return count($this->logs);
-	}
-
+class PHPIO_Log_File extends PHPIO_Log {
 	function save() {
+		$this->stop();
 		if ( $this->count() == 0 ) return;
 		
 		file_put_contents($this->save_dir.'/prof_'.PHPIO::$run_id, serialize($this->logs));
@@ -34,10 +24,6 @@ class PHPIO_Log_File {
 		return $profiles;
 	}
 
-	function getURI($info) {
-		return isset($info['DOCUMENT_URI']) ? $info['DOCUMENT_URI'] : $info['SCRIPT_NAME'];
-	}
-
 	function getProfile($profile_id) {
 		$profile = $this->save_dir.'/prof_'.$profile_id;
 		$data = file_get_contents($profile);
@@ -54,5 +40,9 @@ class PHPIO_Log_File {
 
 	function getCurlHeader($curl_id){
 		return file_get_contents($curl_id);
+	}
+
+	function getSource($file) {
+		return file_get_contents($file);
 	}
 }

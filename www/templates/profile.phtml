@@ -141,6 +141,10 @@
                   foreach($row['trace'] as $trace) {
                       preg_match('|\[(.*?)\:(\d+)\]|', $trace, $matches);
                       $matches[0] = $trace;
+                      // get source file hash
+                      if ( isset($data[0]['_SRC'][ $matches[1] ]) ) {
+                        $matches[1] = $data[0]['_SRC'][ $matches[1] ];
+                      }
                       $traces[] = $matches;
                   }
                 ?>
