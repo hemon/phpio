@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Hook_Mysql extends PHPIO_Hook_Func {
+class PHPIO_Hook_Mysql extends PHPIO_Hook {
 	const classname = 'Mysql';
 	var $hooks = array(
 		//'mysql_affected_rows',

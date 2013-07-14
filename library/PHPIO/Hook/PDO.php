@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Hook_PDO extends PHPIO_Hook_Class {
+class PHPIO_Hook_PDO extends PHPIO_Hook {
     const classname = 'PDO';
     var $hooks = array(
         'beginTransaction',

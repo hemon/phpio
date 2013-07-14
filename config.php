@@ -11,6 +11,9 @@ if ( !file_exists(PHPIO_TMP) ) {
 	mkdir(PHPIO_TMP, 0, true);
 }
 
+require PHPIO_FUNC.'/common.func.php';
+phpio_load();
+
 $_PHPIO = array(
 	'enabled' => array(
 		'APC' => 1,
@@ -28,9 +31,6 @@ $_PHPIO = array(
 		'save_dir' => PHPIO_TMP,
 	)
 );
-
-require PHPIO_FUNC.'/common.func.php';
-spl_autoload_register('phpio_loader');
 
 foreach ( $_PHPIO as $_name => $_value ) {
 	if ( isset($_value['class']) ) {

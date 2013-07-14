@@ -1,5 +1,5 @@
 <?php
-abstract class PHPIO_Hook_Class {
+abstract class PHPIO_Hook {
 	const classname = '';
 	//var $log = array();
 	var $hooks = array();
@@ -118,5 +118,19 @@ abstract class PHPIO_Hook_Class {
 	
 	function getHookFunc($func) {
 		return $this::classname . '->' . $func . '()';
+	}
+}
+
+abstract class PHPIO_Hook_Func extends PHPIO_Hook {
+	const classname = '';
+	var $log = array();
+	var $hooks = array();
+	
+	function getFunctions() {
+		return get_extension_funcs($this::classname);
+	}
+
+	function getHookFunc($func) {
+		return $func . '()';
 	}
 }

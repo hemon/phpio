@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Hook_Memcached extends PHPIO_Hook_Class {
+class PHPIO_Hook_Memcached extends PHPIO_Hook {
 	const classname = 'Memcached';
 	var $hooks = array(
         'add',

@@ -32,4 +32,15 @@ class PHPIO {
 		if ( isset($_SERVER['XDEBUG_PROFILE'])  ) return $_SERVER['XDEBUG_PROFILE'];
 		return 0;
 	}
+
+	static function load($classname, $args=array()) {
+		$class_path = str_replace('_', '/', $classname);
+		$class_file = PHPIO_LIB. "/" . $class_path . ".php";
+		if ( is_file($class_file) ) require $class_file;
+
+		$rc = new ReflectionClass($classname);
+		$class = $rc->newInstanceArgs($args);
+
+		return $class;
+	}
 }

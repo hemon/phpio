@@ -1,6 +1,6 @@
 <?php
 
-class PHPIO_Hook_PDOStatement extends PHPIO_Hook_Class {
+class PHPIO_Hook_PDOStatement extends PHPIO_Hook {
 	const classname = 'PDOStatement';
 	var $hooks = array(
         'execute',
