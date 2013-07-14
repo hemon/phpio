@@ -34,7 +34,7 @@ class PHPIO_Log_File extends PHPIO_Log {
 		$root_profile_id = substr($root_profile_id,0,13);
 		$profiles = glob($this->save_dir."/prof_{$root_profile_id}*");
 		foreach($profiles as &$profile) {
-			$profile = basename($profile);
+			$profile = substr(basename($profile),5);
 		}
 		return $profiles;
 	}
