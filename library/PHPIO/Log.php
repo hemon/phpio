@@ -28,7 +28,7 @@ abstract class PHPIO_Log {
 	function getProfiles() {}
 	function getProfile($profile_id) {}
 	function getSource($file) {}
-	function getRel($root_profile_id){}
+	function getFlow($root_profile_id){}
 	function getCurlHeader($curl_id){}
 
 }

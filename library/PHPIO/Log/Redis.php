@@ -27,7 +27,7 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 
 		if ( count($run_ids) >= 2 ) {
 			$root_profile_id = $run_ids[0];
-			$this->getRedis()->sAdd('PHPIO_REL_'.$root_prof_id, PHPIO::$run_id);
+			$this->getRedis()->sAdd('PHPIO_FLOW_'.$root_prof_id, PHPIO::$run_id);
 		}
 	}
 
@@ -81,8 +81,9 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		return unserialize($data);
 	}
 
-	function getRel($root_profile_id) {
-		return $this->getRedis()->sMembers($root_profile_id);
+	function getFlow($root_profile_id) {
+		$root_profile_id = substr($root_profile_id,0,13);
+		return $this->getRedis()->sMembers('PHPIO_FLOW_'.$root_profile_id);
 	}
 
 	function getCurlHeader($curl_id) {

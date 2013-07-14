@@ -30,7 +30,8 @@ class PHPIO_Log_File extends PHPIO_Log {
 		return unserialize($data);
 	}
 
-	function getRel($root_profile_id) {
+	function getFlow($root_profile_id) {
+		$root_profile_id = substr($root_profile_id,0,13);
 		$profiles = glob($this->save_dir."/prof_{$root_profile_id}*");
 		foreach($profiles as &$profile) {
 			$profile = basename($profile);
