@@ -120,28 +120,28 @@
         background: #fff;
         padding: 0;
       }
-
       #tree {
         position: fixed;
         right: 0;
-        top: 40px;
+        /*top: 40px;*/
+        bottom: 0;
         background: #fff;
         border-left: 1px solid #CCCCCC;
-        border-bottom: 1px solid #CCCCCC;
+        border-top: 1px solid #CCCCCC;
         padding: 25px;
+        -moz-user-select: none;
       }
       #tree span.zoomin {
-        background: url("img/arrow.gif") no-repeat scroll -19px 0 transparent;
+        background: url("img/arrow.gif") no-repeat scroll 0 -19px transparent;
       }
       #tree .zoomout {
-        background: url("img/arrow.gif") no-repeat scroll -19px -19px transparent;
+        background: url("img/arrow.gif") no-repeat scroll 0px 0px transparent;
         position: absolute;
         bottom:0;
-        left:0;
+        right:0;
         width: 19px;
         height: 19px;
         cursor: pointer;
-        -moz-user-select: none;
       }
 
     </style>
@@ -161,11 +161,14 @@
               <li class="active"><a href="#">ALL</a></li>
             </ul>
       	    <ul class="nav secondary-nav">
-          		<li class="dropdown" data-dropdown="dropdown" id="profiles">
-                <a href="#" class="dropdown-toggle">Profile：<?php if(!isset($_REQUEST['profile_id'])) echo '(last)'; ?> <b class="label"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
+              <li>
+                <a href="#"><b class="label notice"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
+              </li>
+              <li class="dropdown" data-dropdown="dropdown" id="profiles">
+                <a href="#" class="dropdown-toggle">Profiles<?php if(!isset($_REQUEST['profile_id'])) echo '(last)'; ?></a>
                 <ul class="dropdown-menu">
                 </ul>
-          		</li>
+              </li>
       	    </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -173,7 +176,7 @@
     </div>
 
     <div class="container-fluid">
-        <?php if( is_array($flow) && count($flow) > 1 ) : ?>
+        <?php if ( is_array($flow) && count($flow) > 1 ) : ?>
         <div id="tree">
           <span class="zoomout"></span>
           <?php echo phpio_ul(phpio_tree($flow), $profile_id);?>
