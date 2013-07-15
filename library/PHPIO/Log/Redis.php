@@ -12,8 +12,9 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		$this->stop();
 		if ( $this->count() == 0 ) return;
 
-		$run_ids = explode('.', PHPIO::$run_id);
-		$last_id = array_slice($run_ids, -1);
+		$path_ids = explode('.', PHPIO::$run_id);
+		$path_len = count($path_ids);
+		$last_id = $path_ids[ $path_len-1 ];
 		
 		if ( $this->saveSource ) $this->saveSource();
 		if ( $this->saveCurlHeader ) $this->saveCurlHeader();
@@ -25,9 +26,8 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 			serialize(array(PHPIO::$run_id, $this->getURI($this->logs[0]['_SERVER'])))
 		);
 
-		if ( count($run_ids) >= 2 ) {
-			$root_profile_id = $run_ids[0];
-			$this->getRedis()->sAdd('PHPIO_FLOW_'.$root_prof_id, PHPIO::$run_id);
+		if ( $path_len > 1 ) {
+			$this->getRedis()->sAdd('PHPIO_FLOW_'.$path_ids[0], PHPIO::$run_id);
 		}
 	}
 
@@ -84,8 +84,11 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	function getFlow($root_profile_id) {
 		$root_profile_id = substr($root_profile_id,0,13);
 		$flow = $this->getRedis()->sMembers('PHPIO_FLOW_'.$root_profile_id);
-		if ( empty($flow) ) {
-			return array($root_profile_id);
+
+		if ( is_array($flow) ) {
+			array_unshift($flow, $root_profile_id);
+		} else {
+			$flow = array($root_profile_id);
 		}
 		return $flow;
 	}
