@@ -16,6 +16,7 @@ abstract class PHPIO_Log {
 	}
 
 	function stop() {
+		if ( function_exists('fastcgi_finish_request') ) fastcgi_finish_request();
 		ini_set("aop.enable","0");
 		$this->start = false;
 	}
