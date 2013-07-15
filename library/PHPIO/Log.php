@@ -19,6 +19,7 @@ abstract class PHPIO_Log {
 		if ( function_exists('fastcgi_finish_request') ) fastcgi_finish_request();
 		ini_set("aop.enable","0");
 		$this->start = false;
+		$this->logs[0]['_ERROR'] = error_get_last();
 	}
 
 	function getURI($info) {
