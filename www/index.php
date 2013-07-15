@@ -13,7 +13,7 @@ switch( $_REQUEST['op'] ){
 		require 'templates/fileviewer.phtml';
 		break;
 	case 'profiles':
-		$profiles = PHPIO::$log->getProfiles();
+		$profiles = PHPIO::$log->getProfiles(20);
 		echo json_encode($profiles);
 		break;
 	default:
@@ -24,7 +24,7 @@ switch( $_REQUEST['op'] ){
 				list($profile_id, $uri) = array_shift($profiles);
 			}
 		}
-
+		$flow = PHPIO::$log->getFlow($profile_id);
 		$data = PHPIO::$log->getProfile($profile_id);
 		if ( $data === false ) {
 			echo 'Profile is not exists or is not readable.';

@@ -83,7 +83,11 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 
 	function getFlow($root_profile_id) {
 		$root_profile_id = substr($root_profile_id,0,13);
-		return $this->getRedis()->sMembers('PHPIO_FLOW_'.$root_profile_id);
+		$flow = $this->getRedis()->sMembers('PHPIO_FLOW_'.$root_profile_id);
+		if ( empty($flow) ) {
+			return array($root_profile_id);
+		}
+		return $flow;
 	}
 
 	function getCurlHeader($curl_id) {

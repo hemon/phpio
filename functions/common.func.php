@@ -30,3 +30,29 @@ function phpio_class_set_properties($class, $properties) {
 		}
 	}
 }
+
+function phpio_tree($array) {
+    $tree = array();
+    foreach($array as $item) {
+        $items = explode('.',$item);
+        $var = '$tree["'.implode('"]["', $items).'"]';
+        eval(' if ( !isset('.$var.') ) '.$var.' = array(); ');
+    }
+    return $tree;
+}
+
+function phpio_ul($tree, $current='', $parent='') {
+    $html = '<ul class="tree">';
+    foreach ( $tree as $name => $node ) {
+        $fullpath = (!empty($parent) ? "$parent.$name" : $name);
+        $class = ( (strpos($current, $name) !== false) ? 'label' : 'label label-empty');
+        $class = ( ($fullpath === $current) ? 'label notice' : $class);
+        $html .= '<li><a href="?profile_id='.$fullpath.'" class="'.$class.'">'.$name.'</a>';
+        if ( !empty($node) ) {
+            $html .= phpio_ul($node, $current, $fullpath);
+        }
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+    return $html;
+}

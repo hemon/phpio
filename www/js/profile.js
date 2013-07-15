@@ -42,7 +42,7 @@ $(function(){
     	 $(this).prev('tr').click();
     });
 
-    $('#profiles .dropdown').click(function(){
+    $('#profiles').click(function(){
     	if ( $(this).hasClass('open') ) return;
     	
     	var menu = $('#profiles .dropdown-menu');
@@ -59,5 +59,18 @@ $(function(){
                 '</a></li>');
             });
         });
+    });
+
+    $('#tree span').click(function(){
+    	var tree = $('#tree ul.tree');
+    	if ( tree.css('display') == 'none' ) {
+    		$(this).removeClass('zoomin');
+    		$('#tree').css('padding','25px');
+    		tree.show();
+    	} else {
+    		$(this).addClass('zoomin');
+    		$('#tree').css('padding','8px');
+    		tree.hide();
+    	}
     });
 })

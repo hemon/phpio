@@ -19,7 +19,6 @@
     		/*position: absolute;*/
     		margin-left: 2px
     	}
-      #profiles{ float:right; margin-right:80px}
       .prof_detail {
         display: none;
         height: 150px;
@@ -42,6 +41,11 @@
         display: inline-block;
         margin-right: 3px;
       }
+      .label-empty {
+        background: none;
+        color: #000;
+        /*border: 1px solid #ccc;*/
+      }
       /* 1D8BD1, F1683C, 2AD62A, DBDC25,  649665, 4169E1, 087eb6, BA55D3, D2691E, FF7F50, 32CD32, 4682B4 */
       .label-APC{background-color:#BA55D3}
       .label-Mysql{background-color:#D2691E}
@@ -51,6 +55,7 @@
       .label-Memcache{background-color:#DBDC25}
       .label-Memcached{background-color:#D2691E}
       .label-Curl{background-color:#087eb6}
+      a.label, a.label:hover { text-decoration: none;color: auto }
 
       .srclink {
         float: right;
@@ -86,9 +91,60 @@
         border: 1px solid #ccc;
       }
 
-    </style>
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+      ul.tree, ul.tree ul {
+          background: url("img/vline.png") repeat-y scroll 0 0 transparent;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+      }
+      ul.tree ul {
+          margin-left: 10px;
+      }
+      ul.tree li {
+          background: url("img/node.png") no-repeat scroll 0 0 transparent;
+          color: #336699;
+          font-weight: bold;
+          line-height: 20px;
+          margin: 0;
+          padding: 0 12px;
+      }
+      ul.tree li.last {
+          background: url("img/lastnode.png") no-repeat scroll 0 0 #FFFFFF;
+      }
 
+      ul.tree li:last-child { 
+        background: #fff url("img/lastnode.png") no-repeat; 
+      }
+
+      #tree >ul >li {
+        background: #fff;
+        padding: 0;
+      }
+
+      #tree {
+        position: fixed;
+        right: 0;
+        top: 40px;
+        background: #fff;
+        border-left: 1px solid #CCCCCC;
+        border-bottom: 1px solid #CCCCCC;
+        padding: 25px;
+      }
+      #tree span.zoomin {
+        background: url("img/arrow.gif") no-repeat scroll -19px 0 transparent;
+      }
+      #tree .zoomout {
+        background: url("img/arrow.gif") no-repeat scroll -19px -19px transparent;
+        position: absolute;
+        bottom:0;
+        left:0;
+        width: 19px;
+        height: 19px;
+        cursor: pointer;
+        -moz-user-select: none;
+      }
+
+    </style>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -104,19 +160,26 @@
             <ul class="nav" id="hooks">
               <li class="active"><a href="#">ALL</a></li>
             </ul>
-	    <ul class="nav" id="profiles">
-		<li class="dropdown" data-dropdown="dropdown">
-                  <a href="#" class="dropdown-toggle">Profile<?php if(!isset($_REQUEST['profile_id'])) echo '(last)'; ?> : <b class="label"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
-                  <ul class="dropdown-menu">
-                  </ul>
-		</li>
-	    </ul>
+      	    <ul class="nav secondary-nav">
+          		<li class="dropdown" data-dropdown="dropdown" id="profiles">
+                <a href="#" class="dropdown-toggle">Profiles<?php if(!isset($_REQUEST['profile_id'])) echo '(last)'; ?> <b class="label"><?php $prof_ids=explode('.',$profile_id); echo array_pop($prof_ids);?></b></a>
+                <ul class="dropdown-menu">
+                </ul>
+          		</li>
+      	    </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
     <div class="container-fluid">
+        <?php if( is_array($flow) && count($flow) > 1 ) : ?>
+        <div id="tree">
+          <span class="zoomout"></span>
+          <?php echo phpio_ul(phpio_tree($flow), $profile_id);?>
+        </div>
+        <?php endif;?>
+
         <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
             <thead>
                 <tr>
@@ -284,3 +347,4 @@
     <script src="js/profile.js?20130713"></script>
   </body>
 </html>
+
