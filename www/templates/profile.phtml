@@ -55,6 +55,7 @@
       .label-Memcache{background-color:#DBDC25}
       .label-Memcached{background-color:#D2691E}
       .label-Curl{background-color:#087eb6}
+      .label-Error{background-color:red}
       a.label, a.label:hover { text-decoration: none;color: auto }
 
       .srclink {
@@ -176,6 +177,7 @@
     </div>
 
     <div class="container-fluid">
+
         <?php if ( is_array($flow) && count($flow) > 1 ) : ?>
         <div id="tree">
           <span class="zoomout"></span>
