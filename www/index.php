@@ -1,5 +1,6 @@
 <?php
-require '../config.php';
+
+if ( !defined('PHPIO_ROOT') ) require '../config.php';
 
 switch( $_REQUEST['op'] ){
 	case 'fileviewer':
