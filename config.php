@@ -25,6 +25,8 @@ $_PHPIO = array(
 		'Memcache' => 1,
 		'Memcached' => 1,
 		'CallUserFunc' => 1,
+		'Error' => 1,
+		'Exception' => 1,
 	),
 	'log' => array(
 		'class' => 'PHPIO_Log_File',
