@@ -10,7 +10,7 @@
 // 1.ignore Exception; can't hook!
 try {
     $redis = new Redis();
-    $redis->connect('192.168.1.1');
+    $redis->connect('192.168.1.1',6379,1);
 } catch(Exception $e) {
 	// don't call any Exception method
 }
@@ -18,7 +18,7 @@ try {
 // 2.call any Exception method in catch
 try {
     $redis = new Redis();
-    $redis->connect('192.168.1.1');
+    $redis->connect('192.168.1.1',6379,1);
 } catch(Exception $e) {
 	$e->getMessage();
 }
@@ -52,4 +52,5 @@ aop_add_before('set_exception_handler()',function($jp){
 
 set_exception_handler('exception_handler');
 //Throw new DivideByZeroException("DivideByZeroException3");
-$redis->connect('192.168.1.1');
+$redis->connect('192.168.1.1',6379,1);
+$redis->ping();
