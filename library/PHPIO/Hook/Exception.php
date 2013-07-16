@@ -41,8 +41,8 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
 		$traces = debug_backtrace();
 		$trace = $traces[2];
 		$args = $jp->getArguments();
-		if(isset($args[0])) $trace['cmd'] = $args[0];
-		if(isset($args[1])) $trace['code'] = $args[1];
+		if(isset($args[0])) $trace['cmd'] = $trace['error'] = $args[0];
+		if(isset($args[1])) $trace['errno'] = $args[1];
 		$trace['trace']  = $this->getPrintTrace($traces,2);
 		$trace['classname'] = $this::classname;
 		unset($trace['class']);
@@ -56,8 +56,8 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
 
 		$traces = $exception->getTrace();
 		$trace = $traces[0];
-		$trace['cmd'] = $exception->getMessage();
-		$trace['code'] = $exception->getCode();
+		$trace['errno'] = $exception->getCode();
+		$trace['error'] = $trace['cmd'] = $exception->getMessage();
 		$trace['file'] = $exception->getFile();
 		$trace['trace'] = $this->getPrintTrace($traces,0);
 		$trace['classname'] = $this::classname;
