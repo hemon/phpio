@@ -1,7 +1,6 @@
 <?php
 abstract class PHPIO_Hook {
 	const classname = '';
-	//var $log = array();
 	var $hooks = array();
 	var $jp = null;
 	var $args = array();
@@ -45,12 +44,11 @@ abstract class PHPIO_Hook {
 		PHPIO::$log->append($this->trace);
 	}
 	
-	function getPrintTrace($traces) {
+	function getPrintTrace($traces, $max_level=1) {
 		//0  c() called at [/tmp/include.php:10]
-		$i = 0;
 		$trace_len = count($traces)-1;
 		$printTraces = array();
-		for ($i = $trace_len; $i >= 1; $i--) {
+		for ($i = $trace_len; $i >= $max_level; $i--) {
 			if ( isset($traces[$i]['class']) ) {
 				$traces[$i]['function'] = $traces[$i]['class'] .'->'.$traces[$i]['function'];
 			}
