@@ -40,13 +40,13 @@ class PHPIO_Hook_Error extends PHPIO_Hook_Func {
 
     // ignore the follow-up set_error_handler call
     // by reset the args to my error_handler
-    function _preCallback($jp) {
+    function _preCallback($jp, $traces=array()) {
 		$args = $jp->getArguments();
 		$this->other_handler = $args[0];
 		$jp->setArguments(array($this->my_handler));
     }
 
-    function _postCallback() {
+    function _postCallback($jp) {
     }
 
     function error_handler($errno, $error, $file, $line){
