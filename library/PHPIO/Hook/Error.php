@@ -56,9 +56,8 @@ class PHPIO_Hook_Error extends PHPIO_Hook_Func {
     }
 
     function _error_handler($errno, $error, $file, $line, $trace = array()) {
-    	if (empty($trace)) {
-    		$trace = array(sprintf('%s: %s at [%s:%d]', $this->ERROR[$errno], $error, $file, $line));
-    	}
+    	// append last error message to trace log
+    	array_push($trace, sprintf('%s: %s at [%s:%d]', $this->ERROR[$errno], $error, $file, $line));
 
     	$log = compact('errno','error','file','line','trace');
 		$log['classname'] = 'Error';
