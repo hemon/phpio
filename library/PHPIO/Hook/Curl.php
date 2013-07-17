@@ -4,6 +4,7 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 	const classname = 'Curl';
 	var $hooks = array('curl_exec','curl_multi_add_handle','curl_multi_remove_handle');
 	var $stderr = array(); // curl error handels
+	var $followProfileFlag = false;
 	
 	function curl_exec_pre($jp) {
 		$ch = $this->args[0];
@@ -40,10 +41,10 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_STDERR, fopen($stderr, 'w'));
 		
-		$this->addDebugFlag($ch);
+		if ($this->followProfileFlag) $this->followProfileFlag($ch);
 	}
 
-	function addDebugFlag($ch) {
+	function followProfileFlag($ch) {
 		$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		$glue = (( strpos($url,'?') !== false ) ? '&' : '?');
 		$url .= $glue.'XDEBUG_PROFILE='.PHPIO::$run_id;
@@ -119,3 +120,4 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		return isset($HTTP_STATUS[$http_code]) ? $HTTP_STATUS[$http_code] : '';
 	}
 }
+
