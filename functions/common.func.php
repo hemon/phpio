@@ -12,7 +12,7 @@ function phpio_dir($directory, &$files = array()) {
     $handle = opendir($directory);
     while ( false !== ($resource = readdir($handle)) ) {
         if ( !in_array($resource, array('.','..')) ) {
-            $fullpath = $directory.$resource.'/';
+            $fullpath = $directory.$resource;
             if ( is_dir($fullpath) )
                 array_merge($files, phpio_dir($fullpath, $files));
             else
