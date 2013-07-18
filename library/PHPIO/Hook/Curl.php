@@ -118,7 +118,7 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		20056 => 'CURLOPT_PROGRESSFUNCTION',
 		20012 => 'CURLOPT_READFUNCTION',
 		20011 => 'CURLOPT_WRITEFUNCTION',
-);
+	);
 
 	static $HTTP_STATUS = array(
 		100 => 'Continue',
