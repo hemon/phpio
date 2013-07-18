@@ -178,6 +178,11 @@
     </div>
 
     <div class="container-fluid">
+      <?php if ( ini_get('xdebug.overload_var_dump') === 'On' ): ?>
+      <div class="alert-message block-message error">
+        <p>Xdebug replaces PHP's var_dump() function, Please disable this feature in php.ini :<strong>xdebug.overload_var_dump = 0</strong></p>
+      </div>
+      <?php endif;?>
 
         <?php if ( is_array($flow) && count($flow) > 1 ) : ?>
         <div id="tree">
