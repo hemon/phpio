@@ -10,10 +10,10 @@ class PHPIO_Hook_MiCurl extends PHPIO_Hook_Curl {
 				$params['data'] = json_decode(base64_decode($params['data']),true);
 				if ( is_array($params['data']) && isset($params['data']['header']['method']) ) {
 					$params['data']['header']['method'] .= '?XDEBUG_PROFILE='.PHPIO::$run_id;
+					$params['data'] = base64_encode(json_encode($params['data']));
+					$value = http_build_query($params);
 				}
-				$params['data'] = base64_encode(json_encode($params['data']));
 			}
-			$value = http_build_query($params);
 		}
 		return $value;
 	}
