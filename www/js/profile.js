@@ -54,8 +54,9 @@ $(function(){
             $.each(data,function(id,profile){
             	var profile_id = profile[0];
             	var uri = profile[1];
+		var date = new Date(parseInt(profile_id.substr(0,8),16)*1000);
                 menu.append('<li><a href="?profile_id='+profile_id+'" title="'+uri+'">'+
-                	profile_id.substr(profile_id.length-4,4)+' '+uri+
+                	date.toTimeString().substr(0,5) +' '+uri+
                 '</a></li>');
             });
         });
