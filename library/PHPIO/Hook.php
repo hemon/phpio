@@ -7,6 +7,7 @@ abstract class PHPIO_Hook {
 	var $trace = array();
 	var $object = null;
 	var $link = null;
+	var $links = array();
 	var $time_start = 0;
 
 	function _preCallback($jp, $traces=array()) {

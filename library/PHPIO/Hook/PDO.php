@@ -19,8 +19,6 @@ class PHPIO_Hook_PDO extends PHPIO_Hook {
         'rollBack',
         //'setAttribute',
     );
-
-    var $links = array();
     static $statements = array();
 
     function __construct_post($jp) {
