@@ -20,9 +20,6 @@ abstract class PHPIO_Log {
 			fastcgi_finish_request();
 		}
 
-		restore_exception_handler();
-		restore_error_handler();
-
 		ini_set("aop.enable","0");
 
 		$last_error = error_get_last();
