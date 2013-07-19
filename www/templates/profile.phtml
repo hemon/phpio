@@ -147,6 +147,18 @@
       }
       .tab-pane pre { background:none }
 
+      #vars .pills a:hover {
+        background-position: 0 -20px;
+      }
+
+      #vars .btn:hover {
+        background-position: 0 0;
+      }
+
+      #vars .pills .active a {
+        background-position: 0 -20px;
+      }
+
     </style>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -170,7 +182,7 @@
                 </ul>
               </li>
       	    </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
@@ -182,8 +194,32 @@
       </div>
       <?php endif;?>
 
-	<h1><?php echo $data[0]['_SERVER']['HTTP_HOST'],$data[0]['_SERVER']['DOCUMENT_URI']?> 
-	<small><?php echo $data[0]['_SERVER']['SERVER_ADDR'],':',$data[0]['_SERVER']['SERVER_PORT']?></small></h1>
+      	<h1><?php echo $data[0]['_SERVER']['HTTP_HOST'],$data[0]['_SERVER']['DOCUMENT_URI']?> 
+      	<small><?php echo $data[0]['_SERVER']['SERVER_ADDR'],':',$data[0]['_SERVER']['SERVER_PORT']?></small></h1>
+
+        <div class="tabbable" id="vars">
+            <ul class="pills">
+              <?php foreach ( array('_SERVER','_GET','_POST','_COOKIE') as $_var ) : if ( empty($data[0][$_var]) ) continue; ?>
+              <li><a href="#info<?php echo $_var;?>" class="btn" data-toggle="tab">$<?php echo $_var;?></a></li>
+              <?php endforeach; ?>
+            </ul>
+            <div class="tab-content">
+                <?php foreach ( array('_SERVER','_GET','_POST','_COOKIE') as $_var ) : ?>
+                <div class="tab-pane" id="info<?php echo $_var;?>">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                      <?php foreach($data[0][$_var] as $parameter => $value):?>
+                      <tr>
+                        <th><?php echo $parameter;?></th>
+                        <td><pre><?php echo htmlspecialchars(print_r($value,1));?></pre></td>
+                      </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                  </table>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
 
         <?php if ( is_array($flow) && count($flow) > 1 ) : ?>
         <div id="tree">

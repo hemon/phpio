@@ -74,4 +74,8 @@ $(function(){
     		tree.hide();
     	}
     });
+
+    $(document).on('click','#vars li.active',function(){
+    	$('#vars .active').removeClass('active');
+    });
 })
