@@ -10,15 +10,15 @@
 class PHPIO_Hook_Exception extends PHPIO_Hook {
 	const classname = 'Exception';
 	var $exceptions = array();
-    var $my_handler = null;
-    var $other_handler = null;
+    var $exceptionHandler = null;
+    var $otherHandler = null;
 	var $hooks = array(
 		'*',
     );
 
     function __construct() {
-    	$this->my_handler = array($this, 'exception_handler');
-    	set_exception_handler($this->my_handler);
+    	$this->exceptionHandler = array($this, 'exceptionHandler');
+    	set_exception_handler($this->exceptionHandler);
     	aop_add_before('set_exception_handler()', array($this, 'set_exception_handler_pre'));
     }
 
@@ -33,7 +33,7 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
 		if ( $method === '__construct' ) {
 			$this->__construct_post($jp);
 		} else {
-			$this->exception_handler($exception, false);
+			$this->traceLog($exception);
 		}
     }
 
@@ -51,9 +51,7 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
 		PHPIO::$log->append($trace);
     }
 
-    function exception_handler($exception, $doCheck=true) {
-    	if ( $doCheck && $this->isProcessed($exception) ) return;
-
+    function traceLog($exception) {
 		$traces = $exception->getTrace();
 		$trace = $traces[0];
 		$trace['errno'] = $exception->getCode();
@@ -65,16 +63,22 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
 		$trace['function'] = get_class($exception);
 
 		PHPIO::$log->append($trace);
+    }
 
-		if ($doCheck && $this->other_handler) {
-			call_user_func($this->other_handler, $exception);
+    function exceptionHandler($exception) {
+    	if ( !$this->isProcessed($exception) ) {
+    		$this->traceLog($exception);
+    	}
+
+		if ( $this->otherHandler ) {
+			call_user_func($this->otherHandler, $exception);
 		}
     }
 
     function set_exception_handler_pre($jp) {
 		$args = $jp->getArguments();
-		$this->other_handler = $args[0];
-		$jp->setArguments(array($this->my_handler));
+		$this->otherHandler = $args[0];
+		$jp->setArguments(array($this->exceptionHandler));
     }
 
     function isProcessed($exception) {
