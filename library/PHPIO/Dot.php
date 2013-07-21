@@ -84,7 +84,7 @@ class PHPIO_Dot {
 		}
 		return 'digraph CallGraph {
 //rankdir=LR;
-MAIN [shape=doublecircle,fontcolor=white,style=filled, color="#111111"];
+MAIN [shape=doublecircle,fontcolor=white,style=filled, color=black];
 '. implode("\n",$nodes)."\n".implode("\n",$edges).'
 }';
 	}
