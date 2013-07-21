@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<base target="_blank"/>
+	<title>CallGraph - <?php echo $profile_id?></title>
+</head>
+<body>
+	<script type="text/vnd.graphviz" id="dot"><?php echo $dot ?></script>
+	<script src="js/viz.js"></script>
+	<div id="viewport" style="overflow: hidden"></div>
+	<script>
+	var dot = document.getElementById("dot").innerHTML;
+	var svg = Viz(dot, "svg");
+	var viewport = document.getElementById("viewport");
+	var result = svg.match(/svg width="(\d+)pt" height=\"(\d+)pt"/);
+	var scale = 0.5;
+	viewport.style.width = (scale * result[1]) + 'pt';
+	viewport.style.height = (scale * result[2]) + 'pt';
+	svg = svg.replace('scale(1 1)','scale('+scale+' '+scale+')');
+	viewport.innerHTML = svg;
+	</script>
+</body>
+</html>
