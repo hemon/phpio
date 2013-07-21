@@ -7,6 +7,7 @@ switch( $_REQUEST['op'] ){
 		$file = $_REQUEST['file'];
 		$line = $_REQUEST['line'];
 		$data = PHPIO::$log->getSource($file);
+		$file = isset($_REQUEST['filename']) ? $_REQUEST['filename'] : $file;
 		if ( $data === false ) {
 			echo 'Source file is not exists or is not readable.';
 			break;
@@ -16,6 +17,15 @@ switch( $_REQUEST['op'] ){
 	case 'profiles':
 		$profiles = PHPIO::$log->getProfiles(20);
 		echo json_encode($profiles);
+		break;
+	case 'dot':
+		$profile_id = $_REQUEST['profile_id'];
+		if ( !empty($profile_id) ) {
+			$data = PHPIO::$log->getProfile($profile_id);
+		    $dot = new PHPIO_Dot($data);
+		    $dot = $dot->output();
+		    require 'templates/dot.phtml';
+		}
 		break;
 	default:
 		$profile_id = $_REQUEST['profile_id'];

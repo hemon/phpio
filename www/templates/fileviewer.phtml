@@ -7,13 +7,11 @@
     <meta name="description" content="">
     <meta name="author" content="Zhangwei(hemono@gmail.com)">
 
-    <!-- Le styles -->
-    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
-    <link href="css/fbootstrap.min.css" rel="stylesheet">
     <style>
       body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
         overflow: auto;
+        font-family: monospace;
+        font-size: 12px;
       }
       code {
         overflow-x: auto;
@@ -42,22 +40,8 @@
   </head>
 
   <body>
-    <div id="nav" class="topbar navbar-inverse navbar-fixed-top">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">PHPIO</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Source</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
     <div class="container-fluid">
-    	<h2><?php echo $file?></h2>
-        <br>
+    	<h1><?php echo $file?></h1>
     	<code>
         <?php if ($message==''):?>
     	<?php 

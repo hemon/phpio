@@ -31,6 +31,18 @@ $_PHPIO = array(
 	'log' => array(
 		'class' => 'PHPIO_Log_File',
 		'save_dir' => PHPIO_TMP,
+	),
+	'colors' => array(
+		'APC' => '#BA55D3',
+		'Mysql' => '#0476D6',
+		'PDO' => '#015A84',
+		'PDOStatement' => '#015A84',
+		'Redis' => '#3CC472',
+		'Memcache' => '#9BCD9B',
+		'Memcached' => '#9BCD9B',
+		'Curl' => '#3CA9C4',
+		'Error' => 'red',
+		'Exception' => 'orange',
 	)
 );
 
@@ -39,6 +51,8 @@ foreach ( $_PHPIO as $_name => $_value ) {
 		PHPIO::$$_name = new $_value['class'];
 		phpio_class_set_properties(PHPIO::$$_name, $_value);
 	} else {
-		PHPIO::$$_name = $_value;
+		if ( property_exists('PHPIO', $_name) ) {
+			PHPIO::$$_name = $_value;
+		}
 	}
 }
