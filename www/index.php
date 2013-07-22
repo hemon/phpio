@@ -36,6 +36,9 @@ switch( $_REQUEST['op'] ){
 			}
 		}
 		$flow = PHPIO::$log->getFlow($profile_id);
+		if ( count($flow) > 1 ) {
+			$flow_uris = PHPIO::$log->getProfileUri($flow);
+		}
 		$data = PHPIO::$log->getProfile($profile_id);
 		if ( $data === false ) {
 			echo 'Profile is not exists or is not readable.';

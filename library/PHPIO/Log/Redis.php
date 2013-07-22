@@ -111,3 +111,4 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		return $this->redis;
 	}
 }
+

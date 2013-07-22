@@ -42,12 +42,13 @@ function phpio_tree($array) {
 }
 
 function phpio_ul($tree, $current='', $parent='') {
+    global $flow_uris;
     $html = '<ul class="tree">';
     foreach ( $tree as $name => $node ) {
         $fullpath = (!empty($parent) ? "$parent.$name" : $name);
         $class = ( (strpos($current, $name) !== false) ? 'label' : 'label label-empty');
-        $class = ( ($fullpath === $current) ? 'label notice' : $class);
-        $html .= '<li><a href="?profile_id='.$fullpath.'" class="'.$class.'">'.$name.'</a>';
+        $class = ( ($fullpath === $current) ? 'label important' : $class);
+        $html .= '<li><a href="?profile_id='.$fullpath.'" class="'.$class.'">'.$flow_uris[$fullpath].'</a>';
         if ( !empty($node) ) {
             $html .= phpio_ul($node, $current, $fullpath);
         }

@@ -149,10 +149,20 @@
       #vars .pills .active a {
         background-position: 0 -20px;
       }
+      .dropdown-menu {
+        max-width: 500px;
+      }
+      .label-time {
+        margin-right: 10px;
+      }
+      #tree a.label:hover {
+        color: white;
+        background-color: #DD3C10;
+      }
       <?php 
       foreach ($_PHPIO['colors'] as $class => $color) {
         echo '.label-',$class,'{background-color:',$color,'}';
-      }    
+      }
       ?>
     </style>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -190,7 +200,7 @@
       </div>
       <?php endif;?>
 
-      	<h1><?php echo $data[0]['_SERVER']['HTTP_HOST'],$data[0]['_SERVER']['DOCUMENT_URI']?> 
+      	<h1><?php echo PHPIO::$log->getURI($data[0]['_SERVER']) ?> 
       	<small><?php echo $data[0]['_SERVER']['SERVER_ADDR'],':',$data[0]['_SERVER']['SERVER_PORT']?></small></h1>
 
         <div class="tabbable" id="vars">

@@ -31,7 +31,25 @@ abstract class PHPIO_Log {
 	}
 
 	function getURI($info) {
-		return isset($info['DOCUMENT_URI']) ? $info['DOCUMENT_URI'] : $info['SCRIPT_NAME'];
+		if ( isset($info['HTTP_HOST']) ) {
+			$uri = $info['HTTP_HOST'];
+			if ( $info['SERVER_PORT'] != '80' ) {
+				$uri .= ':'.$info['SERVER_PORT'];
+			}
+			list($path, ) = explode('?', $info['REQUEST_URI']);
+			return $uri . $path;
+		} else {
+			return $info['SCRIPT_NAME'];
+		}
+	}
+
+	function getProfileUri($profile_ids) {
+		$profile_uri = array();
+		if ($profile_ids) foreach ($profile_ids as $profile_id) {
+			$profile = $this->getProfile($profile_id);
+			$profile_uri[$profile_id] = $this->getURI($profile[0]['_SERVER']);
+		}
+		return $profile_uri;
 	}
 
 	function save() {}
