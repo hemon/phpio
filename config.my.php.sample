@@ -1,0 +1,6 @@
+<?php
+// overwrite $_PHPIO in your config.my.php
+$_PHPIO['enabled']['Memcache'] = 0;
+// user define logger
+$_PHPIO['log']['class'] = 'PHPIO_Log_Redis';
+$_PHPIO['log']['host'] = '127.0.0.1';
