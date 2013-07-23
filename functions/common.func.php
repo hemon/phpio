@@ -57,3 +57,35 @@ function phpio_ul($tree, $current='', $parent='') {
     $html .= '</ul>';
     return $html;
 }
+
+function phpio_arg_name($function) {
+    static $arg_name;
+    $key = $function;
+    if ( is_array($function) ) {
+        list($class, $method) = $function;
+        $key = "$class::$method";
+    }
+
+    if ( isset($arg_name[$key]) ) {
+        return $arg_name[$key];
+    }
+
+    try {
+        if ( isset($class) ) {
+            if ( class_exists("PHPIO_Reflection_$class") ) {
+                $class = "PHPIO_Reflection_$class";
+            }
+            $rf = new ReflectionMethod($class, $method);  
+        } else {
+            $rf = new ReflectionFunction($function);
+        }
+
+        $arg_name[$key] = array();
+        foreach ($rf->getParameters() as $param) {
+            $arg_name[$key][] = $param->getName();
+        }
+        return $arg_name[$key];
+    } catch ( Exception $e ) {
+        echo $e;
+    }
+}

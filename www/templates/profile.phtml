@@ -350,9 +350,18 @@
                             <th>value</th>
                           </thead>
                           <tbody>
-                            <?php foreach($row['args'] as $parameter => $value):?>
+                            <?php 
+                            if ( !in_array($row['classname'], array('Error','Exception')) ) {
+                              if ( isset($row['class']) ) {
+                                $arg_names = phpio_arg_name(array($row['class'], $row['function']));
+                              } else {
+                                $arg_names = phpio_arg_name($row['function']);
+                              }
+                            }
+                            foreach($row['args'] as $parameter => $value):
+                            ?>
                             <tr>
-                              <th><?php echo $parameter;?></th>
+                              <th><?php echo is_numeric($parameter) && isset($arg_names[$parameter]) ? $arg_names[$parameter] : $parameter;?></th>
                               <td><?php echo gettype($value);?></td>
                               <td><pre><?php echo htmlspecialchars(print_r($value,true));?></pre></td>
                             </tr>
