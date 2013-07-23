@@ -24,7 +24,7 @@ class PHPIO_Dot {
 				list(, $func, $file, $line) = $matches;
 				// get source file hash
 				if ( isset($profile[0]['_SRC'][ $file ]) ) {
-					$file= $profile[0]['_SRC'][ $file ];
+					$file = $profile[0]['_SRC'][ $file ] . '&filename='.$file;
 				}
 				// node
 				$node = $file.":".$line;
