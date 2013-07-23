@@ -273,7 +273,7 @@
                     <a href="#"><?php echo (isset($row['class']) ? $row['class'].'->'.$row['function'] : $row['function']) ?></a>
                   </td>
                   <td class="lr"><?php echo htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
-                  <td><?php echo $row['link'] ?></td>
+                  <td><?php echo (is_array($row['link']) ? '<i>Server By Key</i>' : $row['link']) ?></td>
                   <td><?php 
 			$label_style = 'success';
 			if(isset($row['error'])) {
@@ -326,6 +326,7 @@
                         <?php if(isset($row['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
                         <?php if(!empty($row['curl'])): ?><li><a href="#curl<?php echo $i?>" data-toggle="tab">Curl</a></li><?php endif;?>
                         <?php if(!empty($row['result'])): ?><li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li><?php endif;?>
+                        <?php if(is_array($row['link'])): ?><li><a href="#serverByKey<?php echo $i?>" data-toggle="tab">ServerByKey</a></li><?php endif;?>
                         </ul>
                         <div class="tab-content">
                         <div class="tab-pane active" id="traces<?php echo $i?>">
@@ -354,6 +355,24 @@
                               <th><?php echo $parameter;?></th>
                               <td><?php echo gettype($value);?></td>
                               <td><pre><?php echo htmlspecialchars(print_r($value,true));?></pre></td>
+                            </tr>
+                          <?php endforeach;?>
+                          </tbody>
+                        </table>
+                        </div>
+                        <?php endif;?>
+                      <?php if( is_array($row['link']) ): ?>
+                        <div class="tab-pane" id="serverByKey<?php echo $i?>">
+                          <table class="args_table">
+                            <thead>
+                            <th>server</th>
+                            <th>key</th>
+                          </thead>
+                          <tbody>
+                            <?php foreach($row['link'] as $server => $keys):?>
+                            <tr>
+                              <td><?php echo $server;?></td>
+                              <td><pre><?php echo htmlspecialchars(implode("\n",$keys));?></pre></td>
                             </tr>
                           <?php endforeach;?>
                           </tbody>
