@@ -25,17 +25,16 @@ abstract class PHPIO_Log {
 
 	function stop() {
 		if ( function_exists('fastcgi_finish_request') ) {
-			//fastcgi_finish_request();
+			fastcgi_finish_request();
 		}
-
-		ini_set("aop.enable","0");
 
 		$last_error = error_get_last();
 		if ( is_array($last_error) ) {
 			call_user_func_array(array(PHPIO::$hooks['Error'], '_error_handler'), $last_error);
 		}
-	
-		//$this->start = false;
+
+		ini_set("aop.enable", "0");
+		$this->start = false;
 	}
 
 	function getURI($info) {
