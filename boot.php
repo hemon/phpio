@@ -9,7 +9,7 @@ define('PHPIO_FUNC' , PHPIO_ROOT.'/functions');
 define('PHPIO_TMP' , '/tmp/phpio');
 
 if ( !file_exists(PHPIO_TMP) ) {
-	mkdir(PHPIO_TMP, 0, true);
+	mkdir(PHPIO_TMP, 0777, true);
 }
 
 require PHPIO_ROOT.'/config.php';
