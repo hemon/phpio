@@ -64,7 +64,7 @@ abstract class PHPIO_Log {
 		foreach ( $this->logs as &$log ) {
 			if ( isset($log['args']) && !in_array($log['classname'],array('Exception','Error')) ) {
 				$function = ( isset($log['class']) ? array($log['class'],$log['function']) : $log['function'] );
-				$log['argnames'] = phpio_arg_name($function);
+				$log['argnames'] = phpio_argnames($function);
 			}
 		}
 	}

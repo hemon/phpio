@@ -58,7 +58,7 @@ function phpio_ul($tree, $current='', $parent='') {
     return $html;
 }
 
-function phpio_arg_name($function) {
+function phpio_argnames($function) {
     static $arg_name;
     $key = $function;
     if ( is_array($function) ) {
