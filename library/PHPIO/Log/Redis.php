@@ -5,29 +5,24 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	var $host = '127.0.0.1';
 	var $port = 6379;
 	var $auth = '';
-	var $saveSource = true;
-	var $saveCurlHeader = true;
+	var $processor = array('saveArgnames','saveCurlHeader','saveSource','saveProfileFlow','saveProfileList','saveProfile');
 
-	function save() {
-		$this->stop();
-		if ( $this->count() == 0 ) return;
-
-		$path_ids = explode('.', PHPIO::$run_id);
-		$path_len = count($path_ids);
-		$last_id = $path_ids[ $path_len-1 ];
-		
-		if ( $this->saveSource ) $this->saveSource();
-		if ( $this->saveCurlHeader ) $this->saveCurlHeader();
-
+	function saveProfile() {
 		$this->getRedis()->hSet('PHPIO_PROF', PHPIO::$run_id, serialize($this->logs));
+	}
+
+	function saveProfileList() {
 		$this->getRedis()->zAdd(
 			'PHPIO_LIST', 
-			hexdec($last_id), 
+			$_SERVER['REQUEST_TIME'], 
 			serialize(array(PHPIO::$run_id, $this->getURI($this->logs[0]['_SERVER'])))
 		);
+	}
 
-		if ( $path_len > 1 ) {
-			$this->getRedis()->sAdd('PHPIO_FLOW_'.$path_ids[0], PHPIO::$run_id);
+	function saveProfileFlow() {
+		list($root_profile_id, $profile_ids) = explode('.', PHPIO::$run_id, 2);
+		if ( !empty($profile_ids) ) {
+			$this->getRedis()->sAdd('PHPIO_FLOW_'.$root_profile_id, PHPIO::$run_id);
 		}
 	}
 

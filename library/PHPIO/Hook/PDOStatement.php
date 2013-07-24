@@ -23,7 +23,7 @@ class PHPIO_Hook_PDOStatement extends PHPIO_Hook {
 		$this->trace['classname'] = 'PDO';
 		$this->trace['link'] = $this->link;
 		$this->trace['cmd'] = $this->queryString($this->inputParams);
-		$this->trace['args'] = $this->inputParams;
+		$this->trace['options'] = $this->inputParams;
 
 		if ( $this->result === true ) {
 			$this->trace['rowcount'] = $this->object->rowCount();

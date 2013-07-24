@@ -323,6 +323,7 @@
                         <ul class="pills">
                         <li class="active"><a href="#traces<?php echo $i?>" data-toggle="tab">Traces</a></li>
                         <?php if(!empty($row['args'])): ?><li><a href="#args<?php echo $i?>" data-toggle="tab">Args</a></li><?php endif;?>
+                        <?php if(!empty($row['options'])): ?><li><a href="#options<?php echo $i?>" data-toggle="tab">Options</a></li><?php endif;?>
                         <?php if(isset($row['header'])): ?><li><a href="#header<?php echo $i?>" data-toggle="tab">Header</a></li><?php endif;?>
                         <?php if(!empty($row['curl'])): ?><li><a href="#curl<?php echo $i?>" data-toggle="tab">Curl</a></li><?php endif;?>
                         <?php if(!empty($row['result'])): ?><li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li><?php endif;?>
@@ -350,18 +351,29 @@
                             <th>value</th>
                           </thead>
                           <tbody>
-                            <?php 
-                            if ( !in_array($row['classname'], array('Error','Exception')) ) {
-                              if ( isset($row['class']) ) {
-                                $arg_names = phpio_arg_name(array($row['class'], $row['function']));
-                              } else {
-                                $arg_names = phpio_arg_name($row['function']);
-                              }
-                            }
-                            foreach($row['args'] as $parameter => $value):
-                            ?>
+                            <?php foreach($row['args'] as $parameter => $value): ?>
                             <tr>
-                              <th><?php echo is_numeric($parameter) && isset($arg_names[$parameter]) ? $arg_names[$parameter] : $parameter;?></th>
+                              <th><?php echo (isset($row['argnames'][$parameter]) ? $row['argnames'][$parameter] : $parameter)?></th>
+                              <td><?php echo gettype($value);?></td>
+                              <td><pre><?php echo htmlspecialchars(print_r($value,true));?></pre></td>
+                            </tr>
+                          <?php endforeach;?>
+                          </tbody>
+                        </table>
+                        </div>
+                        <?php endif;?>
+                      <?php if(!empty($row['options'])): ?>
+                        <div class="tab-pane" id="options<?php echo $i?>">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                            <?php foreach($row['options'] as $parameter => $value): ?>
+                            <tr>
+                              <th><?php echo $parameter;?></th>
                               <td><?php echo gettype($value);?></td>
                               <td><pre><?php echo htmlspecialchars(print_r($value,true));?></pre></td>
                             </tr>

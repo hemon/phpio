@@ -241,14 +241,14 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 
 	function getinfo($ch) {
 		$ch_id = intval($ch);
-		$this->trace['args'] = $this->formatArgs($this->options[$ch_id]);
+		$this->trace['options'] = $this->getOptions($this->options[$ch_id]);
 		$this->trace['cmd'] = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		$this->trace['curl'] = curl_getinfo($ch);
 		$this->trace['curl']['http_status'] = $this->httpStatus($this->trace['curl']['http_code']);
 		$this->trace['header'] = $this->stderr[$ch_id];
 	}
 
-	function formatArgs($args) {
+	function getOptions($args) {
 		$newArgs = array();
 		foreach ($args as $name => $value) {
 			$newName = (isset(self::$CURLOPT[$name]) ? self::$CURLOPT[$name] : $name);

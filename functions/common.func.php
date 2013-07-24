@@ -72,7 +72,7 @@ function phpio_arg_name($function) {
 
     try {
         if ( isset($class) ) {
-            if ( class_exists("PHPIO_Reflection_$class") ) {
+            if ( class_exists("PHPIO_Reflection_$class", false) ) {
                 $class = "PHPIO_Reflection_$class";
             }
             $rf = new ReflectionMethod($class, $method);  

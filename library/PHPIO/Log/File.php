@@ -1,10 +1,9 @@
 <?php
 
 class PHPIO_Log_File extends PHPIO_Log {
-	function save() {
-		$this->stop();
-		if ( $this->count() == 0 ) return;
-		
+	var $processor = array('saveArgnames','saveProfile');
+
+	function saveProfile() {
 		file_put_contents($this->save_dir.'/prof_'.PHPIO::$run_id, serialize($this->logs));
 	}
 

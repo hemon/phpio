@@ -1,5 +1,6 @@
 <?php
 set_time_limit(0);
+ini_set("aop.enable", "1");
 ini_set('memory_limit', -1);
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -13,7 +14,6 @@ if ( !file_exists(PHPIO_TMP) ) {
 }
 
 require PHPIO_ROOT.'/config.php';
-// overwrite $_PHPIO in your config.my.php
 if ( file_exists(PHPIO_ROOT.'/config.my.php') ) {
 	require PHPIO_ROOT.'/config.my.php';
 }

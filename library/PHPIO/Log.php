@@ -4,6 +4,14 @@ abstract class PHPIO_Log {
 	var $save_dir = '';
 	var $logs = array();
 	var $start = true;
+	var $processor = array();
+
+	function save() {
+		$this->stop();
+		foreach ($this->processor as $processor) {
+			$this->$processor();
+		}
+	}
 
 	function append($value) {
 		if ($this->start) {
@@ -17,7 +25,7 @@ abstract class PHPIO_Log {
 
 	function stop() {
 		if ( function_exists('fastcgi_finish_request') ) {
-			fastcgi_finish_request();
+			//fastcgi_finish_request();
 		}
 
 		ini_set("aop.enable","0");
@@ -27,7 +35,7 @@ abstract class PHPIO_Log {
 			call_user_func_array(array(PHPIO::$hooks['Error'], '_error_handler'), $last_error);
 		}
 	
-		$this->start = false;
+		//$this->start = false;
 	}
 
 	function getURI($info) {
@@ -52,11 +60,23 @@ abstract class PHPIO_Log {
 		return $profile_uri;
 	}
 
-	function save() {}
+	function saveArgnames() {
+		foreach ( $this->logs as &$log ) {
+			if ( isset($log['args']) && !in_array($log['classname'],array('Exception','Error')) ) {
+				$function = ( isset($log['class']) ? array($log['class'],$log['function']) : $log['function'] );
+				$log['argnames'] = phpio_arg_name($function);
+			}
+		}
+	}
+
 	function getProfiles() {}
 	function getProfile($profile_id) {}
 	function getSource($file) {}
 	function getFlow($root_profile_id){}
 	function getCurlHeader($curl_id){}
-
+	function saveSource(){}
+	function saveCurlHeader(){}
+	function saveProfileFlow(){}
+	function saveProfileList(){}
+	function saveProfile(){}
 }

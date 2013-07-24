@@ -38,7 +38,7 @@ class PHPIO_Hook_CallUserFunc extends PHPIO_Hook_Func {
     }
 
     function isHook($hook, $method) {
-		if ( class_exists("PHPIO_Hook_$hook") ) {
+		if ( class_exists("PHPIO_Hook_$hook", false) ) {
 			foreach ( PHPIO::$hooks[$hook]->hooks as $hook_method ) {
 				if (strcasecmp($method, $hook_method) == 0) {
 					return true;
