@@ -246,6 +246,12 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		$this->trace['curl'] = curl_getinfo($ch);
 		$this->trace['curl']['http_status'] = $this->httpStatus($this->trace['curl']['http_code']);
 		$this->trace['header'] = $this->stderr[$ch_id];
+
+		$errno = curl_errno($ch);
+		if ( $errno > 0 ) {
+			$this->trace['errno'] = $errno;
+			$this->trace['error'] = curl_error($ch);
+		}
 	}
 
 	function getOptions($args) {

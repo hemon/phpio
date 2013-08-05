@@ -83,6 +83,9 @@
         max-width: 100%;
         border: 1px solid #ccc;
       }
+      .args_table th,.args_table td {
+        border: 1px solid #DDD;
+      }
 
       ul.tree, ul.tree ul {
           background: url("img/vline.png") repeat-y scroll 0 0 transparent;
@@ -161,7 +164,7 @@
       }
       <?php 
       foreach ($_PHPIO['colors'] as $class => $color) {
-        echo '.label-',$class,'{background-color:',$color,'}';
+        echo ".label-$class {background-color: $color;}\n";
       }
       ?>
     </style>
@@ -248,22 +251,70 @@
             <tbody>
             <?php
                 if ($data) foreach($data as $i => $row):
+                  // skip 0, meta info
                   if ($i == 0) continue;
-
+                  // Curl
                   if ( isset($row['curl']) ) {
-                      $row['header'] = PHPIO::$log->getCurlHeader($row['header']);
-                      $row['link'] = PHPIO_Hook_Curl::getLink($row['header']);
+                    $row['header'] = PHPIO::$log->getCurlHeader($row['header']);
+                    $row['link'] = PHPIO_Hook_Curl::getLink($row['header']);
                   }
-
+                  // Trace
                   $traces = array();
-                  foreach($row['trace'] as $t_i => $trace) {
-                      preg_match('|\[(.*?)\:(\d+)\]|', $trace, $matches);
-                      $matches[0] = $trace;
-                      // get source file hash
-                      if ( isset($data[0]['_SRC'][ $matches[1] ]) ) {
-                          $matches[1] = $data[0]['_SRC'][ $matches[1] ] . '&filename='.$matches[1];
+                  foreach($row['trace'] as $j => $trace) {
+                    preg_match('|\[(.*?)\:(\d+)\]|', $trace, $matches);
+                    $matches[0] = $trace;
+                    // get source file hash
+                    if ( isset($data[0]['_SRC'][ $matches[1] ]) ) {
+                        $matches[1] = $data[0]['_SRC'][ $matches[1] ] . '&filename='.$matches[1];
+                    }
+                    $traces[] = $matches;
+                  }
+                  // Response
+                  $resp['style'] = 'success';
+                  $resp['title'] = '';
+                  $resp['value'] = '';
+                  if(isset($row['error'])) {
+                    $resp['style'] = 'error';
+                    $resp['title'] = $row['error'];
+                    $resp['value'] = "errno({$row['errno']})";
+                  } elseif ( isset($row['rowcount']) ) {
+                    $resp['style'] = ($row['rowcount'] == 0 ? 'warning' : $resp['style']);
+                    $resp['title'] = "{$row['rowcount']} Affected Rows";
+                    $resp['value'] = "rows({$row['rowcount']})";
+                  } elseif ( isset($row['curl']) ) {
+                    $http_code = $row['curl']['http_code'];
+                    $http_status = $row['curl']['http_status'];
+                    switch ( substr($http_code,0,1) ){
+                      case '4'://4xx client error
+                      case '5'://5xx server error
+                        $resp['style'] = 'warning';
+                    }
+                    $resp['title'] = "HTTP $http_code $http_status";
+                    $resp['value'] = "http($http_code)";
+                  } elseif ( isset($row['result']) ) {
+                    if ( preg_match('|(\w+)\((.+?)\)(#\d+)?|',$row['result'], $matches) ) {
+                      list(,$type,$value) = $matches;
+                      switch ($type) {
+                        case 'bool':
+                          $resp['style'] = ($value == 'false' ? 'error' : $resp['style']);
+                          $resp['value'] = $value;
+                          break;
+                        case 'object':
+                          $resp['value'] = $value.$matches[3];
+                          break;
+                        default :
+                          $resp['value'] = $matches[0];
                       }
-                      $traces[] = $matches;
+                    } else {
+                      // NULL
+                      $resp['value'] = $row['result'];
+                    }
+                  }
+                  // Time
+                  if ( isset($row['curl']) ) {
+                    $time = $row['curl']['total_time'];
+                  } else {
+                    $time = $row['time_end']-$row['time_start'];
                   }
                 ?>
                 <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
@@ -274,48 +325,8 @@
                   </td>
                   <td class="lr"><?php echo htmlspecialchars(isset($row['cmd']) ? $row['cmd'] : print_r($row['args'][0],true)) ?></td>
                   <td><?php echo (is_array($row['link']) ? '<i>Server By Key</i>' : $row['link']) ?></td>
-                  <td><?php 
-			$label_style = 'success';
-			if(isset($row['error'])) {
-				$label_style = 'error';
-				echo '<span class="label '.$label_style.'" title="',htmlspecialchars($row['error']),'">errno(',$row['errno'],')</span>';
-			} elseif ( isset($row['rowcount']) ) {
-				$label_style = ($row['rowcount'] == 0 ? 'warning' : $label_style);
-				echo '<span class="label '.$label_style.'" title="',$row['rowcount'],' Affected Rows">rows(',$row['rowcount'],')</span>';
-			} elseif ( isset($row['curl']) ) {
-				$http_code = $row['curl']['http_code'];
-        $http_status = $row['curl']['http_status'];
-				switch ( substr($http_code,0,1) ){
-					case '1':
-					case '2':
-						break;
-					case '3':
-						$label_style = 'warning';
-					case '4':
-					case '5':
-						$label_style = 'error';
-				}
-				echo "<span class=\"label $label_style\" title=\"HTTP $http_code $http_status\">http($http_code)</span>";
-			} elseif ( isset($row['result']) ) {
-				if ( preg_match('|(\w+)\((.+?)\)(#\d+)?|',$row['result'], $matches) ) {
-					list(,$type,$value) = $matches;
-					switch ($type) {
-						case 'bool':
-							$label_style = ($value == 'false' ? 'error' : $label_style);
-							echo '<span class="label '.$label_style.'">',$value,'</span>';break;
-						case 'object':
-							$matches[0] = $value.$matches[3];
-						default :
-							echo '<span class="label '.$label_style.'">',$matches[0],'</span>';
-					
-					}
-				} else {
-					// NULL
-					echo '<span class="label '.$label_style.'">',$row['result'],'</span>';
-				}
-			}
-		?></td>
-                  <td class="nr"><?php echo round((isset($row['curl']) ? $row['curl']['total_time'] : ($row['time_end']-$row['time_start']))*1000,4) ?></td>
+                  <td><?php echo "<span class=\"label {$resp['style']}\" title=\"{$resp['title']}\">{$resp['value']}</span>"; ?></td>
+                  <td class="nr"><?php echo round($time*1000,4); ?></td>
                 </tr>
                 <tr id="prof_detail_<?php echo $i?>" class="prof_detail">
                   <td colspan=5>
@@ -328,6 +339,7 @@
                         <?php if(!empty($row['curl'])): ?><li><a href="#curl<?php echo $i?>" data-toggle="tab">Curl</a></li><?php endif;?>
                         <?php if(!empty($row['result'])): ?><li><a href="#response<?php echo $i?>" data-toggle="tab">Response</a></li><?php endif;?>
                         <?php if(is_array($row['link'])): ?><li><a href="#serverByKey<?php echo $i?>" data-toggle="tab">ServerByKey</a></li><?php endif;?>
+                        <?php if(!empty($row['rowset'])): ?><li><a href="#rowset<?php echo $i?>" data-toggle="tab">Rowset</a></li><?php endif;?>
                         </ul>
                         <div class="tab-content">
                         <div class="tab-pane active" id="traces<?php echo $i?>">
