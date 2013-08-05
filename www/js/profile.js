@@ -38,10 +38,6 @@ $(function(){
 	    $(this).tab('show');
     });
 
-    $('.prof_detail').dblclick(function(){
-    	 $(this).prev('tr').click();
-    });
-
     $('#profiles').click(function(){
     	if ( $(this).hasClass('open') ) return;
     	
