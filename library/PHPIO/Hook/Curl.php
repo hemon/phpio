@@ -7,7 +7,6 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		'curl_setopt',
 		'curl_setopt_array',
 		'curl_exec',
-		'curl_multi_add_handle',
 		'curl_multi_remove_handle',
 	);
 	var $stderr = array(); // curl error handels
@@ -190,21 +189,12 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		
 		parent::postCallback($jp);
 	}
-	// add verbose(debug) file handle before curl_multi_exec
-	function curl_multi_add_handle_pre($jp) {
-		$ch = $this->args[1];
-		$this->getinfo($ch);
-	}
-	// don't log curl_multi_add_handle
-	function curl_multi_add_handle_post($jp) {
-	}
 	// when remove curl handle, curl was executed
-	function curl_multi_remove_handle_post($jp) {
+	function curl_multi_remove_handle_pre($jp) {
 		$ch = $this->args[1];
+
 		$this->getinfo($ch);
 		$this->trace['result'] = $this->dump(curl_multi_getcontent($ch));
-
-		parent::postCallback($jp);
 	}
 
 	function curl_setopt_pre($jp) {
@@ -247,10 +237,11 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		$this->trace['curl']['http_status'] = $this->httpStatus($this->trace['curl']['http_code']);
 		$this->trace['header'] = $this->stderr[$ch_id];
 
-		$errno = curl_errno($ch);
-		if ( $errno > 0 ) {
-			$this->trace['errno'] = $errno;
-			$this->trace['error'] = curl_error($ch);
+		$error = curl_error($ch);
+		if ( !empty($error) ) {
+			$this->trace['error'] = $error;
+			// in [curl_multi_exec], only [curl_multi_info_read] can get last error number
+			$this->trace['errno'] = curl_errno($ch);
 		}
 	}
 
