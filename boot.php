@@ -1,8 +1,10 @@
 <?php
 set_time_limit(0);
+error_reporting(E_ALL ^ E_NOTICE);
+
+if ( !extension_loaded('aop') ) dl('aop.so');
 ini_set("aop.enable", "1");
 ini_set('memory_limit', -1);
-error_reporting(E_ALL ^ E_NOTICE);
 
 define('PHPIO_ROOT' , __DIR__);
 define('PHPIO_LIB'  , PHPIO_ROOT.'/library');
