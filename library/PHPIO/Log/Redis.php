@@ -5,6 +5,7 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	var $host = '127.0.0.1';
 	var $port = 6379;
 	var $auth = '';
+	var $db   = 0;
 	var $processor = array('saveArgnames','saveCurlHeader','saveSource','saveProfileFlow','saveProfileList','saveProfile');
 
 	function saveProfile() {
@@ -21,8 +22,9 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 
 	function saveProfileFlow() {
 		list($root_profile_id, $profile_ids) = explode('.', PHPIO::$run_id, 2);
+		$score = hexdec($root_profile_id);
 		if ( !empty($profile_ids) ) {
-			$this->getRedis()->sAdd('PHPIO_FLOW_'.$root_profile_id, PHPIO::$run_id);
+			$this->getRedis()->zAdd('PHPIO_FLOW', $score, PHPIO::$run_id);
 		}
 	}
 
@@ -77,8 +79,9 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	}
 
 	function getFlow($root_profile_id) {
-		$root_profile_id = substr($root_profile_id,0,13);
-		$flow = $this->getRedis()->sMembers('PHPIO_FLOW_'.$root_profile_id);
+		$root_profile_id = substr($root_profile_id, 0, 13);
+		$score = hexdec($root_profile_id);
+		$flow = $this->getRedis()->zRangeByScore('PHPIO_FLOW', $score, $score);
 
 		if ( is_array($flow) ) {
 			array_unshift($flow, $root_profile_id);
@@ -101,9 +104,20 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 			if ( !empty($this->auth) ) {
 				$this->redis->auth($this->auth);
 			}
+			if ($this->db > 0) {
+				$this->redis->select($this->db);
+			}
 		}
 
 		return $this->redis;
 	}
-}
 
+	function flush() {
+		$this->getRedis()->multi()
+			->del('PHPIO_CURL')
+			->del('PHPIO_FLOW')
+			->del('PHPIO_SRC')
+			->del('PHPIO_PROF')
+			->exec();
+	}
+}

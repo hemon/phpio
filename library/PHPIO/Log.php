@@ -68,6 +68,7 @@ abstract class PHPIO_Log {
 		}
 	}
 
+	function flush() {}
 	function getProfiles() {}
 	function getProfile($profile_id) {}
 	function getSource($file) {}

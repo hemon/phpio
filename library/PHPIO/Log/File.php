@@ -45,4 +45,8 @@ class PHPIO_Log_File extends PHPIO_Log {
 	function getSource($file) {
 		return file_get_contents($file);
 	}
+
+	function flush() {
+		phpio_rmdir($this->save_dir);
+	}
 }
