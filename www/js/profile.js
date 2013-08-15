@@ -46,7 +46,7 @@ $(function(){
 		$.getJSON("?op=profiles",function(data){
 			if ( data.length == 0 ) return;
 
-			menu.empty().append('<li><a href="?">Auto(last)</a></li>');
+			menu.empty().append('<li><a id="autoLast" href="?">Auto(last)</a><a id="clearAll" href="?op=flush" title="Remove all profiles!" onclick="return confirm(\'Remove all profiles! Are you sure ?\')">Clear</a></li><li class="divider"></li>');
             $.each(data,function(id,profile){
             	var profile_id = profile[0];
             	var uri = profile[1];
@@ -54,6 +54,7 @@ $(function(){
                 menu.append('<li><a href="?profile_id='+profile_id+'" title="'+uri+'"><span class="label-time">'+
                 	date.toTimeString().substr(0,5) +'</span>'+uri+'</a></li>');
             });
+            //menu.append('<li class="divider"></li><li></li>')
         });
     });
 

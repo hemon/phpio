@@ -27,6 +27,8 @@ switch( $_REQUEST['op'] ){
 		    require 'templates/dot.phtml';
 		}
 		break;
+	case 'flush':
+		PHPIO::$log->flush();
 	default:
 		$profile_id = $_REQUEST['profile_id'];
 		if ( empty($profile_id) ) {
