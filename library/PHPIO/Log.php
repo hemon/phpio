@@ -68,11 +68,16 @@ abstract class PHPIO_Log {
 		}
 	}
 
+	function getRootProfileId($profile_id) {
+		$profile_ids = explode(".", $profile_id, 2);
+		return $profile_ids[0];
+	}
+
 	function flush() {}
 	function getProfiles() {}
 	function getProfile($profile_id) {}
 	function getSource($file) {}
-	function getFlow($root_profile_id){}
+	function getFlow($profile_id){}
 	function getCurlHeader($curl_id){}
 	function saveSource(){}
 	function saveCurlHeader(){}

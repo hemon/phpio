@@ -6,26 +6,20 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	var $port = 6379;
 	var $auth = '';
 	var $db   = 0;
-	var $processor = array('saveArgnames','saveCurlHeader','saveSource','saveProfileFlow','saveProfileList','saveProfile');
+	var $processor = array('saveArgnames','saveCurlHeader','saveSource','saveProfileList','saveProfile');
 
 	function saveProfile() {
 		$this->getRedis()->hSet('PHPIO_PROF', PHPIO::$run_id, serialize($this->logs));
 	}
 
 	function saveProfileList() {
+		$root_profile_id = $this->getRootProfileId(PHPIO::$run_id);
+		$score = hexdec($root_profile_id);
 		$this->getRedis()->zAdd(
-			'PHPIO_LIST', 
-			$_SERVER['REQUEST_TIME'], 
+			'PHPIO_LIST',
+			$score,
 			serialize(array(PHPIO::$run_id, $this->getURI($this->logs[0]['_SERVER'])))
 		);
-	}
-
-	function saveProfileFlow() {
-		list($root_profile_id, $profile_ids) = explode('.', PHPIO::$run_id, 2);
-		$score = hexdec($root_profile_id);
-		if ( !empty($profile_ids) ) {
-			$this->getRedis()->zAdd('PHPIO_FLOW', $score, PHPIO::$run_id);
-		}
 	}
 
 	function saveCurlHeader() {
@@ -78,15 +72,14 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		return unserialize($data);
 	}
 
-	function getFlow($root_profile_id) {
-		$root_profile_id = substr($root_profile_id, 0, 13);
+	function getFlow($profile_id) {
+		$root_profile_id = $this->getRootProfileId($profile_id);
 		$score = hexdec($root_profile_id);
-		$flow = $this->getRedis()->zRangeByScore('PHPIO_FLOW', $score, $score);
-
-		if ( is_array($flow) ) {
-			array_unshift($flow, $root_profile_id);
-		} else {
-			$flow = array($root_profile_id);
+		$profiles = $this->getRedis()->zRangeByScore('PHPIO_LIST', $score, $score);
+		$flow = array();
+		foreach ( $profiles as &$profile) {
+			$profile = unserialize($profile);
+			$flow[] = $profile[0];
 		}
 		return $flow;
 	}
@@ -115,8 +108,8 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	function flush() {
 		$this->getRedis()->multi()
 			->del('PHPIO_CURL')
-			->del('PHPIO_FLOW')
 			->del('PHPIO_SRC')
+			->del('PHPIO_LIST')
 			->del('PHPIO_PROF')
 			->exec();
 	}
