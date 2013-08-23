@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PHPIO - 52178abfbf1a4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
+    <!-- Le styles -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <link href="css/fbootstrap.min.css?20130719" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        overflow: auto;
+      }
+    	.nav span.label {
+    		/*position: absolute;*/
+    		margin-left: 2px
+    	}
+      .prof_detail {
+        display: none;
+        height: 150px;
+      }
+      .show_detail,.prof_detail {
+        background-color: #F5F5F5;
+      }
+      .prof_detail .tabbable .nav {
+        margin: 0;
+        padding: 0;
+      }
+      .label {
+        font-size:11px;
+      	font-weight:normal;
+      	text-transform:none;
+      }
+      .label-class {
+        text-indent: 1em;
+        width: 3px;
+        display: inline-block;
+        margin-right: 3px;
+      }
+      .label-empty {
+        background: none;
+        color: #000;
+        /*border: 1px solid #ccc;*/
+      }
+      a.label, a.label:hover { 
+        text-decoration: none;
+        color: auto
+      }
+
+      .srclink {
+        float: right;
+      }
+
+      .error {
+        background-color: red;
+      }
+
+      .lr {
+        word-wrap:break-word;
+      }
+
+      #function_table {
+        table-layout:fixed;
+      }
+
+      .tab-pane pre {
+        background-color: #F2F2F2;
+        border: none;
+        border-radius: none;
+        display: block;
+        font-size: 100%;
+        margin: 0;
+        padding: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .args_table {
+        width:auto;
+        max-width: 100%;
+        border: 1px solid #ccc;
+      }
+
+      ul.tree, ul.tree ul {
+          background: url("img/vline.png") repeat-y scroll 0 0 transparent;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+      }
+      ul.tree ul {
+          margin-left: 10px;
+      }
+      ul.tree li {
+          background: url("img/node.png") no-repeat scroll 0 0 transparent;
+          color: #336699;
+          font-weight: bold;
+          line-height: 20px;
+          margin: 0;
+          padding: 0 12px;
+      }
+      ul.tree li.last {
+          background: url("img/lastnode.png") no-repeat scroll 0 0 #FFFFFF;
+      }
+
+      ul.tree li:last-child { 
+        background: #fff url("img/lastnode.png") no-repeat; 
+      }
+
+      #tree >ul >li {
+        background: #fff;
+        padding: 0;
+      }
+      #tree {
+        position: fixed;
+        right: 0;
+        /*top: 40px;*/
+        bottom: 0;
+        background: #fff;
+        border-left: 1px solid #CCCCCC;
+        border-top: 1px solid #CCCCCC;
+        padding: 25px;
+        -moz-user-select: none;
+      }
+      #tree span.zoomin {
+        background: url("img/arrow.gif") no-repeat scroll 0 -19px transparent;
+      }
+      #tree .zoomout {
+        background: url("img/arrow.gif") no-repeat scroll 0px 0px transparent;
+        position: absolute;
+        bottom:0;
+        right:0;
+        width: 19px;
+        height: 19px;
+        cursor: pointer;
+      }
+      .tab-pane pre { background:none }
+
+      #vars .pills a:hover {
+        background-position: 0 -20px;
+      }
+
+      #vars .btn:hover {
+        background-position: 0 0;
+      }
+
+      #vars .pills .active a {
+        background-position: 0 -20px;
+      }
+      .dropdown-menu {
+        max-width: 500px;
+      }
+      .label-time {
+        margin-right: 10px;
+      }
+      #tree a.label:hover {
+        color: white;
+        background-color: #DD3C10;
+      }
+      .label-APC{background-color:#BA55D3}.label-Mysql{background-color:#0476D6}.label-PDO{background-color:#015A84}.label-PDOStatement{background-color:#015A84}.label-Redis{background-color:#3CC472}.label-Memcache{background-color:#9BCD9B}.label-Memcached{background-color:#9BCD9B}.label-Curl{background-color:#3CA9C4}.label-Error{background-color:red}.label-Exception{background-color:orange}    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id="nav" class="topbar navbar-inverse navbar-fixed-top">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#">PHPIO</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav" id="hooks">
+              <li class="active"><a href="#">ALL</a></li>
+            </ul>
+      	    <ul class="nav secondary-nav">
+              <li><a href="mailto:hemono@gmail.com" title="Contact me"><span class="label label-Mysql">@hemono</span></a></li>
+              <li class="dropdown" data-dropdown="dropdown" id="profiles">
+                <a href="#" class="dropdown-toggle">Profile(52178abfbf1a4)</a>
+                <ul class="dropdown-menu">
+                </ul>
+              </li>
+      	    </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      
+      	<h1>localhost/phpio/test/all.php 
+      	<small>127.0.0.1:80</small></h1>
+
+        <div class="tabbable" id="vars">
+            <ul class="pills">
+              <a class="btn" href="dot_52178abfbf1a4.html" target="_blank">Call Graph</a>
+                            <li><a href="#info_SERVER" class="btn" data-toggle="tab">$_SERVER</a></li>
+                            <li><a href="#info_GET" class="btn" data-toggle="tab">$_GET</a></li>
+                          </ul>
+            <div class="tab-content">
+                                <div class="tab-pane" id="info_SERVER">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                            <tr>
+                        <th>USER</th>
+                        <td><pre>apache</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HOME</th>
+                        <td><pre>/home/apache</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>FCGI_ROLE</th>
+                        <td><pre>RESPONDER</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SCRIPT_FILENAME</th>
+                        <td><pre>all.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>QUERY_STRING</th>
+                        <td><pre>XDEBUG_PROFILE</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_METHOD</th>
+                        <td><pre>GET</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>CONTENT_TYPE</th>
+                        <td><pre></pre></td>
+                      </tr>
+                                          <tr>
+                        <th>CONTENT_LENGTH</th>
+                        <td><pre></pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SCRIPT_NAME</th>
+                        <td><pre>/phpio/test/all.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_URI</th>
+                        <td><pre>/phpio/test/all.php?XDEBUG_PROFILE</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>DOCUMENT_URI</th>
+                        <td><pre>/phpio/test/all.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>DOCUMENT_ROOT</th>
+                        <td><pre>/var/www</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_PROTOCOL</th>
+                        <td><pre>HTTP/1.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>GATEWAY_INTERFACE</th>
+                        <td><pre>CGI/1.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_SOFTWARE</th>
+                        <td><pre>nginx/1.4.2</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REMOTE_ADDR</th>
+                        <td><pre>127.0.0.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REMOTE_PORT</th>
+                        <td><pre>35334</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_ADDR</th>
+                        <td><pre>127.0.0.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_PORT</th>
+                        <td><pre>80</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_NAME</th>
+                        <td><pre>localhost</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REDIRECT_STATUS</th>
+                        <td><pre>200</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_USER_AGENT</th>
+                        <td><pre>curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.14.0.0 zlib/1.2.3 libidn/1.18 libssh2/1.4.2</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_HOST</th>
+                        <td><pre>localhost</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_ACCEPT</th>
+                        <td><pre>*/*</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>PHP_SELF</th>
+                        <td><pre>/phpio/test/all.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_TIME_FLOAT</th>
+                        <td><pre>1377274559.7712</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_TIME</th>
+                        <td><pre>1377274559</pre></td>
+                      </tr>
+                                        </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_GET">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                            <tr>
+                        <th>XDEBUG_PROFILE</th>
+                        <td><pre></pre></td>
+                      </tr>
+                                        </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_POST">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                          </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_COOKIE">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                            </div>
+        </div>
+
+                <div id="tree">
+          <span class="zoomout"></span>
+          <ul class="tree"><li><a href="index.html" class="label important">localhost/phpio/test/all.php</a><ul class="tree"><li><a href="profile_52178abfbf1a4.52178abfcefb0.html" class="label label-empty">localhost/phpio/test/flow.php</a><ul class="tree"><li><a href="profile_52178abfbf1a4.52178abfcefb0.52178abfd737c.html" class="label label-empty">localhost/phpio/test/flow.php</a></li></ul></li></ul></li></ul>        </div>
+        
+        <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th width=220><span>Function</span></th>
+                    <th><span>Command</span></th>
+                    <th width=220><span>Connection</span></th>
+                    <th width=100><span>Response</span></th>
+                    <th width=50><span>Time(ms)</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                            <tr id="prof_item_1" class="prof_item" data="Curl">
+                  <td nowrap>
+                    <a target="_blank" href="file_flow.html#line=18" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Curl">&nbsp;</i>
+                    <a href="#">curl_exec</a>
+                  </td>
+                  <td class="lr">http://localhost/phpio/test/flow.php?i=2</td>
+                  <td>127.0.0.1:80</td>
+                  <td><span class="label success" title="HTTP 200 OK">http(200)</span></td>
+                  <td class="nr">87.937</td>
+                </tr>
+                <tr id="prof_detail_1" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces1" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args1" data-toggle="tab">Args</a></li>                        <li><a href="#options1" data-toggle="tab">Options</a></li>                        <li><a href="#header1" data-toggle="tab">Header</a></li>                        <li><a href="#curl1" data-toggle="tab">Curl</a></li>                        <li><a href="#response1" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces1">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=3" title="Show Source">include() called at [all.php:3]</a></li>
+                                                      <li><a target="_blank" href="file_flow.html#line=5" title="Show Source">curl() called at [flow.php:5]</a></li>
+                                                      <li><a target="_blank" href="file_flow.html#line=18" title="Show Source">curl_exec() called at [flow.php:18]</a></li>
+                                                    </ol>
+                        </div>
+                                                <div class="tab-pane" id="header1">
+                          <pre>* About to connect() to localhost port 80 (#0)
+*   Trying ::1... * Connection refused
+*   Trying 127.0.0.1... * connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+> GET /phpio/test/flow.php?i=2 HTTP/1.1
+Host: localhost
+Accept: */*
+Cookie: XDEBUG_PROFILE=52178abfbf1a4;
+
+< HTTP/1.1 200 OK
+< Server: nginx/1.4.2
+< Date: Fri, 23 Aug 2013 16:15:59 GMT
+< Content-Type: text/html
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< X-Powered-By: PHP/5.4.17
+< Set-Cookie: XDEBUG_PROFILE_ID=52178abfbf1a4.52178abfcefb0
+< 
+* Connection #0 to host localhost left intact
+* Closing connection #0
+</pre>
+                        </div>
+                                                                    <div class="tab-pane" id="args1">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>ch</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                      <div class="tab-pane" id="options1">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>CURLOPT_URL</th>
+                              <td>string</td>
+                              <td><pre>http://localhost/phpio/test/flow.php?i=2</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>CURLOPT_HEADER</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                             <div class="tab-pane" id="curl1">
+                          <table class="args_table">
+                          <tbody>
+                                                        <tr>
+                              <th>url</th>
+                              <td><pre>http://localhost/phpio/test/flow.php?i=2</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>content_type</th>
+                              <td><pre>text/html</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_code</th>
+                              <td><pre>200</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>header_size</th>
+                              <td><pre>239</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>request_size</th>
+                              <td><pre>110</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>filetime</th>
+                              <td><pre>-1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ssl_verify_result</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_count</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>total_time</th>
+                              <td><pre>0.087937</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>namelookup_time</th>
+                              <td><pre>0.019555</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>connect_time</th>
+                              <td><pre>0.020057</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>pretransfer_time</th>
+                              <td><pre>0.020066</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_download</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_download</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>download_content_length</th>
+                              <td><pre>-1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>upload_content_length</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>starttransfer_time</th>
+                              <td><pre>0.087903</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_time</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>certinfo</th>
+                              <td><pre>Array
+(
+)
+</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>primary_ip</th>
+                              <td><pre>127.0.0.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_url</th>
+                              <td><pre></pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_status</th>
+                              <td><pre>OK</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                       <div class="tab-pane" id="response1"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_2" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=2" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_connect</a>
+                  </td>
+                  <td class="lr">127.0.0.1</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label success">resource(11)</span></td>
+                  <td class="nr">1.282</td>
+                </tr>
+                <tr id="prof_detail_2" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces2" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args2" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response2" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces2">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=2" title="Show Source">mysql_connect() called at [mysql.php:2]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args2">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>hostname</th>
+                              <td>string</td>
+                              <td><pre>127.0.0.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>username</th>
+                              <td>string</td>
+                              <td><pre>root</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>password</th>
+                              <td>string</td>
+                              <td><pre>Seattle01!</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response2"><pre>resource(11) of type (mysql link)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_3" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=3" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_select_db</a>
+                  </td>
+                  <td class="lr">test</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label success">true</span></td>
+                  <td class="nr">0.7598</td>
+                </tr>
+                <tr id="prof_detail_3" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces3" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args3" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response3" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces3">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=3" title="Show Source">mysql_select_db() called at [mysql.php:3]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args3">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>database_name</th>
+                              <td>string</td>
+                              <td><pre>test</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response3"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_4" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=4" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_query</a>
+                  </td>
+                  <td class="lr">show databases</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label success" title="7 Affected Rows">rows(7)</span></td>
+                  <td class="nr">1.102</td>
+                </tr>
+                <tr id="prof_detail_4" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces4" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args4" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response4" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces4">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=4" title="Show Source">mysql_query() called at [mysql.php:4]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args4">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>query</th>
+                              <td>string</td>
+                              <td><pre>show databases</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response4"><pre>resource(12) of type (mysql result)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_5" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=6" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_connect</a>
+                  </td>
+                  <td class="lr">127.0.0.1</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label success">resource(13)</span></td>
+                  <td class="nr">0.6568</td>
+                </tr>
+                <tr id="prof_detail_5" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces5" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args5" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response5" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces5">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=6" title="Show Source">mysql_connect() called at [mysql.php:6]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args5">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>hostname</th>
+                              <td>string</td>
+                              <td><pre>127.0.0.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>username</th>
+                              <td>string</td>
+                              <td><pre>root</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>password</th>
+                              <td>string</td>
+                              <td><pre>Seattle01!</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>new</th>
+                              <td>boolean</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response5"><pre>resource(13) of type (mysql link)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_6" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=7" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_select_db</a>
+                  </td>
+                  <td class="lr">test</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label success">true</span></td>
+                  <td class="nr">0.489</td>
+                </tr>
+                <tr id="prof_detail_6" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces6" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args6" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response6" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces6">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=7" title="Show Source">mysql_select_db() called at [mysql.php:7]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args6">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>database_name</th>
+                              <td>string</td>
+                              <td><pre>test</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response6"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_7" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_mysql.html#line=8" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_query</a>
+                  </td>
+                  <td class="lr">set names utf8</td>
+                  <td>127.0.0.1:3306</td>
+                  <td><span class="label warning" title="0 Affected Rows">rows(0)</span></td>
+                  <td class="nr">0.447</td>
+                </tr>
+                <tr id="prof_detail_7" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces7" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args7" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response7" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces7">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=4" title="Show Source">include() called at [all.php:4]</a></li>
+                                                      <li><a target="_blank" href="file_mysql.html#line=8" title="Show Source">mysql_query() called at [mysql.php:8]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args7">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>query</th>
+                              <td>string</td>
+                              <td><pre>set names utf8</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response7"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_8" class="prof_item" data="APC">
+                  <td nowrap>
+                    <a target="_blank" href="file_apc.html#line=4" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-APC">&nbsp;</i>
+                    <a href="#">apc_store</a>
+                  </td>
+                  <td class="lr">anumber</td>
+                  <td>localhost</td>
+                  <td><span class="label success">true</span></td>
+                  <td class="nr">0.3521</td>
+                </tr>
+                <tr id="prof_detail_8" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces8" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args8" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response8" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces8">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_apc.html#line=4" title="Show Source">apc_store() called at [apc.php:4]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args8">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>key</th>
+                              <td>string</td>
+                              <td><pre>anumber</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>var</th>
+                              <td>integer</td>
+                              <td><pre>42</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response8"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_9" class="prof_item" data="APC">
+                  <td nowrap>
+                    <a target="_blank" href="file_apc.html#line=6" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-APC">&nbsp;</i>
+                    <a href="#">apc_fetch</a>
+                  </td>
+                  <td class="lr">anumber</td>
+                  <td>localhost</td>
+                  <td><span class="label success">int(42)</span></td>
+                  <td class="nr">0.3262</td>
+                </tr>
+                <tr id="prof_detail_9" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces9" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args9" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response9" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces9">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_apc.html#line=6" title="Show Source">apc_fetch() called at [apc.php:6]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args9">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>key</th>
+                              <td>string</td>
+                              <td><pre>anumber</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response9"><pre>int(42)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_10" class="prof_item" data="APC">
+                  <td nowrap>
+                    <a target="_blank" href="file_apc.html#line=8" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-APC">&nbsp;</i>
+                    <a href="#">apc_inc</a>
+                  </td>
+                  <td class="lr">anumber</td>
+                  <td>localhost</td>
+                  <td><span class="label success">int(43)</span></td>
+                  <td class="nr">0.283</td>
+                </tr>
+                <tr id="prof_detail_10" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces10" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args10" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response10" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces10">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_apc.html#line=8" title="Show Source">apc_inc() called at [apc.php:8]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args10">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>key</th>
+                              <td>string</td>
+                              <td><pre>anumber</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response10"><pre>int(43)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_11" class="prof_item" data="Curl">
+                  <td nowrap>
+                    <a target="_blank" href="file_curl.html#line=10" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Curl">&nbsp;</i>
+                    <a href="#">curl_exec</a>
+                  </td>
+                  <td class="lr">http://www.baidu.com/</td>
+                  <td>115.239.210.26:80</td>
+                  <td><span class="label success" title="HTTP 200 OK">http(200)</span></td>
+                  <td class="nr">132.895</td>
+                </tr>
+                <tr id="prof_detail_11" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces11" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args11" data-toggle="tab">Args</a></li>                        <li><a href="#options11" data-toggle="tab">Options</a></li>                        <li><a href="#header11" data-toggle="tab">Header</a></li>                        <li><a href="#curl11" data-toggle="tab">Curl</a></li>                        <li><a href="#response11" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces11">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_curl.html#line=10" title="Show Source">curl_exec() called at [curl.php:10]</a></li>
+                                                    </ol>
+                        </div>
+                                                <div class="tab-pane" id="header11">
+                          <pre>* About to connect() to www.baidu.com port 80 (#0)
+*   Trying 115.239.210.26... * connected
+* Connected to www.baidu.com (115.239.210.26) port 80 (#0)
+> GET / HTTP/1.1
+Host: www.baidu.com
+Accept: */*
+Cookie: XDEBUG_PROFILE=52178abfbf1a4;
+
+< HTTP/1.1 200 OK
+< Date: Fri, 23 Aug 2013 16:14:17 GMT
+< Server: BWS/1.0
+< Content-Length: 10443
+< Content-Type: text/html;charset=utf-8
+< Cache-Control: private
+< BDPAGETYPE: 1
+< BDUSERID: 0
+< BDQID: 0x881d159000bb2c9f
+< Set-Cookie: BDSVRTM=1; path=/
+< Set-Cookie: H_PS_PSSID=3143_1434_3139_2976_3090_2701; path=/; domain=.baidu.com
+< Set-Cookie: BAIDUID=60E082B88EDAB7AA91E0217A5BAF2927:FG=1; expires=Fri, 23-Aug-43 16:14:17 GMT; path=/; domain=.baidu.com
+< Expires: Fri, 23 Aug 2013 16:14:17 GMT
+< P3P: CP=" OTI DSP COR IVA OUR IND COM "
+< Connection: Keep-Alive
+< 
+* Connection #0 to host www.baidu.com left intact
+* Closing connection #0
+</pre>
+                        </div>
+                                                                    <div class="tab-pane" id="args11">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>ch</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                      <div class="tab-pane" id="options11">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>CURLOPT_URL</th>
+                              <td>string</td>
+                              <td><pre>http://www.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>CURLOPT_HEADER</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                             <div class="tab-pane" id="curl11">
+                          <table class="args_table">
+                          <tbody>
+                                                        <tr>
+                              <th>url</th>
+                              <td><pre>http://www.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>content_type</th>
+                              <td><pre>text/html;charset=utf-8</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_code</th>
+                              <td><pre>200</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>header_size</th>
+                              <td><pre>554</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>request_size</th>
+                              <td><pre>91</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>filetime</th>
+                              <td><pre>-1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ssl_verify_result</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_count</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>total_time</th>
+                              <td><pre>0.132895</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>namelookup_time</th>
+                              <td><pre>0.053327</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>connect_time</th>
+                              <td><pre>0.091709</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>pretransfer_time</th>
+                              <td><pre>0.09173</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_download</th>
+                              <td><pre>10443</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_download</th>
+                              <td><pre>78580</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>download_content_length</th>
+                              <td><pre>10443</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>upload_content_length</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>starttransfer_time</th>
+                              <td><pre>0.132602</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_time</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>certinfo</th>
+                              <td><pre>Array
+(
+)
+</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>primary_ip</th>
+                              <td><pre>115.239.210.26</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_url</th>
+                              <td><pre></pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_status</th>
+                              <td><pre>OK</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                       <div class="tab-pane" id="response11"><pre>bool(true)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_12" class="prof_item" data="Curl">
+                  <td nowrap>
+                    <a target="_blank" href="file_curl2.html#line=35" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Curl">&nbsp;</i>
+                    <a href="#">curl_multi_remove_handle</a>
+                  </td>
+                  <td class="lr">http://m.baidu.com/</td>
+                  <td>115.239.210.14:80</td>
+                  <td><span class="label success" title="HTTP 200 OK">http(200)</span></td>
+                  <td class="nr">183.178</td>
+                </tr>
+                <tr id="prof_detail_12" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces12" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args12" data-toggle="tab">Args</a></li>                        <li><a href="#options12" data-toggle="tab">Options</a></li>                        <li><a href="#header12" data-toggle="tab">Header</a></li>                        <li><a href="#curl12" data-toggle="tab">Curl</a></li>                        <li><a href="#response12" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces12">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_curl2.html#line=35" title="Show Source">curl_multi_remove_handle() called at [curl2.php:35]</a></li>
+                                                    </ol>
+                        </div>
+                                                <div class="tab-pane" id="header12">
+                          <pre>* About to connect() to m.baidu.com port 80 (#0)
+*   Trying 115.239.210.14... * Connected to m.baidu.com (115.239.210.14) port 80 (#0)
+> GET / HTTP/1.1
+Host: m.baidu.com
+Accept: */*
+Cookie: XDEBUG_PROFILE=52178abfbf1a4;
+
+< HTTP/1.1 200 OK
+< Set-Cookie: BAIDUID=60E082B88EDAB7AAF5FE437C2759D361:FG=1; max-age=31536000; expires=Sat, 23-Aug-14 16:14:17 GMT; domain=.baidu.com; path=/; version=1
+< P3P: CP=" OTI DSP COR IVA OUR IND COM "
+< Cache-Control: no-cache
+< Content-type: text/html;charset=utf-8
+< Date: Fri, 23 Aug 2013 16:14:17 GMT
+< Server: apache
+< Set-Cookie: BAIDU_WISE_UID=AA046216992805918DFDA7AD1DC25187;expires=Sun, 12-May-2212 00:00:00 GMT; path=/; domain=.baidu.com
+< Version: HTTP/1.1
+< Content-Length: 4995
+< 
+* Expire cleared
+* Connection #0 to host m.baidu.com left intact
+</pre>
+                        </div>
+                                                                    <div class="tab-pane" id="args12">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>mh</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ch</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                      <div class="tab-pane" id="options12">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>CURLOPT_URL</th>
+                              <td>string</td>
+                              <td><pre>http://m.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>CURLOPT_RETURNTRANSFER</th>
+                              <td>integer</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                             <div class="tab-pane" id="curl12">
+                          <table class="args_table">
+                          <tbody>
+                                                        <tr>
+                              <th>url</th>
+                              <td><pre>http://m.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>content_type</th>
+                              <td><pre>text/html;charset=utf-8</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_code</th>
+                              <td><pre>200</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>header_size</th>
+                              <td><pre>496</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>request_size</th>
+                              <td><pre>89</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>filetime</th>
+                              <td><pre>-1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ssl_verify_result</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_count</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>total_time</th>
+                              <td><pre>0.183178</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>namelookup_time</th>
+                              <td><pre>0.069033</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>connect_time</th>
+                              <td><pre>0.122061</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>pretransfer_time</th>
+                              <td><pre>0.122255</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_download</th>
+                              <td><pre>4995</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_download</th>
+                              <td><pre>27268</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>download_content_length</th>
+                              <td><pre>4995</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>upload_content_length</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>starttransfer_time</th>
+                              <td><pre>0.182937</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_time</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>certinfo</th>
+                              <td><pre>Array
+(
+)
+</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>primary_ip</th>
+                              <td><pre>115.239.210.14</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_url</th>
+                              <td><pre></pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_status</th>
+                              <td><pre>OK</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                       <div class="tab-pane" id="response12"><pre><b>string(4995)</b><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.0//EN&quot; &quot;http://www.wapforum.org/DTD/xhtml-mobile10.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;!--STATUS OK--&gt;&lt;head&gt;&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;application/xhtml+xml; charset=utf-8&quot;/&gt;&lt;meta http-equiv=&quot;Cache-control&quot; content=&quot;no-cache&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;body{font-size:medium;line-height:1.6em;text-align:center}img{border:0}form{margin:0;padding:0}.a{padding-top:6px;margin-top:6px;margin-bottom:6px}.h{color:#c60a00}.s{font-size:small}.b{font-size:small;color:#77C}&lt;/style&gt;&lt;title&gt;百度一下,你就知道&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;div&gt;&lt;img src=&quot;http://m.baidu.com/static/index/l.gif&quot; alt=&quot;百度首页&quot; /&gt;&lt;br/&gt;&lt;form action=&quot;ssid=0/from=0/bd_page_type=1/uid=AA046216992805918DFDA7AD1DC25187/baiduid=60E082B88EDAB7AAF5FE437C2759D361/s&quot; method=&quot;get&quot;&gt;&lt;div&gt;&lt;input type=&quot;text&quot; name=&quot;word&quot; maxlength=&quot;64&quot; size=&quot;20&quot; id=&quot;word&quot;/&gt;&lt;br/&gt;&lt;input type=&quot;hidden&quot; value=&quot;upssntdnvelami&quot; name=&quot;uc_param_str&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;ib&quot; name=&quot;sa&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;111041&quot; name=&quot;st_1&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;102041&quot; name=&quot;st_2&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;sz@176_220,ta@____&quot; name=&quot;pu&quot;/&gt;&lt;input type=&quot;hidden&quot; name=&quot;idx&quot; value=&quot;20000&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;webmain&quot; name=&quot;tn_1&quot;/&gt;&lt;input type=&quot;hidden&quot; value=&quot;fwapadv&quot; name=&quot;tn_2&quot;/&gt;&lt;input type=&quot;submit&quot; value=&quot;搜网页&quot; name=&quot;ct_1&quot;/&gt;&amp;nbsp;&lt;input type=&quot;submit&quot; value=&quot;搜Wap&quot; name=&quot;ct_2&quot;/&gt;&lt;/div&gt;&lt;/form&gt;&lt;div class=&quot;a&quot;&gt;&lt;a href=&quot;http://duokoo.baidu.com/novel/?fr=home&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&quot;&gt;小说&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;ssid=0/from=0/bd_page_type=1/uid=AA046216992805918DFDA7AD1DC25187/pu=sz%40176_220%2Cta%40____/news?idx=20000&amp;amp;itj=22&quot;&gt;新闻&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://tieba.baidu.com/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;idx=20000&amp;amp;itj=23&amp;amp;mo_device=1&quot;&gt;贴吧&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://zhidao.baidu.com/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;idx=20000&amp;amp;itj=24&amp;amp;device=mobile&quot;&gt;知道&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://wapmap.baidu.com/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;idx=20000&amp;amp;itj=25&quot;&gt;地图&lt;/a&gt;&lt;br/&gt;&lt;a href=&quot;img?idx=20000&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;itj=21&quot;&gt;图片&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://m.hao123.com/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;idx=20000&amp;amp;itj=29&quot;&gt;hao123&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;a&quot;&gt;&lt;a href=&quot;http://duokoo.baidu.com/game/?fr=home&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;itj=222&quot;&gt;游戏&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://duokoo.baidu.com/d/?fr=home&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;itj=212&quot;&gt;下载&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;pub/jump.php?itj=223&amp;amp;url=http%3A%2F%2Fmv.guotv.com%2Ftv100-baidu-wap%2Ftv100%2Findex%3Fpid%3D643%26ssid%3D0%26from%3D0%26bd_page_type%3D1%26uid%3DAA046216992805918DFDA7AD1DC25187%26pu%3Dsz%40176_220%2Cta%40____&quot;&gt;视频&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;http://imn.baidu.com/coolsite/index.php?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;itj=215&quot;&gt;酷站&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;pub/more.php?idx=20000&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;itj=210&quot;&gt;更多&lt;/a&gt;&lt;br/&gt;客户端:&lt;a href=&quot;http://mo.baidu.com/zhangbai/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;page_type=1&amp;amp;itj=217&quot;&gt;掌上百度&lt;/a&gt;|&lt;a href=&quot;http://mo.baidu.com/input/?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;page_type=1&amp;amp;itj=219&quot;&gt;输入法&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;a&quot;&gt;&lt;a href=&quot;http://m.baidu.com/pub/help.php?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&amp;amp;tt=I1211&quot;&gt;帮助&lt;/a&gt;-&lt;a href=&quot;http://wapp.baidu.com/f?kw=%B0%D9%B6%C8%B8%F6%C8%CB%CA%D7%D2%B3&amp;amp;ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____&quot;&gt;反馈&lt;/a&gt;&lt;br/&gt;&amp;lt;&lt;a href=&quot;?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=0&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____%2Csz%40176_208&quot;&gt;极简版&lt;/a&gt;|炫彩版|&lt;a href=&quot;?ssid=0&amp;amp;from=0&amp;amp;bd_page_type=1&amp;amp;uid=AA046216992805918DFDA7AD1DC25187&amp;amp;pu=sz%40176_220%2Cta%40____%2Csz%401330_240&quot;&gt;触屏版&lt;/a&gt;&amp;gt;&lt;br/&gt;&lt;span class=&quot;b&quot;&gt;Baidu&amp;nbsp;京ICP证030173号&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_13" class="prof_item" data="Curl">
+                  <td nowrap>
+                    <a target="_blank" href="file_curl2.html#line=36" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Curl">&nbsp;</i>
+                    <a href="#">curl_multi_remove_handle</a>
+                  </td>
+                  <td class="lr">http://www.baidu.com/</td>
+                  <td>115.239.210.27:80</td>
+                  <td><span class="label success" title="HTTP 200 OK">http(200)</span></td>
+                  <td class="nr">216.779</td>
+                </tr>
+                <tr id="prof_detail_13" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces13" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args13" data-toggle="tab">Args</a></li>                        <li><a href="#options13" data-toggle="tab">Options</a></li>                        <li><a href="#header13" data-toggle="tab">Header</a></li>                        <li><a href="#curl13" data-toggle="tab">Curl</a></li>                        <li><a href="#response13" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces13">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_curl2.html#line=36" title="Show Source">curl_multi_remove_handle() called at [curl2.php:36]</a></li>
+                                                    </ol>
+                        </div>
+                                                <div class="tab-pane" id="header13">
+                          <pre>* About to connect() to www.baidu.com port 80 (#1)
+*   Trying 115.239.210.27... * Connected to www.baidu.com (115.239.210.27) port 80 (#1)
+> GET / HTTP/1.1
+Host: www.baidu.com
+Accept: */*
+Cookie: XDEBUG_PROFILE=52178abfbf1a4;
+
+< HTTP/1.1 200 OK
+< Date: Fri, 23 Aug 2013 16:14:17 GMT
+< Server: BWS/1.0
+< Content-Length: 10433
+< Content-Type: text/html;charset=utf-8
+< Cache-Control: private
+< BDPAGETYPE: 1
+< BDUSERID: 0
+< BDQID: 0x99484f9000b8694b
+< Set-Cookie: BDSVRTM=1; path=/
+< Set-Cookie: H_PS_PSSID=3143_1434_3139_2976_3090_2701; path=/; domain=.baidu.com
+< Set-Cookie: BAIDUID=60E082B88EDAB7AA91E0217A5BAF2927:FG=1; expires=Fri, 23-Aug-43 16:14:17 GMT; path=/; domain=.baidu.com
+< Expires: Fri, 23 Aug 2013 16:14:17 GMT
+< P3P: CP=" OTI DSP COR IVA OUR IND COM "
+< Connection: Keep-Alive
+< 
+* Expire cleared
+* Connection #1 to host www.baidu.com left intact
+</pre>
+                        </div>
+                                                                    <div class="tab-pane" id="args13">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>mh</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ch</th>
+                              <td>integer</td>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                      <div class="tab-pane" id="options13">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>CURLOPT_URL</th>
+                              <td>string</td>
+                              <td><pre>http://www.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>CURLOPT_RETURNTRANSFER</th>
+                              <td>integer</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                             <div class="tab-pane" id="curl13">
+                          <table class="args_table">
+                          <tbody>
+                                                        <tr>
+                              <th>url</th>
+                              <td><pre>http://www.baidu.com/</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>content_type</th>
+                              <td><pre>text/html;charset=utf-8</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_code</th>
+                              <td><pre>200</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>header_size</th>
+                              <td><pre>554</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>request_size</th>
+                              <td><pre>91</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>filetime</th>
+                              <td><pre>-1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>ssl_verify_result</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_count</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>total_time</th>
+                              <td><pre>0.216779</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>namelookup_time</th>
+                              <td><pre>0.051148</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>connect_time</th>
+                              <td><pre>0.095158</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>pretransfer_time</th>
+                              <td><pre>0.095265</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>size_download</th>
+                              <td><pre>10433</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_download</th>
+                              <td><pre>48127</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>speed_upload</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>download_content_length</th>
+                              <td><pre>10433</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>upload_content_length</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>starttransfer_time</th>
+                              <td><pre>0.146838</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_time</th>
+                              <td><pre>0</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>certinfo</th>
+                              <td><pre>Array
+(
+)
+</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>primary_ip</th>
+                              <td><pre>115.239.210.27</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>redirect_url</th>
+                              <td><pre></pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>http_status</th>
+                              <td><pre>OK</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                       <div class="tab-pane" id="response13"><pre><b>string(10433)</b><br>&lt;!DOCTYPE html&gt;&lt;!--STATUS OK--&gt;&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;style &gt;html,body{height:100%}html{overflow-y:auto}#wrapper{position:relative;_position:;min-height:100%}#content{padding-bottom:100px;text-align:center}#ftCon{height:100px;position:absolute;bottom:44px;text-align:center;width:100%;margin:0 auto;z-index:0;overflow:hidden}#ftConw{width:720px;margin:0 auto}body{font:12px arial;text-align:;background:#fff}body,p,form,ul,li{margin:0;padding:0;list-style:none}body,form,#fm{position:relative}td{text-align:left}img{border:0}a{color:#00c}a:active{color:#f60}#u{color:#999;padding:4px 10px 5px 0;text-align:right}#u a{margin:0 5px}#u .reg{margin:0}#m{width:720px;margin:0 auto}#nv a,#nv b,.btn,#lk{font-size:14px}#fm{padding-left:110px;text-align:left;z-index:1}input{border:0;padding:0}#nv{height:19px;font-size:16px;margin:0 0 4px;text-align:left;text-indent:137px}.s_ipt_wr{width:418px;height:30px;display:inline-block;margin-right:5px;background:url(/img/i-1.0.0.png) no-repeat -304px 0;border:1px solid #b6b6b6;border-color:#9a9a9a #cdcdcd #cdcdcd #9a9a9a;vertical-align:top}.s_ipt{width:405px;height:22px;font:16px/22px arial;margin:5px 0 0 7px;background:#fff;outline:0;-webkit-appearance:none}.s_btn{width:95px;height:32px;padding-top:2px\9;font-size:14px;background:#ddd url(/img/i-1.0.0.png);cursor:pointer}.s_btn_h{background-position:-100px 0}.s_btn_wr{width:97px;height:34px;display:inline-block;background:url(/img/i-1.0.0.png) no-repeat -202px 0;*position:relative;z-index:0;vertical-align:top}#lg img{vertical-align:top;margin-bottom:3px}#lk{margin:33px 0}#lk span{font:14px &quot;宋体&quot;}#lm{height:60px}#lh{margin:16px 0 5px;word-spacing:3px}.tools{position:absolute;top:-4px;*top:10px;right:7px}#mHolder{width:62px;position:relative;z-index:296;display:none}#mCon{height:18px;line-height:18px;position:absolute;cursor:pointer;padding:0 18px 0 0;background:url(/img/bg-1.0.0.gif) no-repeat right -134px;background-position:right -136px\9}#mCon span{color:#00c;cursor:default;display:block}#mCon .hw{text-decoration:underline;cursor:pointer}#mMenu a{width:100%;height:100%;display:block;line-height:22px;text-indent:6px;text-decoration:none;filter:none\9}#mMenu,#user ul{box-shadow:1px 1px 2px #ccc;-moz-box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;filter:progid:DXImageTransform.Microsoft.Shadow(Strength=2,Direction=135,Color=&quot;#cccccc&quot;)\9}#mMenu{width:56px;border:1px solid #9b9b9b;list-style:none;position:absolute;right:27px;top:28px;display:none;background:#fff}#mMenu a:hover{background:#ebebeb}#mMenu .ln{height:1px;background:#ebebeb;overflow:hidden;font-size:1px;line-height:1px;margin-top:-1px}#cp,#cp a{color:#666}#seth{display:none;behavior:url(#default#homepage)}#setf{display:none}#sekj{margin-left:14px}#shouji{margin-right:14px}&lt;/style&gt;&lt;script &gt;function h(obj){obj.style.behavior='url(#default#homepage)';var a = obj.setHomePage('http://www.baidu.com/');}&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;wrapper&quot;&gt;&lt;div id=&quot;content&quot;&gt;&lt;div id=&quot;u&quot;&gt;&lt;a href=&quot;http://www.baidu.com/gaoji/preferences.html&quot; name=&quot;tj_setting&quot;&gt;搜索设置&lt;/a&gt;|&lt;a href=&quot;https://passport.baidu.com/v2/?login&amp;tpl=mn&amp;u=http%3A%2F%2Fwww.baidu.com%2F&quot; name=&quot;tj_login&quot; id=&quot;lb&quot; onclick=&quot;return false;&quot;&gt;登录&lt;/a&gt;&lt;a href=&quot;https://passport.baidu.com/v2/?reg&amp;regType=1&amp;tpl=mn&amp;u=http%3A%2F%2Fwww.baidu.com%2F&quot; target=&quot;_blank&quot; name=&quot;tj_reg&quot; class=&quot;reg&quot;&gt;注册&lt;/a&gt;&lt;/div&gt;&lt;div id=&quot;m&quot;&gt;&lt;p id=&quot;lg&quot;&gt;&lt;img src=&quot;http://www.baidu.com/img/bdlogo.gif&quot; width=&quot;270&quot; height=&quot;129&quot;&gt;&lt;/p&gt;&lt;p id=&quot;nv&quot;&gt;&lt;a href=&quot;http://news.baidu.com&quot;&gt;新&amp;nbsp;闻&lt;/a&gt;　&lt;b&gt;网&amp;nbsp;页&lt;/b&gt;　&lt;a href=&quot;http://tieba.baidu.com&quot;&gt;贴&amp;nbsp;吧&lt;/a&gt;　&lt;a href=&quot;http://zhidao.baidu.com&quot;&gt;知&amp;nbsp;道&lt;/a&gt;　&lt;a href=&quot;http://music.baidu.com&quot;&gt;音&amp;nbsp;乐&lt;/a&gt;　&lt;a href=&quot;http://image.baidu.com&quot;&gt;图&amp;nbsp;片&lt;/a&gt;　&lt;a href=&quot;http://v.baidu.com&quot;&gt;视&amp;nbsp;频&lt;/a&gt;　&lt;a href=&quot;http://map.baidu.com&quot;&gt;地&amp;nbsp;图&lt;/a&gt;&lt;/p&gt;&lt;div id=&quot;fm&quot;&gt;&lt;form name=&quot;f&quot; action=&quot;/s&quot;&gt;&lt;span class=&quot;s_ipt_wr&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;wd&quot; id=&quot;kw&quot; maxlength=&quot;100&quot; class=&quot;s_ipt&quot;&gt;&lt;/span&gt;&lt;input type=&quot;hidden&quot; name=&quot;rsv_bp&quot; value=&quot;0&quot;&gt;&lt;input type=hidden name=ch value=&quot;&quot;&gt;&lt;input type=hidden name=tn value=&quot;baidu&quot;&gt;&lt;input type=hidden name=bar value=&quot;&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;rsv_spt&quot; value=&quot;3&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;ie&quot; value=&quot;utf-8&quot;&gt;&lt;span class=&quot;s_btn_wr&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;百度一下&quot; id=&quot;su&quot; class=&quot;s_btn&quot; onmousedown=&quot;this.className='s_btn s_btn_h'&quot; onmouseout=&quot;this.className='s_btn'&quot;&gt;&lt;/span&gt;&lt;/form&gt;&lt;span class=&quot;tools&quot;&gt;&lt;span id=&quot;mHolder&quot;&gt;&lt;div id=&quot;mCon&quot;&gt;&lt;span&gt;输入法&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;/span&gt;&lt;ul id=&quot;mMenu&quot;&gt;&lt;li&gt;&lt;a href=&quot;#&quot; name=&quot;ime_hw&quot;&gt;手写&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot; name=&quot;ime_py&quot;&gt;拼音&lt;/a&gt;&lt;/li&gt;&lt;li class=&quot;ln&quot;&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;#&quot; name=&quot;ime_cl&quot;&gt;关闭&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;p id=&quot;lk&quot;&gt;&lt;a href=&quot;http://baike.baidu.com&quot;&gt;百科&lt;/a&gt;　&lt;a href=&quot;http://wenku.baidu.com&quot;&gt;文库&lt;/a&gt;　&lt;a href=&quot;http://www.hao123.com&quot;&gt;hao123&lt;/a&gt;&lt;span&gt;&amp;nbsp;|&amp;nbsp;&lt;a href=&quot;http://www.baidu.com/more/&quot;&gt;更多&amp;gt;&amp;gt;&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;lm&quot;&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;ftCon&quot;&gt;&lt;div id=&quot;ftConw&quot;&gt;&lt;p &gt;&lt;a id=&quot;seth&quot; onClick=&quot;h(this)&quot; href=&quot;/&quot; onmousedown=&quot;return ns_c({'fm':'behs','tab':'homepage','pos':0})&quot;&gt;把百度设为主页&lt;/a&gt;&lt;a id=&quot;setf&quot; href=&quot;http://www.baidu.com/cache/sethelp/index.html&quot; onmousedown=&quot;return ns_c({'fm':'behs','tab':'favorites','pos':0})&quot; target=&quot;_blank&quot;&gt;把百度设为主页&lt;/a&gt;&lt;span id=&quot;sekj&quot;&gt;&lt;a href=&quot;http://liulanqi.baidu.com/ps.php&quot; target=&quot;_blank&quot; onmousedown=&quot;return ns_c({'fm':'behs','tab':'bdbrwlk','pos':1})&quot;&gt;安装百度浏览器&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;p id=&quot;lh&quot;&gt;&lt;a href=&quot;http://e.baidu.com/?refer=888&quot; onmousedown=&quot;return ns_c({'fm':'behs','tab':'btlink','pos':2})&quot;&gt;加入百度推广&lt;/a&gt;&amp;nbsp;|&amp;nbsp;&lt;a onmousedown=&quot;return ns_c({'fm':'behs','tab':'tj_bang'})&quot; href=&quot;http://top.baidu.com&quot;&gt;搜索风云榜&lt;/a&gt;&amp;nbsp;|&amp;nbsp;&lt;a onmousedown=&quot;return ns_c({'fm':'behs','tab':'tj_about'})&quot; href=&quot;http://home.baidu.com&quot;&gt;关于百度&lt;/a&gt;&amp;nbsp;|&amp;nbsp;&lt;a onmousedown=&quot;return ns_c({'fm':'behs','tab':'tj_about_en'})&quot; href=&quot;http://ir.baidu.com&quot;&gt;About Baidu&lt;/a&gt;&lt;/p&gt;&lt;p id=&quot;cp&quot;&gt;&amp;copy;2013&amp;nbsp;Baidu&amp;nbsp;&lt;a href=&quot;/duty/&quot; name=&quot;tj_duty&quot;&gt;使用百度前必读&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp;&lt;img src=&quot;http://www.baidu.com/cache/global/img/gs.gif&quot;&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;script&gt;var bds={se:{},comm : {ishome : 1,sid : &quot;3187_2777_3138_2976_3154_3090_2702&quot;,user : &quot;&quot;,username : &quot;&quot;,sugHost : &quot;http://suggestion.baidu.com/su&quot;,personalData : &quot;&quot;,loginAction : []}}&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://s1.bdstatic.com/r/www/cache/static/global/js/home_299f7566.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;script&gt;var bdUser = null;var w=window,d=document,n=navigator,k=d.f.wd,a=d.getElementById(&quot;nv&quot;).getElementsByTagName(&quot;a&quot;),isIE=n.userAgent.indexOf(&quot;MSIE&quot;)!=-1&amp;&amp;!window.opera;(function(){if(/q=([^&amp;]+)/.test(location.search)){k.value=decodeURIComponent(RegExp[&quot;\x241&quot;])}})();if(n.cookieEnabled){bds.se.sug();};function addEV(o, e, f){if(w.attachEvent){o.attachEvent(&quot;on&quot; + e, f);}else if(w.addEventListener){ o.addEventListener(e, f, false);}}function G(id){return d.getElementById(id);}function ns_c(q){var p = encodeURIComponent(window.document.location.href), sQ = '', sV = '', mu='', img = window[&quot;BD_PS_C&quot; + (new Date()).getTime()] = new Image();for (v in q) {sV = q[v];sQ += v + &quot;=&quot; + sV + &quot;&amp;&quot;;} mu= &quot;&amp;mu=&quot; + p ;img.src = &quot;http://nsclick.baidu.com/v.gif?pid=201&amp;pj=www&amp;rsv_sid=3187_2777_3138_2976_3154_3090_2702&amp;&quot; + sQ + &quot;path=&quot;+p+&quot;&amp;t=&quot;+new Date().getTime();return true;}if(/\bbdime=[12]/.test(d.cookie)){document.write('&lt;script src=&quot;' + &quot;http://s1.bdstatic.com/r/www/cache/static/ime/js/openime_b157f449.js&quot; + '&quot; charset=&quot;utf-8&quot;&gt;&lt;\/script&gt;');}(function(){var u = G(&quot;u&quot;).getElementsByTagName(&quot;a&quot;), nv = G(&quot;nv&quot;).getElementsByTagName(&quot;a&quot;), lk = G(&quot;lk&quot;).getElementsByTagName(&quot;a&quot;), un = &quot;&quot;;var tj_nv = [&quot;news&quot;,&quot;tieba&quot;,&quot;zhidao&quot;,&quot;mp3&quot;,&quot;img&quot;,&quot;video&quot;,&quot;map&quot;];var tj_lk = [&quot;baike&quot;,&quot;wenku&quot;,&quot;hao123&quot;,&quot;more&quot;];un = bds.comm.user == &quot;&quot; ? &quot;&quot; : bds.comm.user;function _addTJ(obj){addEV(obj, &quot;mousedown&quot;, function(e){var e = e || window.event;var target = e.target || e.srcElement;ns_c({'fm':'behs','tab':target.name||'tj_user','un':encodeURIComponent(un)});});}for(var i = 0; i &lt; u.length; i++){_addTJ(u[i]);}for(var i = 0; i &lt; nv.length; i++){nv[i].name = 'tj_' + tj_nv[i];}for(var i = 0; i &lt; lk.length; i++){lk[i].name = 'tj_' + tj_lk[i];}})();(function() {var links = {'tj_news': ['word', 'http://news.baidu.com/ns?tn=news&amp;cl=2&amp;rn=20&amp;ct=1&amp;ie=utf-8'],'tj_tieba': ['kw', 'http://tieba.baidu.com/f?ie=utf-8'],'tj_zhidao': ['word', 'http://zhidao.baidu.com/search?pn=0&amp;rn=10&amp;lm=0'],'tj_mp3': ['key', 'http://music.baidu.com/search?fr=ps&amp;ie=utf-8'],'tj_img': ['word', 'http://image.baidu.com/i?ct=201326592&amp;cl=2&amp;nc=1&amp;lm=-1&amp;st=-1&amp;tn=baiduimage&amp;istype=2&amp;fm=&amp;pv=&amp;z=0&amp;ie=utf-8'],'tj_video': ['word', 'http://video.baidu.com/v?ct=301989888&amp;s=25&amp;ie=utf-8'],'tj_map': ['wd', 'http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s'],'tj_baike': ['word', 'http://baike.baidu.com/search/word?pic=1&amp;sug=1&amp;enc=utf8'],'tj_wenku': ['word', 'http://wenku.baidu.com/search?ie=utf-8']};var domArr = [G('nv'), G('lk'),G('cp')],kw = G('kw');for (var i = 0, l = domArr.length; i &lt; l; i++) {domArr[i].onmousedown = function(e) {e = e || window.event;var target = e.target || e.srcElement,name = target.getAttribute('name'),items = links[name],reg = new RegExp('^\\s+|\\s+\x24'),key = kw.value.replace(reg, '');if (items) {if (key.length &gt; 0) {var wd = items[0], url = items[1],url = url + ( name === 'tj_map' ? encodeURIComponent('&amp;' + wd + '=' + key) : ( ( url.indexOf('?') &gt; 0 ? '&amp;' : '?' ) + wd + '=' + encodeURIComponent(key) ) );target.href = url;} else {target.href = target.href.match(new RegExp('^http:\/\/.+\.baidu\.com'))[0];}}name &amp;&amp; ns_c({'fm': 'behs','tab': name,'query': encodeURIComponent(key),'un': encodeURIComponent(bds.comm.user || '') });};}})();addEV(w,&quot;load&quot;,function(){k.focus()});w.onunload=function(){};&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://s1.bdstatic.com/r/www/cache/static/global/js/tangram-1.3.4c1.0_07038476.js&quot;&gt;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://s1.bdstatic.com/r/www/cache/static/user/js/u_c941c196.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;script&gt;try{document.cookie=&quot;WWW_ST=;expires=Sat, 01 Jan 2000 00:00:00 GMT&quot;;baidu.on(document.forms[0],&quot;submit&quot;,function(){var _t=new Date().getTime();document.cookie = &quot;WWW_ST=&quot; + _t +&quot;;expires=&quot; + new Date(_t + 10000).toGMTString()})}catch(e){}&lt;/script&gt;&lt;/html&gt;&lt;!--c5ceea4c27fc0e71--&gt;</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_14" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=34" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_WARNING</a>
+                  </td>
+                  <td class="lr">mysql_connect(): Access denied for user 'apache'@'localhost' (using password: NO)</td>
+                  <td></td>
+                  <td><span class="label error" title="mysql_connect(): Access denied for user 'apache'@'localhost' (using password: NO)">errno(2)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_14" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces14" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces14">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=34" title="Show Source">mysql_connect() called at [error.php:34]</a></li>
+                                                      <li><a target="_blank" href="file=#line=0" title="Show Source">ErrorHandler->_errorHandler() called at [:0]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=34" title="Show Source">E_WARNING: mysql_connect(): Access denied for user 'apache'@'localhost' (using password: NO) at [error.php:34]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_15" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_Hook_Mysql.html#line=45" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_NOTICE</a>
+                  </td>
+                  <td class="lr">Undefined offset: 0</td>
+                  <td></td>
+                  <td><span class="label error" title="Undefined offset: 0">errno(8)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_15" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces15" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces15">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=34" title="Show Source">mysql_connect() called at [error.php:34]</a></li>
+                                                      <li><a target="_blank" href="file_#line=0" title="Show Source".html#IO_Hook->_postCallback() called at [:0]</a></li>
+                                                      <li><a target="_blank" href="file_Hook.php#line=38" title="Show Source">PHPIO_Hook_Mysql->mysql_connect_post() called at [/var/www/phpio/library/PHPIO/Hook.php:38]</a></li>
+                                                      <li><a target="_blank" href="file_Hook_Mysql.html#line=40" title="Show Source">PHPIO_Hook_Mysql->getLink() called at [/var/www/phpio/library/PHPIO/Hook/Mysql.php:40]</a></li>
+                                                      <li><a target="_blank" href="file_Hook_Mysql.html#line=45" title="Show Source">ErrorHandler->_errorHandler() called at [/var/www/phpio/library/PHPIO/Hook/Mysql.php:45]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_Hook_Mysql.html#line=45" title="Show Source">E_NOTICE: Undefined offset: 0 at [/var/www/phpio/library/PHPIO/Hook/Mysql.php:45]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_16" class="prof_item" data="Mysql">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=34" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Mysql">&nbsp;</i>
+                    <a href="#">mysql_connect</a>
+                  </td>
+                  <td class="lr"></td>
+                  <td>:3306</td>
+                  <td><span class="label error" title="">errno(0)</span></td>
+                  <td class="nr">14.179</td>
+                </tr>
+                <tr id="prof_detail_16" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces16" data-toggle="tab">Traces</a></li>
+                                                                                                                        <li><a href="#response16" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces16">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=34" title="Show Source">mysql_connect() called at [error.php:34]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                <div class="tab-pane" id="response16"><pre>bool(false)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_17" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=36" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_NOTICE</a>
+                  </td>
+                  <td class="lr">Undefined variable: scale</td>
+                  <td></td>
+                  <td><span class="label error" title="Undefined variable: scale">errno(8)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_17" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces17" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces17">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=36" title="Show Source">ErrorHandler->_errorHandler() called at [error.php:36]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=36" title="Show Source">E_NOTICE: Undefined variable: scale at [error.php:36]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_18" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=36" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_USER_ERROR</a>
+                  </td>
+                  <td class="lr">log(x) for x &lt;= 0 is undefined, you used: scale = </td>
+                  <td></td>
+                  <td><span class="label error" title="log(x) for x &lt;= 0 is undefined, you used: scale = ">errno(256)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_18" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces18" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces18">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=36" title="Show Source">trigger_error() called at [error.php:36]</a></li>
+                                                      <li><a target="_blank" href="file=#line=0" title="Show Source">ErrorHandler->_errorHandler() called at [:0]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=36" title="Show Source">E_USER_ERROR: log(x) for x <= 0 is undefined, you used: scale =  at [error.php:36]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_19" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=37" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_USER_WARNING</a>
+                  </td>
+                  <td class="lr">Incorrect input vector, array of values expected</td>
+                  <td></td>
+                  <td><span class="label error" title="Incorrect input vector, array of values expected">errno(512)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_19" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces19" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces19">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=37" title="Show Source">trigger_error() called at [error.php:37]</a></li>
+                                                      <li><a target="_blank" href="file=#line=0" title="Show Source">ErrorHandler->_errorHandler() called at [:0]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=37" title="Show Source">E_USER_WARNING: Incorrect input vector, array of values expected at [error.php:37]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_20" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=38" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_NOTICE</a>
+                  </td>
+                  <td class="lr">Undefined variable: pos</td>
+                  <td></td>
+                  <td><span class="label error" title="Undefined variable: pos">errno(8)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_20" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces20" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces20">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=38" title="Show Source">ErrorHandler->_errorHandler() called at [error.php:38]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=38" title="Show Source">E_NOTICE: Undefined variable: pos at [error.php:38]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_21" class="prof_item" data="Error">
+                  <td nowrap>
+                    <a target="_blank" href="file_error.html#line=38" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Error">&nbsp;</i>
+                    <a href="#">E_USER_NOTICE</a>
+                  </td>
+                  <td class="lr">Value at position  is not a number, using 0 (zero)</td>
+                  <td></td>
+                  <td><span class="label error" title="Value at position  is not a number, using 0 (zero)">errno(1024)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_21" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces21" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces21">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=38" title="Show Source">trigger_error() called at [error.php:38]</a></li>
+                                                      <li><a target="_blank" href="file=#line=0" title="Show Source">ErrorHandler->_errorHandler() called at [:0]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=9" title="Show Source">call_user_func() called at [error.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_error.html#line=38" title="Show Source">E_USER_NOTICE: Value at position  is not a number, using 0 (zero) at [error.php:38]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_22" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=12" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->__construct</a>
+                  </td>
+                  <td class="lr"></td>
+                  <td></td>
+                  <td><span class="label success">NULL
+</span></td>
+                  <td class="nr">0.5059</td>
+                </tr>
+                <tr id="prof_detail_22" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces22" data-toggle="tab">Traces</a></li>
+                                                                                                                        <li><a href="#response22" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces22">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=12" title="Show Source">Redis->__construct() called at [exception.php:12]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                <div class="tab-pane" id="response22"><pre>NULL
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_23" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=13" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->connect</a>
+                  </td>
+                  <td class="lr">192.168.1.1</td>
+                  <td>192.168.1.1:6379</td>
+                  <td><span class="label error">false</span></td>
+                  <td class="nr">1005.1048</td>
+                </tr>
+                <tr id="prof_detail_23" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces23" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args23" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response23" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces23">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=13" title="Show Source">Redis->connect() called at [exception.php:13]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args23">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>host</th>
+                              <td>string</td>
+                              <td><pre>192.168.1.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>port</th>
+                              <td>integer</td>
+                              <td><pre>6379</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>timeout</th>
+                              <td>double</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response23"><pre>bool(false)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_24" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=20" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->__construct</a>
+                  </td>
+                  <td class="lr"></td>
+                  <td></td>
+                  <td><span class="label success">NULL
+</span></td>
+                  <td class="nr">0.735</td>
+                </tr>
+                <tr id="prof_detail_24" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces24" data-toggle="tab">Traces</a></li>
+                                                                                                                        <li><a href="#response24" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces24">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=20" title="Show Source">Redis->__construct() called at [exception.php:20]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                <div class="tab-pane" id="response24"><pre>NULL
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_25" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=21" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->connect</a>
+                  </td>
+                  <td class="lr">192.168.1.1</td>
+                  <td>192.168.1.1:6379</td>
+                  <td><span class="label error">false</span></td>
+                  <td class="nr">1003.154</td>
+                </tr>
+                <tr id="prof_detail_25" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces25" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args25" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response25" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces25">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=21" title="Show Source">Redis->connect() called at [exception.php:21]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args25">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>host</th>
+                              <td>string</td>
+                              <td><pre>192.168.1.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>port</th>
+                              <td>integer</td>
+                              <td><pre>6379</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>timeout</th>
+                              <td>double</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response25"><pre>bool(false)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_26" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=60" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->connect</a>
+                  </td>
+                  <td class="lr">192.168.1.1</td>
+                  <td>192.168.1.1:6379</td>
+                  <td><span class="label error">false</span></td>
+                  <td class="nr">1003.3388</td>
+                </tr>
+                <tr id="prof_detail_26" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces26" data-toggle="tab">Traces</a></li>
+                        <li><a href="#args26" data-toggle="tab">Args</a></li>                                                                                                <li><a href="#response26" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces26">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=60" title="Show Source">Redis->connect() called at [exception.php:60]</a></li>
+                                                    </ol>
+                        </div>
+                                                                      <div class="tab-pane" id="args26">
+                          <table class="args_table">
+                            <thead>
+                            <th>parameter </th>
+                            <th>type</th>
+                            <th>value</th>
+                          </thead>
+                          <tbody>
+                                                        <tr>
+                              <th>host</th>
+                              <td>string</td>
+                              <td><pre>192.168.1.1</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>port</th>
+                              <td>integer</td>
+                              <td><pre>6379</pre></td>
+                            </tr>
+                                                      <tr>
+                              <th>timeout</th>
+                              <td>double</td>
+                              <td><pre>1</pre></td>
+                            </tr>
+                                                    </tbody>
+                        </table>
+                        </div>
+                                                                                                                                          <div class="tab-pane" id="response26"><pre>bool(false)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_27" class="prof_item" data="Redis">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=61" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Redis">&nbsp;</i>
+                    <a href="#">Redis->ping</a>
+                  </td>
+                  <td class="lr"></td>
+                  <td>192.168.1.1:6379</td>
+                  <td><span class="label error">false</span></td>
+                  <td class="nr">0.572</td>
+                </tr>
+                <tr id="prof_detail_27" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces27" data-toggle="tab">Traces</a></li>
+                                                                                                                        <li><a href="#response27" data-toggle="tab">Response</a></li>                                                </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces27">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=61" title="Show Source">Redis->ping() called at [exception.php:61]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                <div class="tab-pane" id="response27"><pre>bool(false)
+</pre>
+                        </div>
+                                              </div>
+                    </div>
+                  </td>
+                </tr>
+                                <tr id="prof_item_28" class="prof_item" data="Exception">
+                  <td nowrap>
+                    <a target="_blank" href="file_exception.html#line=61" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
+                    <i class="label-class label-Exception">&nbsp;</i>
+                    <a href="#">RedisException</a>
+                  </td>
+                  <td class="lr">Redis server went away</td>
+                  <td></td>
+                  <td><span class="label error" title="Redis server went away">errno(0)</span></td>
+                  <td class="nr">0</td>
+                </tr>
+                <tr id="prof_detail_28" class="prof_detail">
+                  <td colspan=5>
+                    <div class="tabbable">
+                        <ul class="pills">
+                        <li class="active"><a href="#traces28" data-toggle="tab">Traces</a></li>
+                                                                                                                                                                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="traces28">
+                          <ol>
+                                                        <li><a target="_blank" href="file_all.html#line=9" title="Show Source">include() called at [all.php:9]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=61" title="Show Source">Redis->ping() called at [exception.php:61]</a></li>
+                                                      <li><a target="_blank" href="file_exception.html#line=61" title="Show Source">RedisException: Redis server went away at [exception.php:61]</a></li>
+                                                    </ol>
+                        </div>
+                                                                                                                                                                 </div>
+                    </div>
+                  </td>
+                </tr>
+                            </tbody>
+        </table>
+    </div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/profile.js?201307192"></script>
+  </body>
+</html>
+

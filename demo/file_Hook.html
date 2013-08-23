@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Source - Hook.php</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
+    <style>
+      body {
+        overflow: auto;
+        font-family: monospace;
+        font-size: 12px;
+      }
+      code {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+        #line_emph {
+            background-color: #bbbbff;
+        }
+        .num {
+            border-right: 1px solid gray;
+            color: gray;
+            float: left;
+            margin-right: 6pt;
+            padding-right: 6pt;
+            text-align: right;
+            width: 25px;
+            clear: left;
+        }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+    	<h1>/var/www/phpio/library/PHPIO/Hook.php</h1>
+    	<code>
+            	                <span class="num" >1</span>
+    			<span style="color: #000000">
+<span style="color: #0000BB">&lt;?php    			<br>
+                        <span class="num" >2</span>
+    			</span><span style="color: #007700">abstract&nbsp;class&nbsp;</span><span style="color: #0000BB">PHPIO_Hook&nbsp;</span><span style="color: #007700">{    			<br>
+                        <span class="num" >3</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span><span style="color: #0000BB">classname&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">;    			<br>
+                        <span class="num" >4</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >5</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$jp&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">;    			<br>
+                        <span class="num" >6</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$args&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >7</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$trace&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >8</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$object&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">;    			<br>
+                        <span class="num" >9</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$link&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">;    			<br>
+                        <span class="num" >10</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$links&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >11</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$time_start&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">0</span><span style="color: #007700">;    			<br>
+                        <span class="num" >12</span>
+    			    			<br>
+                        <span class="num" >13</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">_preCallback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">=array())&nbsp;{    			<br>
+                        <span class="num" >14</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">object&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$jp</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getObject</span><span style="color: #007700">();    			<br>
+                        <span class="num" >15</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">args&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$jp</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getArguments</span><span style="color: #007700">();    			<br>
+                        <span class="num" >16</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">time_start&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">microtime</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);    			<br>
+                        <span class="num" >17</span>
+    			    			<br>
+                        <span class="num" >18</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$traces&nbsp;</span><span style="color: #007700">=&nbsp;(!empty(</span><span style="color: #0000BB">$traces</span><span style="color: #007700">)&nbsp;?&nbsp;</span><span style="color: #0000BB">$traces&nbsp;</span><span style="color: #007700">:&nbsp;</span><span style="color: #0000BB">debug_backtrace</span><span style="color: #007700">());    			<br>
+                        <span class="num" >19</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$trace&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">];    			<br>
+                        <span class="num" >20</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'trace'</span><span style="color: #007700">]&nbsp;&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getPrintTrace</span><span style="color: #007700">(</span><span style="color: #0000BB">$traces</span><span style="color: #007700">);    			<br>
+                        <span class="num" >21</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;isset(</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'object'</span><span style="color: #007700">])&nbsp;)&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'object'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getObjectId</span><span style="color: #007700">(</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'object'</span><span style="color: #007700">]);    			<br>
+                        <span class="num" >22</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'time_start'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">time_start</span><span style="color: #007700">;    			<br>
+                        <span class="num" >23</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'classname'</span><span style="color: #007700">]&nbsp;&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname</span><span style="color: #007700">;    			<br>
+                        <span class="num" >24</span>
+    			    			<br>
+                        <span class="num" >25</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">trace&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">;    			<br>
+                        <span class="num" >26</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">func&nbsp;</span><span style="color: #007700">=&nbsp;&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'function'</span><span style="color: #007700">];    			<br>
+                        <span class="num" >27</span>
+    			    			<br>
+                        <span class="num" >28</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;(</span><span style="color: #0000BB">method_exists</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">func</span><span style="color: #007700">}</span><span style="color: #DD0000">_pre"</span><span style="color: #007700">)&nbsp;?&nbsp;</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">func</span><span style="color: #007700">}</span><span style="color: #DD0000">_pre"&nbsp;</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">"preCallback"</span><span style="color: #007700">);    			<br>
+                        <span class="num" >29</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">$callback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">);    			<br>
+                        <span class="num" >30</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >31</span>
+    			    			<br>
+                        <span class="num" >32</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">_postCallback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >33</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">result&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$jp</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getReturnedValue</span><span style="color: #007700">();    			<br>
+                        <span class="num" >34</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'result'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">result</span><span style="color: #007700">);    			<br>
+                        <span class="num" >35</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">trace</span><span style="color: #007700">[</span><span style="color: #DD0000">'time_end'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">microtime</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);    			<br>
+                        <span class="num" >36</span>
+    			    			<br>
+                        <span class="num" >37</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;(</span><span style="color: #0000BB">method_exists</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">func</span><span style="color: #007700">}</span><span style="color: #DD0000">_post"</span><span style="color: #007700">)&nbsp;?&nbsp;</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">func</span><span style="color: #007700">}</span><span style="color: #DD0000">_post"&nbsp;</span><span style="color: #007700">:&nbsp;</span><span style="color: #DD0000">"postCallback"</span><span style="color: #007700">);    			<br>
+                        <span class="num" id="line_emph">38</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">$callback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">);    			<br>
+                        <span class="num" >39</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >40</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >41</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">preCallback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >42</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >43</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >44</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">postCallback</span><span style="color: #007700">(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >45</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">PHPIO</span><span style="color: #007700">::</span><span style="color: #0000BB">$log</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">append</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">trace</span><span style="color: #007700">);    			<br>
+                        <span class="num" >46</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >47</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >48</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getPrintTrace</span><span style="color: #007700">(</span><span style="color: #0000BB">$traces</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$max_level</span><span style="color: #007700">=</span><span style="color: #0000BB">1</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >49</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//0&nbsp;&nbsp;c()&nbsp;called&nbsp;at&nbsp;[/tmp/include.php:10]    			<br>
+                        <span class="num" >50</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$trace_len&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">$traces</span><span style="color: #007700">)-</span><span style="color: #0000BB">1</span><span style="color: #007700">;    			<br>
+                        <span class="num" >51</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$printTraces&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >52</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(</span><span style="color: #0000BB">$i&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$trace_len</span><span style="color: #007700">;&nbsp;</span><span style="color: #0000BB">$i&nbsp;</span><span style="color: #007700">&gt;=&nbsp;</span><span style="color: #0000BB">$max_level</span><span style="color: #007700">;&nbsp;</span><span style="color: #0000BB">$i</span><span style="color: #007700">--)&nbsp;{    			<br>
+                        <span class="num" >53</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;isset(</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'class'</span><span style="color: #007700">])&nbsp;)&nbsp;{    			<br>
+                        <span class="num" >54</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'function'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'class'</span><span style="color: #007700">]&nbsp;.</span><span style="color: #DD0000">'-&gt;'</span><span style="color: #007700">.</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'function'</span><span style="color: #007700">];    			<br>
+                        <span class="num" >55</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >56</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;set&nbsp;default&nbsp;value&nbsp;avoid&nbsp;Undefined&nbsp;Index&nbsp;error    			<br>
+                        <span class="num" >57</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">]&nbsp;+=&nbsp;array(</span><span style="color: #DD0000">'function'</span><span style="color: #007700">=&gt;</span><span style="color: #DD0000">''</span><span style="color: #007700">,</span><span style="color: #DD0000">'file'</span><span style="color: #007700">=&gt;</span><span style="color: #DD0000">''</span><span style="color: #007700">,</span><span style="color: #DD0000">'line'</span><span style="color: #007700">=&gt;</span><span style="color: #0000BB">0</span><span style="color: #007700">);    			<br>
+                        <span class="num" >58</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$printTraces</span><span style="color: #007700">[]&nbsp;=&nbsp;</span><span style="color: #0000BB">sprintf</span><span style="color: #007700">(</span><span style="color: #DD0000">"%s()&nbsp;called&nbsp;at&nbsp;[%s:%d]"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'function'</span><span style="color: #007700">],</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'file'</span><span style="color: #007700">],</span><span style="color: #0000BB">$traces</span><span style="color: #007700">[</span><span style="color: #0000BB">$i</span><span style="color: #007700">][</span><span style="color: #DD0000">'line'</span><span style="color: #007700">]);    			<br>
+                        <span class="num" >59</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >60</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$printTraces</span><span style="color: #007700">;    			<br>
+                        <span class="num" >61</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >62</span>
+    			    			<br>
+                        <span class="num" >63</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$var</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >64</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">ob_start</span><span style="color: #007700">();    			<br>
+                        <span class="num" >65</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$var</span><span style="color: #007700">);    			<br>
+                        <span class="num" >66</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">ob_get_clean</span><span style="color: #007700">();    			<br>
+                        <span class="num" >67</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >68</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >69</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getObjectId</span><span style="color: #007700">(</span><span style="color: #0000BB">$var</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >70</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$dump&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$var</span><span style="color: #007700">);    			<br>
+                        <span class="num" >71</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;</span><span style="color: #0000BB">is_object</span><span style="color: #007700">(</span><span style="color: #0000BB">$var</span><span style="color: #007700">)&nbsp;)&nbsp;{    			<br>
+                        <span class="num" >72</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;</span><span style="color: #0000BB">preg_match</span><span style="color: #007700">(</span><span style="color: #DD0000">'|object\((\w+)\)#(\d+)|'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$dump</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$match</span><span style="color: #007700">)&nbsp;)&nbsp;{    			<br>
+                        <span class="num" >73</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$match</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">];    			<br>
+                        <span class="num" >74</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >75</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >76</span>
+    			    			<br>
+                        <span class="num" >77</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$dump</span><span style="color: #007700">;    			<br>
+                        <span class="num" >78</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >79</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >80</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >81</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//$this-&gt;log&nbsp;=&nbsp;$log;    			<br>
+                        <span class="num" >82</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getHooks</span><span style="color: #007700">();    			<br>
+                        <span class="num" >83</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hook</span><span style="color: #007700">();    			<br>
+                        <span class="num" >84</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >85</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">;    			<br>
+                        <span class="num" >86</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >87</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >88</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getHooks</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >89</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >90</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$hooks_file&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">__DIR__</span><span style="color: #007700">.</span><span style="color: #DD0000">'/'</span><span style="color: #007700">.</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname</span><span style="color: #007700">.</span><span style="color: #DD0000">'.hooks'</span><span style="color: #007700">;    			<br>
+                        <span class="num" >91</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;</span><span style="color: #0000BB">file_exists</span><span style="color: #007700">(</span><span style="color: #0000BB">$hooks_file</span><span style="color: #007700">)&nbsp;)&nbsp;{    			<br>
+                        <span class="num" >92</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">file</span><span style="color: #007700">(</span><span style="color: #0000BB">$hooks_file</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">FILE_IGNORE_NEW_LINES</span><span style="color: #007700">|</span><span style="color: #0000BB">FILE_SKIP_EMPTY_LINES</span><span style="color: #007700">);    			<br>
+                        <span class="num" >93</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;elseif&nbsp;(&nbsp;!empty(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks</span><span style="color: #007700">)&nbsp;)&nbsp;{    			<br>
+                        <span class="num" >94</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">array_walk</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks</span><span style="color: #007700">,array(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'replaceClassPrefix'</span><span style="color: #007700">));    			<br>
+                        <span class="num" >95</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks</span><span style="color: #007700">;    			<br>
+                        <span class="num" >96</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{    			<br>
+                        <span class="num" >97</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getFunctions</span><span style="color: #007700">();    			<br>
+                        <span class="num" >98</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >99</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$hooks</span><span style="color: #007700">;    			<br>
+                        <span class="num" >100</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >101</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >102</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">replaceClassPrefix</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$method</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >103</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$method&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname</span><span style="color: #007700">.</span><span style="color: #DD0000">'::'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$method</span><span style="color: #007700">);    			<br>
+                        <span class="num" >104</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >105</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >106</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getFunctions</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >107</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">get_class_methods</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname</span><span style="color: #007700">);    			<br>
+                        <span class="num" >108</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >109</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >110</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">hook</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >111</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks</span><span style="color: #007700">)&nbsp;foreach&nbsp;(&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hooks&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$func&nbsp;</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >112</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$function&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getHookFunc</span><span style="color: #007700">(</span><span style="color: #0000BB">$func</span><span style="color: #007700">);    			<br>
+                        <span class="num" >113</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">aop_add_before</span><span style="color: #007700">(</span><span style="color: #0000BB">$function</span><span style="color: #007700">,&nbsp;array(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'_preCallback'</span><span style="color: #007700">));    			<br>
+                        <span class="num" >114</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">aop_add_after</span><span style="color: #007700">(</span><span style="color: #0000BB">$function</span><span style="color: #007700">,&nbsp;array(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'_postCallback'</span><span style="color: #007700">));    			<br>
+                        <span class="num" >115</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >116</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >117</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >118</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getHookFunc</span><span style="color: #007700">(</span><span style="color: #0000BB">$func</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >119</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'-&gt;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$func&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'()'</span><span style="color: #007700">;    			<br>
+                        <span class="num" >120</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >121</span>
+    			}    			<br>
+                        <span class="num" >122</span>
+    			    			<br>
+                        <span class="num" >123</span>
+    			abstract&nbsp;class&nbsp;</span><span style="color: #0000BB">PHPIO_Hook_Func&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">PHPIO_Hook&nbsp;</span><span style="color: #007700">{    			<br>
+                        <span class="num" >124</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span><span style="color: #0000BB">classname&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">;    			<br>
+                        <span class="num" >125</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$log&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >126</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;</span><span style="color: #0000BB">$hooks&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >127</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;    			<br>
+                        <span class="num" >128</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getFunctions</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >129</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">get_extension_funcs</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">::</span><span style="color: #0000BB">classname</span><span style="color: #007700">);    			<br>
+                        <span class="num" >130</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >131</span>
+    			    			<br>
+                        <span class="num" >132</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;</span><span style="color: #0000BB">getHookFunc</span><span style="color: #007700">(</span><span style="color: #0000BB">$func</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >133</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$func&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'()'</span><span style="color: #007700">;    			<br>
+                        <span class="num" >134</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >135</span>
+    			}</span>
+</span>
+    			<br>
+            	</code>
+            </div>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script>
+        $(document).ready(function() { 
+            var line_emph = $('#line_emph');
+            if( line_emph.length > 0 ){
+                var offset = line_emph.offset();
+                $("html,body").animate({ scrollTop: offset.top-200 }, "fast");          
+            }
+        });
+    </script>
+</body>
+</html>

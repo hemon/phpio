@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<base target="_blank"/>
+	<title>CallGraph - 52178abfbf1a4</title>
+</head>
+<body>
+	<script type="text/vnd.graphviz" id="dot">digraph CallGraph {
+//rankdir=LR;
+MAIN [shape=doublecircle,fontcolor=white,style=filled, color=black];
+"/var/www/phpio/test/all.php:3" [label="include()", URL="file_all.html#line=3", style=filled, color=white];
+"/var/www/phpio/test/flow.php:5" [label="curl()", URL="file_flow.html#line=5", style=filled, color=white];
+"/var/www/phpio/test/flow.php:18" [label="curl_exec()", URL="file_flow.html#line=18", style=filled, fontcolor=white, color="#3CA9C4"];
+"/var/www/phpio/test/all.php:4" [label="include()", URL="file_all.html#line=4", style=filled, color=white];
+"/var/www/phpio/test/mysql.php:2" [label="mysql_connect()", URL="file_mysql.html#line=2", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/mysql.php:3" [label="mysql_select_db()", URL="file_mysql.html#line=3", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/mysql.php:4" [label="mysql_query()", URL="file_mysql.html#line=4", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/mysql.php:6" [label="mysql_connect()", URL="file_mysql.html#line=6", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/mysql.php:7" [label="mysql_select_db()", URL="file_mysql.html#line=7", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/mysql.php:8" [label="mysql_query()", URL="file_mysql.html#line=8", style=filled, fontcolor=white, color="#0476D6"];
+"/var/www/phpio/test/all.php:9" [label="include()", URL="file_all.html#line=9", style=filled, color=white];
+"/var/www/phpio/test/apc.php:4" [label="apc_store()", URL="file_apc.html#line=4", style=filled, fontcolor=white, color="#BA55D3"];
+"/var/www/phpio/test/apc.php:6" [label="apc_fetch()", URL="file_apc.html#line=6", style=filled, fontcolor=white, color="#BA55D3"];
+"/var/www/phpio/test/apc.php:8" [label="apc_inc()", URL="file_apc.html#line=8", style=filled, fontcolor=white, color="#BA55D3"];
+"/var/www/phpio/test/curl.php:10" [label="curl_exec()", URL="file_curl.html#line=10", style=filled, fontcolor=white, color="#3CA9C4"];
+"/var/www/phpio/test/curl2.php:35" [label="curl_multi_remove_handle()", URL="file_curl2.html#line=35", style=filled, fontcolor=white, color="#3CA9C4"];
+"/var/www/phpio/test/curl2.php:36" [label="curl_multi_remove_handle()", URL="file_curl2.html#line=36", style=filled, fontcolor=white, color="#3CA9C4"];
+"/var/www/phpio/test/error.php:34" [label="mysql_connect()", URL="file_error.html#line=34", style=filled, fontcolor=white, color="#0476D6"];
+":0" [label="ErrorHandler->_errorHandler()", URL="file=&line=0", style=filled, color=white];
+"/var/www/phpio/test/error.php:9" [label="call_user_func()", URL="file_error.html#line=9", style=filled, color=white];
+"/var/www/phpio/test/error.php:34:E_WARNING:" [label="E_WARNING:", URL="file_error.html#line=34", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/library/PHPIO/Hook.php:38" [label="PHPIO_Hook_Mysql->mysql_connect_post()", URL="file_Hook.html#line=38", style=filled, color=white];
+"/var/www/phpio/library/PHPIO/Hook/Mysql.php:40" [label="PHPIO_Hook_Mysql->getLink()", URL="file_Mysql.html#line=40", style=filled, color=white];
+"/var/www/phpio/library/PHPIO/Hook/Mysql.php:45" [label="ErrorHandler->_errorHandler()", URL="file_Mysql.html#line=45", style=filled, color=white];
+"/var/www/phpio/library/PHPIO/Hook/Mysql.php:45:E_NOTICE:" [label="E_NOTICE:", URL="file_Mysql.html#line=45", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/error.php:36" [label="trigger_error()", URL="file_error.html#line=36", style=filled, color=white];
+"/var/www/phpio/test/error.php:36:E_NOTICE:" [label="E_NOTICE:", URL="file_error.html#line=36", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/error.php:36:E_USER_ERROR:" [label="E_USER_ERROR:", URL="file_error.html#line=36", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/error.php:37" [label="trigger_error()", URL="file_error.html#line=37", style=filled, color=white];
+"/var/www/phpio/test/error.php:37:E_USER_WARNING:" [label="E_USER_WARNING:", URL="file_error.html#line=37", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/error.php:38" [label="trigger_error()", URL="file_error.html#line=38", style=filled, color=white];
+"/var/www/phpio/test/error.php:38:E_NOTICE:" [label="E_NOTICE:", URL="file_error.html#line=38", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/error.php:38:E_USER_NOTICE:" [label="E_USER_NOTICE:", URL="file_error.html#line=38", style=filled, fontcolor=white, color="red"];
+"/var/www/phpio/test/exception.php:12" [label="Redis->__construct()", URL="file_exception.html#line=12", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:13" [label="Redis->connect()", URL="file_exception.html#line=13", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:20" [label="Redis->__construct()", URL="file_exception.html#line=20", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:21" [label="Redis->connect()", URL="file_exception.html#line=21", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:60" [label="Redis->connect()", URL="file_exception.html#line=60", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:61" [label="Redis->ping()", URL="file_exception.html#line=61", style=filled, fontcolor=white, color="#3CC472"];
+"/var/www/phpio/test/exception.php:61:RedisException:" [label="RedisException:", URL="file_exception.html#line=61", style=filled, fontcolor=white, color="orange"];
+"MAIN" -> "/var/www/phpio/test/all.php:3" [penwidth=1];
+"/var/www/phpio/test/all.php:3" -> "/var/www/phpio/test/flow.php:5" [penwidth=1];
+"/var/www/phpio/test/flow.php:5" -> "/var/www/phpio/test/flow.php:18" [penwidth=1 label=1 color="#3CA9C4"];
+"MAIN" -> "/var/www/phpio/test/all.php:4" [penwidth=6];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:2" [penwidth=1 label=1 color="#0476D6"];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:3" [penwidth=1 label=1 color="#0476D6"];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:4" [penwidth=1 label=1 color="#0476D6"];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:6" [penwidth=1 label=1 color="#0476D6"];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:7" [penwidth=1 label=1 color="#0476D6"];
+"/var/www/phpio/test/all.php:4" -> "/var/www/phpio/test/mysql.php:8" [penwidth=1 label=1 color="#0476D6"];
+"MAIN" -> "/var/www/phpio/test/all.php:9" [penwidth=20];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/apc.php:4" [penwidth=1 label=1 color="#BA55D3"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/apc.php:6" [penwidth=1 label=1 color="#BA55D3"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/apc.php:8" [penwidth=1 label=1 color="#BA55D3"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/curl.php:10" [penwidth=1 label=1 color="#3CA9C4"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/curl2.php:35" [penwidth=1 label=1 color="#3CA9C4"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/curl2.php:36" [penwidth=1 label=1 color="#3CA9C4"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/error.php:34" [penwidth=3 label=1 color="#0476D6"];
+"/var/www/phpio/test/error.php:34" -> ":0" [penwidth=2];
+":0" -> "/var/www/phpio/test/error.php:9" [penwidth=4];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:34:E_WARNING:" [penwidth=1 label=1 color="red"];
+":0" -> "/var/www/phpio/library/PHPIO/Hook.php:38" [penwidth=1];
+"/var/www/phpio/library/PHPIO/Hook.php:38" -> "/var/www/phpio/library/PHPIO/Hook/Mysql.php:40" [penwidth=1];
+"/var/www/phpio/library/PHPIO/Hook/Mysql.php:40" -> "/var/www/phpio/library/PHPIO/Hook/Mysql.php:45" [penwidth=1];
+"/var/www/phpio/library/PHPIO/Hook/Mysql.php:45" -> "/var/www/phpio/test/error.php:9" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/library/PHPIO/Hook/Mysql.php:45:E_NOTICE:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/error.php:36" [penwidth=2];
+"/var/www/phpio/test/error.php:36" -> "/var/www/phpio/test/error.php:9" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:36:E_NOTICE:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/error.php:36" -> ":0" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:36:E_USER_ERROR:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/error.php:37" [penwidth=1];
+"/var/www/phpio/test/error.php:37" -> ":0" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:37:E_USER_WARNING:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/error.php:38" [penwidth=2];
+"/var/www/phpio/test/error.php:38" -> "/var/www/phpio/test/error.php:9" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:38:E_NOTICE:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/error.php:38" -> ":0" [penwidth=1];
+"/var/www/phpio/test/error.php:9" -> "/var/www/phpio/test/error.php:38:E_USER_NOTICE:" [penwidth=1 label=1 color="red"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:12" [penwidth=1 label=1 color="#3CC472"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:13" [penwidth=1 label=1 color="#3CC472"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:20" [penwidth=1 label=1 color="#3CC472"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:21" [penwidth=1 label=1 color="#3CC472"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:60" [penwidth=1 label=1 color="#3CC472"];
+"/var/www/phpio/test/all.php:9" -> "/var/www/phpio/test/exception.php:61" [penwidth=2 label=1 color="#3CC472"];
+"/var/www/phpio/test/exception.php:61" -> "/var/www/phpio/test/exception.php:61:RedisException:" [penwidth=1 label=1 color="orange"];
+}</script>
+	<script src="js/viz.js"></script>
+	<div id="viewport" style="overflow: hidden"></div>
+	<script>
+	var dot = document.getElementById("dot").innerHTML;
+	var svg = Viz(dot, "svg");
+	var viewport = document.getElementById("viewport");
+	var result = svg.match(/svg width="(\d+)pt" height=\"(\d+)pt"/);
+	var scale = 0.5;
+	viewport.style.width = (scale * result[1]) + 'pt';
+	viewport.style.height = (scale * result[2]) + 'pt';
+	svg = svg.replace('scale(1 1)','scale('+scale+' '+scale+')');
+	viewport.innerHTML = svg;
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<base target="_blank"/>
+	<title>CallGraph - 52178abfbf1a4.52178abfcefb0</title>
+</head>
+<body>
+	<script type="text/vnd.graphviz" id="dot">digraph CallGraph {
+//rankdir=LR;
+MAIN [shape=doublecircle,fontcolor=white,style=filled, color=black];
+"/var/www/phpio/test/flow.php:5" [label="curl()", URL="file_flow.html#line=5", style=filled, color=white];
+"/var/www/phpio/test/flow.php:18" [label="curl_exec()", URL="file_flow.html#line=18", style=filled, fontcolor=white, color="#3CA9C4"];
+"MAIN" -> "/var/www/phpio/test/flow.php:5" [penwidth=20];
+"/var/www/phpio/test/flow.php:5" -> "/var/www/phpio/test/flow.php:18" [penwidth=20 label=1 color="#3CA9C4"];
+}</script>
+	<script src="js/viz.js"></script>
+	<div id="viewport" style="overflow: hidden"></div>
+	<script>
+	var dot = document.getElementById("dot").innerHTML;
+	var svg = Viz(dot, "svg");
+	var viewport = document.getElementById("viewport");
+	var result = svg.match(/svg width="(\d+)pt" height=\"(\d+)pt"/);
+	var scale = 0.5;
+	viewport.style.width = (scale * result[1]) + 'pt';
+	viewport.style.height = (scale * result[2]) + 'pt';
+	svg = svg.replace('scale(1 1)','scale('+scale+' '+scale+')');
+	viewport.innerHTML = svg;
+	</script>
+</body>
+</html>

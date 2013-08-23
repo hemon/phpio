@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Source - exception.php</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
+    <style>
+      body {
+        overflow: auto;
+        font-family: monospace;
+        font-size: 12px;
+      }
+      code {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+        #line_emph {
+            background-color: #bbbbff;
+        }
+        .num {
+            border-right: 1px solid gray;
+            color: gray;
+            float: left;
+            margin-right: 6pt;
+            padding-right: 6pt;
+            text-align: right;
+            width: 25px;
+            clear: left;
+        }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+    	<h1>/var/www/phpio/test/exception.php</h1>
+    	<code>
+            	                <span class="num" >1</span>
+    			<span style="color: #000000">
+<span style="color: #0000BB">&lt;?php    			<br>
+                        <span class="num" >2</span>
+    			    			<br>
+                        <span class="num" >3</span>
+    			</span><span style="color: #FF8000">//aop_add_after('Exception-&gt;*()',function($jp){var_dump('Exception',$jp-&gt;getArguments(),$jp-&gt;getMethodName(),$jp-&gt;getObject()-&gt;getTraceAsString(),'Exception-END');});    			<br>
+                        <span class="num" >4</span>
+    			//aop_add_after('RedisException-&gt;*()',function($jp){var_dump('RedisException',$jp-&gt;getArguments());});    			<br>
+                        <span class="num" >5</span>
+    			    			<br>
+                        <span class="num" >6</span>
+    			//function&nbsp;exception_handler($exception)&nbsp;{var_dump('exception_handler',$exception-&gt;getTraceAsString(),'exception_handler_end');}    			<br>
+                        <span class="num" >7</span>
+    			//set_exception_handler('exception_handler');    			<br>
+                        <span class="num" >8</span>
+    			//&nbsp;make&nbsp;set_error_handler&nbsp;useless    			<br>
+                        <span class="num" >9</span>
+    			    			<br>
+                        <span class="num" >10</span>
+    			//&nbsp;1.ignore&nbsp;Exception;&nbsp;can't&nbsp;hook!    			<br>
+                        <span class="num" >11</span>
+    			</span><span style="color: #007700">try&nbsp;{    			<br>
+                        <span class="num" id="line_emph">12</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$redis&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Redis</span><span style="color: #007700">();    			<br>
+                        <span class="num" >13</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$redis</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'192.168.1.1'</span><span style="color: #007700">,</span><span style="color: #0000BB">6379</span><span style="color: #007700">,</span><span style="color: #0000BB">1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >14</span>
+    			}&nbsp;catch(</span><span style="color: #0000BB">Exception&nbsp;$e</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >15</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;don't&nbsp;call&nbsp;any&nbsp;Exception&nbsp;method    			<br>
+                        <span class="num" >16</span>
+    			</span><span style="color: #007700">}    			<br>
+                        <span class="num" >17</span>
+    			    			<br>
+                        <span class="num" >18</span>
+    			</span><span style="color: #FF8000">//&nbsp;2.call&nbsp;any&nbsp;Exception&nbsp;method&nbsp;in&nbsp;catch    			<br>
+                        <span class="num" >19</span>
+    			</span><span style="color: #007700">try&nbsp;{    			<br>
+                        <span class="num" >20</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$redis&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Redis</span><span style="color: #007700">();    			<br>
+                        <span class="num" >21</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$redis</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'192.168.1.1'</span><span style="color: #007700">,</span><span style="color: #0000BB">6379</span><span style="color: #007700">,</span><span style="color: #0000BB">1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >22</span>
+    			}&nbsp;catch(</span><span style="color: #0000BB">Exception&nbsp;$e</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >23</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$e</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getMessage</span><span style="color: #007700">();    			<br>
+                        <span class="num" >24</span>
+    			}    			<br>
+                        <span class="num" >25</span>
+    			    			<br>
+                        <span class="num" >26</span>
+    			</span><span style="color: #FF8000">//&nbsp;3.&nbsp;throw&nbsp;without&nbsp;catch    			<br>
+                        <span class="num" >27</span>
+    			</span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">DivideByZeroException&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Exception&nbsp;</span><span style="color: #007700">{}    			<br>
+                        <span class="num" >28</span>
+    			    			<br>
+                        <span class="num" >29</span>
+    			function&nbsp;</span><span style="color: #0000BB">throwException</span><span style="color: #007700">()&nbsp;{    			<br>
+                        <span class="num" >30</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;Throw&nbsp;new&nbsp;</span><span style="color: #0000BB">DivideByZeroException</span><span style="color: #007700">(</span><span style="color: #DD0000">"DivideByZeroException1"</span><span style="color: #007700">);    			<br>
+                        <span class="num" >31</span>
+    			}    			<br>
+                        <span class="num" >32</span>
+    			    			<br>
+                        <span class="num" >33</span>
+    			</span><span style="color: #FF8000">//throwException();    			<br>
+                        <span class="num" >34</span>
+    			    			<br>
+                        <span class="num" >35</span>
+    			//&nbsp;4.&nbsp;throw&nbsp;with&nbsp;exception&nbsp;handler    			<br>
+                        <span class="num" >36</span>
+    			//&nbsp;can&nbsp;NOT&nbsp;hook&nbsp;a&nbsp;exception_handler    			<br>
+                        <span class="num" >37</span>
+    			    			<br>
+                        <span class="num" >38</span>
+    			</span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExceptionHandler&nbsp;</span><span style="color: #007700">{    			<br>
+                        <span class="num" >39</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;</span><span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;array();    			<br>
+                        <span class="num" >40</span>
+    			    			<br>
+                        <span class="num" >41</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;function&nbsp;</span><span style="color: #0000BB">_exceptionHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$e</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >42</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #DD0000">'ExceptionHandler'</span><span style="color: #007700">);    			<br>
+                        <span class="num" >43</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">call_user_func</span><span style="color: #007700">(</span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">$callback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$e</span><span style="color: #007700">);    			<br>
+                        <span class="num" >44</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >45</span>
+    			}    			<br>
+                        <span class="num" >46</span>
+    			    			<br>
+                        <span class="num" >47</span>
+    			function&nbsp;</span><span style="color: #0000BB">exception_handler</span><span style="color: #007700">(</span><span style="color: #0000BB">$exception</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >48</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #DD0000">'exception_handler'</span><span style="color: #007700">,</span><span style="color: #0000BB">$exception</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getTraceAsString</span><span style="color: #007700">(),</span><span style="color: #DD0000">'exception_handler_end'</span><span style="color: #007700">);    			<br>
+                        <span class="num" >49</span>
+    			}    			<br>
+                        <span class="num" >50</span>
+    			</span><span style="color: #0000BB">set_exception_handler</span><span style="color: #007700">(</span><span style="color: #DD0000">'ExceptionHandler::_exceptionHandler'</span><span style="color: #007700">);    			<br>
+                        <span class="num" >51</span>
+    			    			<br>
+                        <span class="num" >52</span>
+    			</span><span style="color: #0000BB">aop_add_before</span><span style="color: #007700">(</span><span style="color: #DD0000">'set_exception_handler()'</span><span style="color: #007700">,function(</span><span style="color: #0000BB">$jp</span><span style="color: #007700">){    			<br>
+                        <span class="num" >53</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$args&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$jp</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getArguments</span><span style="color: #007700">();    			<br>
+                        <span class="num" >54</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">ExceptionHandler</span><span style="color: #007700">::</span><span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$args</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">];    			<br>
+                        <span class="num" >55</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$jp</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setArguments</span><span style="color: #007700">(array(</span><span style="color: #DD0000">'ExceptionHandler::_exceptionHandler'</span><span style="color: #007700">));    			<br>
+                        <span class="num" >56</span>
+    			});    			<br>
+                        <span class="num" >57</span>
+    			    			<br>
+                        <span class="num" >58</span>
+    			</span><span style="color: #0000BB">set_exception_handler</span><span style="color: #007700">(</span><span style="color: #DD0000">'exception_handler'</span><span style="color: #007700">);    			<br>
+                        <span class="num" >59</span>
+    			</span><span style="color: #FF8000">//Throw&nbsp;new&nbsp;DivideByZeroException("DivideByZeroException3");    			<br>
+                        <span class="num" >60</span>
+    			</span><span style="color: #0000BB">$redis</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'192.168.1.1'</span><span style="color: #007700">,</span><span style="color: #0000BB">6379</span><span style="color: #007700">,</span><span style="color: #0000BB">1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >61</span>
+    			</span><span style="color: #0000BB">$redis</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">ping</span><span style="color: #007700">();    			<br>
+                        <span class="num" >62</span>
+    			</span>
+</span>
+    			<br>
+            	</code>
+            </div>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script>
+        $(document).ready(function() { 
+            var line_emph = $('#line_emph');
+            if( line_emph.length > 0 ){
+                var offset = line_emph.offset();
+                $("html,body").animate({ scrollTop: offset.top-200 }, "fast");          
+            }
+        });
+    </script>
+</body>
+</html>

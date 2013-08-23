@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Source - curl2.php</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
+    <style>
+      body {
+        overflow: auto;
+        font-family: monospace;
+        font-size: 12px;
+      }
+      code {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+        #line_emph {
+            background-color: #bbbbff;
+        }
+        .num {
+            border-right: 1px solid gray;
+            color: gray;
+            float: left;
+            margin-right: 6pt;
+            padding-right: 6pt;
+            text-align: right;
+            width: 25px;
+            clear: left;
+        }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+    	<h1>/var/www/phpio/test/curl2.php</h1>
+    	<code>
+            	                <span class="num" >1</span>
+    			<span style="color: #000000">
+<span style="color: #0000BB">&lt;?php    			<br>
+                        <span class="num" >2</span>
+    			</span><span style="color: #FF8000">//&nbsp;create&nbsp;both&nbsp;cURL&nbsp;resources    			<br>
+                        <span class="num" >3</span>
+    			</span><span style="color: #0000BB">$ch1&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">curl_init</span><span style="color: #007700">();    			<br>
+                        <span class="num" >4</span>
+    			</span><span style="color: #0000BB">$ch2&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">curl_init</span><span style="color: #007700">();    			<br>
+                        <span class="num" >5</span>
+    			    			<br>
+                        <span class="num" >6</span>
+    			</span><span style="color: #FF8000">//&nbsp;set&nbsp;URL&nbsp;and&nbsp;other&nbsp;appropriate&nbsp;options    			<br>
+                        <span class="num" >7</span>
+    			</span><span style="color: #0000BB">curl_setopt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ch1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CURLOPT_URL</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"http://m.baidu.com/"</span><span style="color: #007700">);    			<br>
+                        <span class="num" >8</span>
+    			</span><span style="color: #0000BB">curl_setopt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ch1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CURLOPT_RETURNTRANSFER</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >9</span>
+    			    			<br>
+                        <span class="num" >10</span>
+    			</span><span style="color: #0000BB">curl_setopt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ch2</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CURLOPT_URL</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"http://www.baidu.com/"</span><span style="color: #007700">);    			<br>
+                        <span class="num" >11</span>
+    			</span><span style="color: #0000BB">curl_setopt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ch2</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CURLOPT_RETURNTRANSFER</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >12</span>
+    			    			<br>
+                        <span class="num" >13</span>
+    			</span><span style="color: #FF8000">//create&nbsp;the&nbsp;multiple&nbsp;cURL&nbsp;handle    			<br>
+                        <span class="num" >14</span>
+    			</span><span style="color: #0000BB">$mh&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">curl_multi_init</span><span style="color: #007700">();    			<br>
+                        <span class="num" >15</span>
+    			    			<br>
+                        <span class="num" >16</span>
+    			</span><span style="color: #FF8000">//add&nbsp;the&nbsp;two&nbsp;handles    			<br>
+                        <span class="num" >17</span>
+    			</span><span style="color: #0000BB">curl_multi_add_handle</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,</span><span style="color: #0000BB">$ch1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >18</span>
+    			</span><span style="color: #0000BB">curl_multi_add_handle</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,</span><span style="color: #0000BB">$ch2</span><span style="color: #007700">);    			<br>
+                        <span class="num" >19</span>
+    			    			<br>
+                        <span class="num" >20</span>
+    			</span><span style="color: #0000BB">$active&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">;    			<br>
+                        <span class="num" >21</span>
+    			</span><span style="color: #FF8000">//execute&nbsp;the&nbsp;handles    			<br>
+                        <span class="num" >22</span>
+    			</span><span style="color: #007700">do&nbsp;{    			<br>
+                        <span class="num" >23</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$mrc&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">curl_multi_exec</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$active</span><span style="color: #007700">);    			<br>
+                        <span class="num" >24</span>
+    			}&nbsp;while&nbsp;(</span><span style="color: #0000BB">$mrc&nbsp;</span><span style="color: #007700">==&nbsp;</span><span style="color: #0000BB">CURLM_CALL_MULTI_PERFORM</span><span style="color: #007700">);    			<br>
+                        <span class="num" >25</span>
+    			    			<br>
+                        <span class="num" >26</span>
+    			while&nbsp;(</span><span style="color: #0000BB">$active&nbsp;</span><span style="color: #007700">&amp;&amp;&nbsp;</span><span style="color: #0000BB">$mrc&nbsp;</span><span style="color: #007700">==&nbsp;</span><span style="color: #0000BB">CURLM_OK</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >27</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">curl_multi_select</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">)&nbsp;!=&nbsp;-</span><span style="color: #0000BB">1</span><span style="color: #007700">)&nbsp;{    			<br>
+                        <span class="num" >28</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do&nbsp;{    			<br>
+                        <span class="num" >29</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$mrc&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">curl_multi_exec</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$active</span><span style="color: #007700">);    			<br>
+                        <span class="num" >30</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;while&nbsp;(</span><span style="color: #0000BB">$mrc&nbsp;</span><span style="color: #007700">==&nbsp;</span><span style="color: #0000BB">CURLM_CALL_MULTI_PERFORM</span><span style="color: #007700">);    			<br>
+                        <span class="num" >31</span>
+    			&nbsp;&nbsp;&nbsp;&nbsp;}    			<br>
+                        <span class="num" >32</span>
+    			}    			<br>
+                        <span class="num" >33</span>
+    			    			<br>
+                        <span class="num" >34</span>
+    			</span><span style="color: #FF8000">//close&nbsp;the&nbsp;handles    			<br>
+                        <span class="num" id="line_emph">35</span>
+    			</span><span style="color: #0000BB">curl_multi_remove_handle</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$ch1</span><span style="color: #007700">);    			<br>
+                        <span class="num" >36</span>
+    			</span><span style="color: #0000BB">curl_multi_remove_handle</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$ch2</span><span style="color: #007700">);    			<br>
+                        <span class="num" >37</span>
+    			</span><span style="color: #0000BB">curl_multi_close</span><span style="color: #007700">(</span><span style="color: #0000BB">$mh</span><span style="color: #007700">);</span>
+</span>
+    			<br>
+            	</code>
+            </div>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script>
+        $(document).ready(function() { 
+            var line_emph = $('#line_emph');
+            if( line_emph.length > 0 ){
+                var offset = line_emph.offset();
+                $("html,body").animate({ scrollTop: offset.top-200 }, "fast");          
+            }
+        });
+    </script>
+</body>
+</html>

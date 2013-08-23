@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PHPIO - 52178abfbf1a4.52178abfcefb0.52178abfd737c</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Zhangwei(hemono@gmail.com)">
+    <!-- Le styles -->
+    <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+    <link href="css/fbootstrap.min.css?20130719" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        overflow: auto;
+      }
+    	.nav span.label {
+    		/*position: absolute;*/
+    		margin-left: 2px
+    	}
+      .prof_detail {
+        display: none;
+        height: 150px;
+      }
+      .show_detail,.prof_detail {
+        background-color: #F5F5F5;
+      }
+      .prof_detail .tabbable .nav {
+        margin: 0;
+        padding: 0;
+      }
+      .label {
+        font-size:11px;
+      	font-weight:normal;
+      	text-transform:none;
+      }
+      .label-class {
+        text-indent: 1em;
+        width: 3px;
+        display: inline-block;
+        margin-right: 3px;
+      }
+      .label-empty {
+        background: none;
+        color: #000;
+        /*border: 1px solid #ccc;*/
+      }
+      a.label, a.label:hover { 
+        text-decoration: none;
+        color: auto
+      }
+
+      .srclink {
+        float: right;
+      }
+
+      .error {
+        background-color: red;
+      }
+
+      .lr {
+        word-wrap:break-word;
+      }
+
+      #function_table {
+        table-layout:fixed;
+      }
+
+      .tab-pane pre {
+        background-color: #F2F2F2;
+        border: none;
+        border-radius: none;
+        display: block;
+        font-size: 100%;
+        margin: 0;
+        padding: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .args_table {
+        width:auto;
+        max-width: 100%;
+        border: 1px solid #ccc;
+      }
+
+      ul.tree, ul.tree ul {
+          background: url("img/vline.png") repeat-y scroll 0 0 transparent;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+      }
+      ul.tree ul {
+          margin-left: 10px;
+      }
+      ul.tree li {
+          background: url("img/node.png") no-repeat scroll 0 0 transparent;
+          color: #336699;
+          font-weight: bold;
+          line-height: 20px;
+          margin: 0;
+          padding: 0 12px;
+      }
+      ul.tree li.last {
+          background: url("img/lastnode.png") no-repeat scroll 0 0 #FFFFFF;
+      }
+
+      ul.tree li:last-child { 
+        background: #fff url("img/lastnode.png") no-repeat; 
+      }
+
+      #tree >ul >li {
+        background: #fff;
+        padding: 0;
+      }
+      #tree {
+        position: fixed;
+        right: 0;
+        /*top: 40px;*/
+        bottom: 0;
+        background: #fff;
+        border-left: 1px solid #CCCCCC;
+        border-top: 1px solid #CCCCCC;
+        padding: 25px;
+        -moz-user-select: none;
+      }
+      #tree span.zoomin {
+        background: url("img/arrow.gif") no-repeat scroll 0 -19px transparent;
+      }
+      #tree .zoomout {
+        background: url("img/arrow.gif") no-repeat scroll 0px 0px transparent;
+        position: absolute;
+        bottom:0;
+        right:0;
+        width: 19px;
+        height: 19px;
+        cursor: pointer;
+      }
+      .tab-pane pre { background:none }
+
+      #vars .pills a:hover {
+        background-position: 0 -20px;
+      }
+
+      #vars .btn:hover {
+        background-position: 0 0;
+      }
+
+      #vars .pills .active a {
+        background-position: 0 -20px;
+      }
+      .dropdown-menu {
+        max-width: 500px;
+      }
+      .label-time {
+        margin-right: 10px;
+      }
+      #tree a.label:hover {
+        color: white;
+        background-color: #DD3C10;
+      }
+      .label-APC{background-color:#BA55D3}.label-Mysql{background-color:#0476D6}.label-PDO{background-color:#015A84}.label-PDOStatement{background-color:#015A84}.label-Redis{background-color:#3CC472}.label-Memcache{background-color:#9BCD9B}.label-Memcached{background-color:#9BCD9B}.label-Curl{background-color:#3CA9C4}.label-Error{background-color:red}.label-Exception{background-color:orange}    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id="nav" class="topbar navbar-inverse navbar-fixed-top">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#">PHPIO</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav" id="hooks">
+              <li class="active"><a href="#">ALL</a></li>
+            </ul>
+      	    <ul class="nav secondary-nav">
+              <li><a href="mailto:hemono@gmail.com" title="Contact me"><span class="label label-Mysql">@hemono</span></a></li>
+              <li class="dropdown" data-dropdown="dropdown" id="profiles">
+                <a href="#" class="dropdown-toggle">Profile(52178abfd737c)</a>
+                <ul class="dropdown-menu">
+                </ul>
+              </li>
+      	    </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      
+      	<h1>localhost/phpio/test/flow.php 
+      	<small>127.0.0.1:80</small></h1>
+
+        <div class="tabbable" id="vars">
+            <ul class="pills">
+              <a class="btn" href="?op=dot&profile_id=52178abfbf1a4.52178abfcefb0.52178abfd737c" target="_blank">Call Graph</a>
+                            <li><a href="#info_SERVER" class="btn" data-toggle="tab">$_SERVER</a></li>
+                            <li><a href="#info_GET" class="btn" data-toggle="tab">$_GET</a></li>
+                          </ul>
+            <div class="tab-content">
+                                <div class="tab-pane" id="info_SERVER">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                            <tr>
+                        <th>USER</th>
+                        <td><pre>apache</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HOME</th>
+                        <td><pre>/home/apache</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>FCGI_ROLE</th>
+                        <td><pre>RESPONDER</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SCRIPT_FILENAME</th>
+                        <td><pre>/var/www/phpio/test/flow.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>QUERY_STRING</th>
+                        <td><pre>i=3</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_METHOD</th>
+                        <td><pre>GET</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>CONTENT_TYPE</th>
+                        <td><pre></pre></td>
+                      </tr>
+                                          <tr>
+                        <th>CONTENT_LENGTH</th>
+                        <td><pre></pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SCRIPT_NAME</th>
+                        <td><pre>/phpio/test/flow.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_URI</th>
+                        <td><pre>/phpio/test/flow.php?i=3</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>DOCUMENT_URI</th>
+                        <td><pre>/phpio/test/flow.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>DOCUMENT_ROOT</th>
+                        <td><pre>/var/www</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_PROTOCOL</th>
+                        <td><pre>HTTP/1.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>GATEWAY_INTERFACE</th>
+                        <td><pre>CGI/1.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_SOFTWARE</th>
+                        <td><pre>nginx/1.4.2</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REMOTE_ADDR</th>
+                        <td><pre>127.0.0.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REMOTE_PORT</th>
+                        <td><pre>35340</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_ADDR</th>
+                        <td><pre>127.0.0.1</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_PORT</th>
+                        <td><pre>80</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>SERVER_NAME</th>
+                        <td><pre>new.haigoumama.com</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REDIRECT_STATUS</th>
+                        <td><pre>200</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_HOST</th>
+                        <td><pre>localhost</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_ACCEPT</th>
+                        <td><pre>*/*</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>HTTP_COOKIE</th>
+                        <td><pre>XDEBUG_PROFILE=52178abfbf1a4.52178abfcefb0;</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>PHP_SELF</th>
+                        <td><pre>/phpio/test/flow.php</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_TIME_FLOAT</th>
+                        <td><pre>1377274559.8728</pre></td>
+                      </tr>
+                                          <tr>
+                        <th>REQUEST_TIME</th>
+                        <td><pre>1377274559</pre></td>
+                      </tr>
+                                        </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_GET">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                            <tr>
+                        <th>i</th>
+                        <td><pre>3</pre></td>
+                      </tr>
+                                        </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_POST">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                                          </tbody>
+                  </table>
+                </div>
+                                <div class="tab-pane" id="info_COOKIE">
+                    <table class="args_table condensed-table">
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                            </div>
+        </div>
+
+                <div id="tree">
+          <span class="zoomout"></span>
+          <ul class="tree"><li><a href="index.html" class="label">localhost/phpio/test/all.php</a><ul class="tree"><li><a href="profile_52178abfbf1a4.52178abfcefb0.html" class="label">localhost/phpio/test/flow.php</a><ul class="tree"><li><a href="profile_52178abfbf1a4.52178abfcefb0.52178abfd737c.html" class="label important">localhost/phpio/test/flow.php</a></li></ul></li></ul></li></ul>        </div>
+        
+        <table class="table table-hover condensed-table" id="function_table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th width=220><span>Function</span></th>
+                    <th><span>Command</span></th>
+                    <th width=220><span>Connection</span></th>
+                    <th width=100><span>Response</span></th>
+                    <th width=50><span>Time(ms)</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                        </tbody>
+        </table>
+    </div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/profile.js?201307192"></script>
+  </body>
+</html>
+
