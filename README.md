@@ -10,13 +10,13 @@ record raw http header(request & response), and reporting the full infomation of
 * Memcached  
 record key for operation, the real server where key is mapped to.
 * Redis
-* Exception, Error
+* Exception, Error  
 recode Exception and All Error types.
-* Call Graph
+* Call Graph  
 call graph is svg format, click map node redirect to source.
-* Request Flow
+* Request Flow  
 add debug flag in curl sub_request, track web services call. 
-* Source viewer
+* Source viewer  
 
 ![Screenshot](//raw.github.com/hemon/phpio/master/www/img/screenshot.png)
 
