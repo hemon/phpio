@@ -11,7 +11,7 @@ record raw http header(request & response), and reporting the full infomation of
 record key for operation, the real server where key is mapped to.
 * Redis
 * Exception, Error  
-recode Exception and All Error types.
+recode Exception and All types of Error.
 * Call Graph  
 call graph is svg format, click map node redirect to source.
 * Source viewer  
