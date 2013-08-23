@@ -14,8 +14,8 @@ record key for operation, the real server where key is mapped to.
 recode Exception and All Error types.
 * Call Graph  
 call graph is svg format, click map node redirect to source.
-* Request Flow  
-add debug flag in curl sub_request, track web services call. 
+* Cross Request Tracking  
+auto append debug flag in curl sub_request, track web service call. 
 * Source viewer  
 
 [DEMO](http://hemon.github.io/phpio/demo/index.html)
