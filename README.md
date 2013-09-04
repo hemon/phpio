@@ -7,9 +7,20 @@ connection's host and port, call trace, function args, response and error messag
 record raw SQL query stirng and affected rows.
 * Curl  
 record raw http header(request & response), and reporting the full infomation of time,speed and size.
-* Memcached, Redis  
-record key for operation
+* Memcached  
+record key for operation, the real server where key is mapped to.
+* Redis
+* Exception, Error  
+recode Exception and All types of Error.
+* Call Graph  
+call graph is svg format, click map node redirect to source.
+* Source viewer  
+* Cross Request Tracking  
+Auto append debug flag in curl sub_request, track relation of web service call.   
+Redis logger for collecting logs from distributed servers.
 
+
+[DEMO](http://hemon.github.io/phpio/demo/index.html)
 
 ![Screenshot](//raw.github.com/hemon/phpio/master/www/img/screenshot.png)
 
