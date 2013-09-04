@@ -226,7 +226,7 @@
                 <div class="tab-pane" id="info<?php echo $_var;?>">
                     <table class="args_table condensed-table">
                     <tbody>
-                      <?php foreach($data[0][$_var] as $parameter => $value):?>
+                      <?php if($data[0][$_var]) foreach($data[0][$_var] as $parameter => $value):?>
                       <tr>
                         <th><?php echo $parameter;?></th>
                         <td><pre><?php echo htmlspecialchars(print_r($value,1));?></pre></td>
@@ -283,7 +283,7 @@
                   $resp['value'] = '';
                   if(isset($row['error'])) {
                     $resp['style'] = 'error';
-                    $resp['title'] = $row['error'];
+                    $resp['title'] = htmlspecialchars($row['error']);
                     $resp['value'] = "errno({$row['errno']})";
                   } elseif ( isset($row['rowcount']) ) {
                     $resp['style'] = ($row['rowcount'] == 0 ? 'warning' : $resp['style']);
@@ -438,7 +438,16 @@
                        <div class="tab-pane" id="response<?php echo $i?>"><pre><?php 
                           list($type, $content) = explode(" ", $row['result'], 2);
                           if ( substr($type, 0, 6) == 'string' ) {
-                              echo '<b>',$type,'</b>','<br>', htmlspecialchars(substr($content,1,-2));
+                              $string = substr($content,1,-2);
+                              if ( ($output = unserialize($string)) || 
+                                   ($output = json_decode($string, true)) ) {
+                                ob_start();
+                                var_dump($output);
+                                $output = ob_get_clean();
+                                echo htmlspecialchars($output);
+                              } else {
+                                echo '<b>',$type,'</b>','<br>', htmlspecialchars($string);
+                              }
                           } else {
                               echo htmlspecialchars($row['result']);
                           }

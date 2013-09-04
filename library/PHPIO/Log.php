@@ -73,6 +73,14 @@ abstract class PHPIO_Log {
 		return $profile_ids[0];
 	}
 
+	function serialize($data) { 
+		return serialize($data); 
+	}
+
+	function unserialize($data) { 
+		return @unserialize($data); 
+	}
+
 	function flush() {}
 	function getProfiles() {}
 	function getProfile($profile_id) {}

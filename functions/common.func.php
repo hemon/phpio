@@ -106,3 +106,7 @@ function phpio_rmdir($dir) {
         rmdir($dir);
     }
 }
+
+function phpio_unserialize_fail($classname) {
+    eval("class $classname{}");
+}

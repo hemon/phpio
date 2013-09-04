@@ -4,7 +4,7 @@ class PHPIO_Log_File extends PHPIO_Log {
 	var $processor = array('saveArgnames','saveProfile');
 
 	function saveProfile() {
-		file_put_contents($this->save_dir.'/prof_'.PHPIO::$run_id, serialize($this->logs));
+		file_put_contents($this->save_dir.'/prof_'.PHPIO::$run_id, $this->serialize($this->logs));
 	}
 
 	function getProfiles($limit=10) {
@@ -13,7 +13,7 @@ class PHPIO_Log_File extends PHPIO_Log {
 		foreach($files as $file) {
 			$data = file_get_contents($file);
 			if ( $data !== false ) {
-				$data = unserialize($data);
+				$data = $this->unserialize($data);
 				$profile_id = substr(basename($file),5);
 				$profiles[$profile_id] = array($profile_id, $this->getURI($data[0]['_SERVER']));
 			}
@@ -26,7 +26,7 @@ class PHPIO_Log_File extends PHPIO_Log {
 	function getProfile($profile_id) {
 		$profile = $this->save_dir.'/prof_'.$profile_id;
 		$data = file_get_contents($profile);
-		return unserialize($data);
+		return $this->unserialize($data);
 	}
 
 	function getFlow($profile_id) {

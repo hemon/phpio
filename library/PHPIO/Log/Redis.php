@@ -9,7 +9,7 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	var $processor = array('saveArgnames','saveCurlHeader','saveSource','saveProfileList','saveProfile');
 
 	function saveProfile() {
-		$this->getRedis()->hSet('PHPIO_PROF', PHPIO::$run_id, serialize($this->logs));
+		$this->getRedis()->hSet('PHPIO_PROF', PHPIO::$run_id, $this->serialize($this->logs));
 	}
 
 	function saveProfileList() {
@@ -18,7 +18,7 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		$this->getRedis()->zAdd(
 			'PHPIO_LIST',
 			$score,
-			serialize(array(PHPIO::$run_id, $this->getURI($this->logs[0]['_SERVER'])))
+			$this->serialize(array(PHPIO::$run_id, $this->getURI($this->logs[0]['_SERVER'])))
 		);
 	}
 
@@ -62,14 +62,14 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 	function getProfiles($limit=10) {
 		$profiles = $this->getRedis()->zRevRange('PHPIO_LIST', 0, $limit-1);
 		foreach ( $profiles as &$profile) {
-			$profile = unserialize($profile);
+			$profile = $this->unserialize($profile);
 		}
 		return $profiles;
 	}
 
 	function getProfile($profile_id) {
 		$data = $this->getRedis()->hGet('PHPIO_PROF', $profile_id);
-		return unserialize($data);
+		return $this->unserialize($data);
 	}
 
 	function getFlow($profile_id) {
@@ -78,7 +78,7 @@ class PHPIO_Log_Redis extends PHPIO_Log {
 		$profiles = $this->getRedis()->zRangeByScore('PHPIO_LIST', $score, $score);
 		$flow = array();
 		foreach ( $profiles as &$profile) {
-			$profile = unserialize($profile);
+			$profile = $this->unserialize($profile);
 			$flow[] = $profile[0];
 		}
 		return $flow;
