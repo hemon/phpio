@@ -3,6 +3,16 @@
 This module for inject xiaomi X5 protocol
 */
 class PHPIO_Hook_MiCurl extends PHPIO_Hook_Curl {
+        function getOptions($args) {
+		$options = parent::getOptions($args);
+		if ( isset($options['CURLOPT_POSTFIELDS']['data']) ) {
+			if ( $data = $this->x5_decode($options['CURLOPT_POSTFIELDS']['data']) ) {
+				$options['CURLOPT_POSTFIELDS']['data'] = $data;
+			}
+		}
+		return $options;
+        }
+
 	function CURLOPT_POSTFIELDS_rewrite($value) {
 		do {
 			if ( !is_string($value) ) {
