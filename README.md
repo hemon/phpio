@@ -1,6 +1,6 @@
 # PHPIO
 Cross request trace for PHP,like google's dapper,twitter's zipkin.  
-it's base on [AOP-PHP](http://aop-php.github.com) extension. 
+It's base on [AOP-PHP](http://aop-php.github.com) extension. 
 focus on trace IO operation, such like MySQL, Memcache, Redis, APC and so on.  
 
 * Common  
