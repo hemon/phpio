@@ -81,5 +81,5 @@ export XDEBUG_PROFILE=1
 ## view profile
 make phpio/www is accessible:  
 ```
-http://path/to/phpio/www/  
+http://localhost/phpio/www/  
 ```
