@@ -309,9 +309,9 @@ a.buttons:hover {
 /* Section - for main page content */
 
 section {
-  width:650px;
-  float:right;
-  padding-bottom:50px;
+  position: absolute;
+  margin-left: 280px;
+  padding-bottom: 50px;
 }
 
 
@@ -362,6 +362,10 @@ footer {
     right:130px;
     top:84px;
   }
+}
+
+#demo {
+  border: 1px solid #000;
 }
 
 @media print, screen and (max-width: 720px) {
