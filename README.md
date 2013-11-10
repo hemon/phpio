@@ -1,7 +1,8 @@
 # PHPIO
 Cross request trace for PHP,like google's dapper,twitter's zipkin.  
 It's base on [AOP-PHP](http://aop-php.github.com) extension. 
-focus on trace IO operation, such like MySQL, Memcache, Redis, APC and so on.  
+PHPIO is focus on trace IO operation, such like Curl, MySQL, Memcache, Redis, APC.   
+It's easily write your own Hooker monitor function/class operation in 10 line code.
 
 * Common  
 connection's host and port, call trace, function args, response and error message.
@@ -18,7 +19,8 @@ call graph is svg format, click map node redirect to source.
 * Source viewer  
 you can see all your source code which been executed.
 * Cross Request Tracking   
-just use a Redis logger can collecting logs from distributed servers.
+A unique request_id is auto inject in Cookie for track http request from frontpage to webservice api,
+just use a Redis logger can collecting logs from all your php web servers.
 
 
 [DEMO](http://hemon.github.io/phpio/demo/index.html)
