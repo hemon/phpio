@@ -214,6 +214,11 @@
       </div>
       <?php endif;?>
 
+      <?php if ( $data === false ): ?>
+      <div class="alert-message block-message error">
+        <p><?php echo (empty($_REQUEST['profile_id']) ? 'There is no profile to analyse, Please record it first!' : "Profile_id: <b>$profile_id</b> is not exists or access denied.") ?></p>
+      </div>
+      <?php else:?>
       	<h1><?php echo PHPIO::$log->getURI($data[0]['_SERVER']) ?> 
       	<small><?php echo $data[0]['_SERVER']['SERVER_ADDR'],':',$data[0]['_SERVER']['SERVER_PORT']?></small></h1>
 
@@ -465,6 +470,7 @@
             </tbody>
         </table>
     </div> <!-- /container -->
+    <?php endif;?>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

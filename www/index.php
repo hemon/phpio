@@ -22,9 +22,9 @@ switch( $_REQUEST['op'] ){
 		$profile_id = $_REQUEST['profile_id'];
 		if ( !empty($profile_id) ) {
 			$data = PHPIO::$log->getProfile($profile_id);
-		    $dot = new PHPIO_Dot($data);
-		    $dot = $dot->output();
-		    require 'templates/dot.phtml';
+			$dot = new PHPIO_Dot($data);
+			$dot = $dot->output();
+			require 'templates/dot.phtml';
 		}
 		break;
 	case 'flush':
@@ -37,14 +37,12 @@ switch( $_REQUEST['op'] ){
 				list($profile_id, $uri) = array_shift($profiles);
 			}
 		}
-		$flow = PHPIO::$log->getFlow($profile_id);
-		if ( count($flow) > 1 ) {
-			$flow_uris = PHPIO::$log->getProfileUri($flow);
-		}
 		$data = PHPIO::$log->getProfile($profile_id);
-		if ( $data === false ) {
-			echo 'Profile is not exists or is not readable.';
-			break;
+		if ( is_array($data) ) {
+			$flow = PHPIO::$log->getFlow($profile_id);
+			if ( count($flow) > 1 ) {
+				$flow_uris = PHPIO::$log->getProfileUri($flow);
+			}
 		}
 		require 'templates/profile.phtml';
 		break;

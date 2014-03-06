@@ -25,6 +25,8 @@ class PHPIO_Log_File extends PHPIO_Log {
 
 	function getProfile($profile_id) {
 		$profile = $this->save_dir.'/prof_'.$profile_id;
+		if ( !is_file($profile) ) return false;
+
 		$data = file_get_contents($profile);
 		return $this->unserialize($data);
 	}
