@@ -25,8 +25,8 @@ class PHPIO_Hook_Memcache extends PHPIO_Hook {
 
     function addServer_post($jp) {
         $link = $this->getLink($this->args);
-        if ( !in_array($link, $this->link) ) {
-            $this->link[] = $link;
+        if ( !in_array($link, $this->links) ) {
+            $this->links[] = $link;
         }
         $this->postCallback($jp);
     }
@@ -36,7 +36,7 @@ class PHPIO_Hook_Memcache extends PHPIO_Hook {
     }
 
     function connect_post($jp) {
-        $this->link = $this->getLink($this->args);
+        $this->links[] = $this->getLink($this->args);
         $this->postCallback($jp);
     }
 
@@ -51,7 +51,7 @@ class PHPIO_Hook_Memcache extends PHPIO_Hook {
     }
 
     function postCallback($jp) {
-        $this->trace['link'] = (is_array($this->link) ? implode(';',$this->link) : $this->link);
+        $this->trace['link'] = implode(';',$this->links);
         if (isset($this->args[0])) $this->trace['cmd'] = (is_array($this->args[0]) ? implode(' ',$this->args[0]) : $this->args[0]);        
         parent::postCallback($jp);
     }
