@@ -18,12 +18,21 @@ class PHPIO_AOP_JoinPoint {
 		$this->args = $args[1];
 		$this->kindOfAdvice = $this->jp->getKindOfAdvice();
 
-		if ( is_array($args[0]) ) {
-			$this->object = $args[0][0];
-			$this->method = $args[0][1];
-		} else {
-			$this->func = $args[0];
-		}
+        switch ( gettype($args[0]) ) {
+            case 'string':
+			    $this->func = $args[0];
+                break;
+            case 'array':
+                // array($object, $method)
+                $this->object = $args[0][0];
+                $this->method = $args[0][1];
+                break;
+            case 'object':
+                //Closure Object
+                $this->object = $args[0];
+                $this->method = '__invoke';
+                break;
+        }
 	}
 
 	function getArguments() {
@@ -43,7 +52,7 @@ class PHPIO_AOP_JoinPoint {
 	}
 
 	function getClassName(){
-		return get_class($this->object);
+		return (is_object($this->object) ? get_class($this->object) : false);
 	}
 
 	function getReturnedValue(){
