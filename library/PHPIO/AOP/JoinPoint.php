@@ -3,7 +3,6 @@ class PHPIO_AOP_JoinPoint {
 	var $jp;
 	var $args;
 	var $object;
-    var $class;
 	var $method;
 	var $func;
 	var $kindOfAdvice;
@@ -25,13 +24,11 @@ class PHPIO_AOP_JoinPoint {
                 break;
             case 'array':
                 // array($object, $method)
-                $this->class  = $this->getClassName($args[0][0]);
                 $this->object = $args[0][0];
                 $this->method = $args[0][1];
                 break;
             case 'object':
                 //Closure Object
-                $this->class = 'Closure';
                 $this->object = $args[0];
                 $this->method = '__invoke';
                 break;
