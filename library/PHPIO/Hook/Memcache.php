@@ -25,6 +25,10 @@ class PHPIO_Hook_Memcache extends PHPIO_Hook {
 
     function addServer_post($jp) {
         $link = $this->getLink($this->args);
+        if ( !is_array($this->link) ) {
+            $this->link = array($link);
+        }
+
         if ( !in_array($link, $this->link) ) {
             $this->link[] = $link;
         }

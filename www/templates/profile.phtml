@@ -230,7 +230,7 @@
               <?php endforeach; ?>
             </ul>
             <div class="tab-content">
-                <?php foreach ( array('_SERVER','_GET','_POST','_COOKIE') as $_var ) : ?>
+                <?php foreach ( array('_SERVER','_GET','_POST','_COOKIE', '_OUTPUT') as $_var ) : ?>
                 <div class="tab-pane" id="info<?php echo $_var;?>">
                     <table class="args_table condensed-table">
                     <tbody>

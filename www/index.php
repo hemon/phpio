@@ -29,6 +29,8 @@ switch( $_REQUEST['op'] ){
 		break;
 	case 'flush':
 		PHPIO::$log->flush();
+        header("Location: {$_SERVER['DOCUMENT_URI']}");
+        break;
 	default:
 		$profile_id = $_REQUEST['profile_id'];
 		if ( empty($profile_id) ) {
