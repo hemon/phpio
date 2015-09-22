@@ -1,6 +1,11 @@
 <?php
 define("PHPIO_PROFILE", "_profile");
 
+if (!extension_loaded('aop')) {
+    error_log('phpio - either extension AOP must be loaded');
+    return;
+}
+
 if (isset($_GET[PHPIO_PROFILE])) {
     //Give them a cookie to hold status, and redirect back to the same page
     setcookie(PHPIO_PROFILE, $_GET[PHPIO_PROFILE]);
