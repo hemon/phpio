@@ -74,7 +74,11 @@ abstract class PHPIO_Log {
 	}
 
 	function serialize($data) { 
-		return serialize($data); 
+		try{
+            return serialize($data);
+        } catch (Exception $e) {
+            return false;
+        }
 	}
 
 	function unserialize($data) { 

@@ -5,7 +5,7 @@ $_PHPIO = array(
 		'APC' => 1,
 		'Curl' => 1,
 		'Mysql' => 1,
-		'Network' => 1,
+		'Core' => 1,
 		'PDO' => 1,
 		'PDOStatement' => 1,
 		'Redis' => 1,
@@ -14,6 +14,7 @@ $_PHPIO = array(
 		'CallUserFunc' => 1,
 		'Error' => 1,
 		'Exception' => 1,
+		'UDF' => 1,
 	),
 	'log' => array(
 		'class' => 'PHPIO_Log_File',
@@ -31,5 +32,7 @@ $_PHPIO = array(
 		'Curl' => '#3CA9C4',
 		'Error' => 'red',
 		'Exception' => 'orange',
+		'Core' => 'pink',
+		'UDF' => '#999999',
 	)
 );

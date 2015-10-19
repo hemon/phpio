@@ -263,7 +263,7 @@ input[disabled],select[disabled],textarea[disabled],input[readonly],select[reado
 .form-stacked .actions{margin-left:-20px;padding-left:20px;}
 table{width:100%;margin-bottom:14px;padding:0;font-size:11px;border-collapse:collapse;}table th,table td{padding:10px 10px 9px;line-height:14px;text-align:left;}
 table th{padding-top:9px;font-weight:bold;vertical-align:middle;}
-table td{vertical-align:top;border-top:1px solid #ddd;}
+table td{vertical-align:top;border-top:1px solid #ddd;overflow: hidden;}
 table tbody th{border-top:1px solid #ddd;vertical-align:top;}
 .condensed-table th,.condensed-table td{padding:5px 5px 4px;}
 .bordered-table{border:1px solid #ddd;border-collapse:separate;*border-collapse:collapse;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}.bordered-table th+th,.bordered-table td+td,.bordered-table th+td{border-left:1px solid #ddd;}
