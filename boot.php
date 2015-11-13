@@ -16,10 +16,6 @@ if ( !file_exists(PHPIO_TMP) ) {
 }
 
 require PHPIO_ROOT.'/config.php';
-if ( file_exists(PHPIO_ROOT.'/config.my.php') ) {
-	require PHPIO_ROOT.'/config.my.php';
-}
-
 require PHPIO_FUNC.'/common.func.php';
 phpio_load();
 

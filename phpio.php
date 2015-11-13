@@ -1,5 +1,5 @@
 <?php
-define("PHPIO_PROFILE", "_profile");
+define("PHPIO_PROFILE", "_debug_phpio");
 
 $is_enabled = (
     (isset($_REQUEST[PHPIO_PROFILE]) && $_REQUEST[PHPIO_PROFILE]) ||
@@ -26,3 +26,7 @@ if (isset($_GET[PHPIO_PROFILE])) {
 
 require __DIR__.'/boot.php';
 PHPIO::hook();
+
+function _empty($var) {
+	return empty($var);
+}

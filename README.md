@@ -61,22 +61,22 @@ php_admin_value[auto_prepend_file] = /path/to/phpio/phpio.php
 ```
 
 ## start profile
-run you php programs with param XDEBUG_PROFILE=1  
+run you php programs with param _debug_phpio=1  
 ```
-$_REQUEST['XDEBUG_PROFILE']=1  
-$_COOKIE['XDEBUG_PROFILE']=1  
-$_SERVER['XDEBUG_PROFILE']=1  
+$_REQUEST['_debug_phpio']=1  
+$_COOKIE['_debug_phpio']=1  
+$_SERVER['_debug_phpio']=1  
 ```
 
 for example : 
-http://www.example.com/index.php?XDEBUG_PROFILE=1 
+http://www.example.com/index.php?_debug_phpio=1 
 
-recommand firfox addon [easy-xdebug](https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/), it can auto append user defined cookie param in request(default is XDEBUG_PROFILE=1): 
+recommand firfox addon [easy-xdebug](https://addons.mozilla.org/firefox/addon/easy-xdebug-with-moveable-/), it can auto append user defined cookie param in request(default is _debug_phpio=1): 
 
 
 in php-cli mode, use `export` command to set param for $_SERVER 
 ```
-export XDEBUG_PROFILE=1
+export _debug_phpio=1
 ```
 
 ## view profile

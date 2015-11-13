@@ -274,8 +274,8 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 	}
 
 	function CURLOPT_COOKIE_rewrite($value) {
-		if ( strpos($value,'XDEBUG_PROFILE') === false ) {
-			$value .= ';XDEBUG_PROFILE='.PHPIO::$run_id.';';
+		if ( strpos($value,PHPIO_PROFILE) === false ) {
+			$value .= ';'.PHPIO_PROFILE.'='.PHPIO::$run_id.';';
 		}
 		return $value;
 	}
