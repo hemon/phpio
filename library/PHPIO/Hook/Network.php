@@ -6,9 +6,25 @@ class PHPIO_Hook_Core extends PHPIO_Hook_Func {
     var $hooks = array(
          'gethostbyaddr',
          'gethostbyname',
-         'gethostbynamel',
-         'fsockopen',
-         'header'
+		 'gethostbynamel',
+		 'file_get_contents',
+		 'file_put_contents',
+		 'fsockopen',
+		 'pfsockopen',
+		 'header',
+		 'popen',
+		 'fopen',
+		 'fwrite',
+		 'fread',
+		 'fgets',
+		 'socket_create',
+		 'socket_connect',
+		 'socket_write',
+		 'socket_recv',
+		 'stream_socket_client',
+		 'stream_socket_sendto',
+		 'stream_socket_recvfrom',
+		 'stream_get_line'
     );
 
     function postCallback($jp) {
