@@ -69,7 +69,7 @@ abstract class PHPIO_Hook {
 	function getObjectId($var) {
 		$dump = $this->dump($var);
 		if ( is_object($var) ) {
-			if ( preg_match('|object\((\w+)\)#(\d+)|', $dump, $match) ) {
+			if ( preg_match('|object\((.*?)\)#(\d+)|', $dump, $match) ) {
 				return $match[0];
 			}
 		}

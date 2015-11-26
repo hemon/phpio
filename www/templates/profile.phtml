@@ -333,7 +333,7 @@
                     $time = $row['time_end']-$row['time_start'];
                   }
                 ?>
-                <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo $row['classname']?>">
+                <tr id="prof_item_<?php echo $i?>" class="prof_item" data="<?php echo str_replace('\\','_',$row['classname'])?>">
                   <td nowrap>
                     <a target="_blank" href="index.php?op=fileviewer&amp;file=<?php echo $traces[$j][1]?>&amp;line=<?php echo $traces[$j][2]?>" class="srclink" title="Show Source"><img alt="O" src="img/file.png"></a>
                     <i class="label-class label-<?php echo $row['classname'];?>">&nbsp;</i>

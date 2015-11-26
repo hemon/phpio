@@ -23,7 +23,7 @@ $(function(){
 		$('#hooks li.active').removeClass('active');
 		$(this).addClass('active');
 		
-		var cls = $("a", this).attr('data');
+		var cls = $("a", this).attr('data').replace('\\','_');
 		if( cls != undefined ) {
 			$('#function_table >tbody >tr').hide();
 			$('#function_table >tbody >tr[data="'+cls+'"]').show();
