@@ -175,7 +175,7 @@ class PHPIO_Hook_Curl extends PHPIO_Hook_Func {
 		$this->options[$ch_id] = array();
 
 		if ( $this->autoFollow ) {
-			curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_PROFILE='.PHPIO::$run_id.';');
+			curl_setopt($ch, CURLOPT_COOKIE, PHPIO_PROFILE.'='.PHPIO::$run_id.';');
 		}
 
 		$this->stderr[$ch_id] = PHPIO::$log->save_dir.'/curl_'.PHPIO::$run_id.'_'.$ch_id;
