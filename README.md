@@ -1,6 +1,9 @@
 # PHPIO
+
 Cross request trace for PHP,like google's dapper,twitter's zipkin.  
 It's base on [AOP-PHP](http://aop-php.github.com) extension. 
+A new fork of [AOP-PHP](https://github.com/pangudashu/AOP) is support PHP 7.0 or later, thanks pangudashu
+
 PHPIO is focus on trace IO operation, such like Curl, MySQL, Memcache, Redis, APC.   
 It's easily write your own Hooker monitor function/class operation in 10 line code.
 
@@ -28,9 +31,19 @@ just use a Redis logger can collecting logs from all your php web servers.
 ![Screenshot](//raw.github.com/hemon/phpio/master/www/img/screenshot.png)
 
 ## Install aop extension
+### php5.5
 ```
 pecl install aop-beta
 ```
+### php7.0 +
+```
+git clone https://github.com/pangudashu/AOP.git
+cd AOP/
+phpize
+./configure
+make && make install
+```
+### php.ini
 ```
 [aop]  
 extension=aop.so 
