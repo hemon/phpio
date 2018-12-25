@@ -10,7 +10,7 @@ abstract class PHPIO_Hook {
 	var $links = array();
 	var $time_start = 0;
 
-	function _preCallback($jp, $traces=array()) {
+	function _preCallback($jp) {
 		$this->object = $jp->getObject();
 	    $this->args = $jp->getArguments();
 	    $this->time_start = microtime(true);
