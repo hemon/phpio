@@ -25,8 +25,8 @@ class PHPIO_Hook_Predis extends PHPIO_Hook {
                 $this->trace['link'] = $this->links[$object_id];
             }
 
-            if ( isset($this->args[0]) ) {
-                $this->trace['cmd'] = $this->args[0] .' '. implode(" ", $this->args[1]);
+	    if ( isset($this->args[0]) ) {
+                $this->trace['cmd'] = json_encode($this->args);
             }
         }
         
