@@ -22,10 +22,10 @@ class PHPIO_Hook_Exception extends PHPIO_Hook {
     	aop_add_before('set_exception_handler()', array($this, 'set_exception_handler_pre'));
     }
 
-    function _preCallback($jp, $traces=array()){
+    function _preCallback($jp){
     }
 
-    function _postCallback($jp){
+    function _postCallback($jp, $traces=array()){
     	$exception = $jp->getObject();
     	if ( $this->isProcessed($exception) ) return;
 

@@ -6,7 +6,7 @@ class PHPIO_Hook_CallUserFunc extends PHPIO_Hook_Func {
         'call_user_func_array',
     );
 
-    function _preCallback($jp, $traces=array()){
+    function _preCallback($jp){
 		$jp = new PHPIO_AOP_JoinPoint($jp);
 		$hook = $this->getHookClass($jp);
 		if ( $this->isHook($hook, $jp->getMethodName()) ) {
@@ -14,7 +14,7 @@ class PHPIO_Hook_CallUserFunc extends PHPIO_Hook_Func {
 		}
     }
 
-    function _postCallback($jp){
+    function _postCallback($jp, $traces=array()){
 		$jp = new PHPIO_AOP_JoinPoint($jp);
 		$hook = $this->getHookClass($jp);
 		$phpio_hook = "PHPIO_$hook";
