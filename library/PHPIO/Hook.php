@@ -15,25 +15,25 @@ abstract class PHPIO_Hook {
 	    $this->args = $jp->getArguments();
 	    $this->time_start = microtime(true);
 
-	    $traces = (!empty($traces) ? $traces : debug_backtrace());
-	    $trace = $traces[1];
-		$trace['trace']  = $this->getPrintTrace($traces);
-		if ( isset($trace['object']) ) $trace['object'] = $this->getObjectId($trace['object']);
-		$trace['time_start'] = $this->time_start;
-		$trace['classname']  = $this::classname;
-
-	    $this->trace = $trace;
-	    $this->func =  $trace['function'];
 
 		$callback = (method_exists($this, "{$this->func}_pre") ? "{$this->func}_pre" : "preCallback");
 		$this->$callback($jp);
 	}
 
-	function _postCallback($jp) {
-	    $this->result = $jp->getReturnedValue();
-		$this->trace['result'] = $this->dump($this->result);
-		$this->trace['time_end'] = microtime(true);
+	function _postCallback($jp, $traces=array()) {
+		$this->result = $jp->getReturnedValue();
 
+		$traces = (!empty($traces) ? $traces : debug_backtrace());
+		$trace = $traces[1];
+		$trace['trace']  = $this->getPrintTrace($traces);
+		if ( isset($trace['object']) ) $trace['object'] = $this->getObjectId($trace['object']);
+		$trace['time_start'] = $this->time_start;
+		$trace['classname']  = $this::classname;
+		$trace['result'] = $this->dump($this->result);
+		$trace['time_end'] = microtime(true);
+
+		$this->trace = $trace;
+		$this->func =  $trace['function'];
 		$callback = (method_exists($this, "{$this->func}_post") ? "{$this->func}_post" : "postCallback");
 		$this->$callback($jp);
 	}
