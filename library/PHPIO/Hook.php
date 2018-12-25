@@ -7,6 +7,7 @@ abstract class PHPIO_Hook {
 	var $trace = array();
 	var $object = null;
 	var $link = null;
+	var $func = null;
 	var $links = array();
 	var $time_start = 0;
 
@@ -15,8 +16,7 @@ abstract class PHPIO_Hook {
 	    $this->args = $jp->getArguments();
 	    $this->time_start = microtime(true);
 
-
-		$callback = (method_exists($this, "{$this->func}_pre") ? "{$this->func}_pre" : "preCallback");
+		$callback = ($this->func && method_exists($this, "{$this->func}_pre") ? "{$this->func}_pre" : "preCallback");
 		$this->$callback($jp);
 	}
 
